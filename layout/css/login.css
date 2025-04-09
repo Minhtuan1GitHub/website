@@ -1,0 +1,138 @@
+
+ul{
+  list-style: none;
+}
+
+
+
+.container{
+  position: relative;
+  width: 850px;
+  height: 550px;
+  background: white;
+  overflow: hidden; /*bo phan du */
+}
+
+.form-box{
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  right: 0;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+}
+
+.container.active .form-box{
+  right: 50%;
+}
+
+
+
+form{
+  width: 100%;
+}
+
+.login-email, .login-password{
+  position: relative;
+}
+
+
+
+
+.register{
+  visibility: hidden;
+}
+
+.container.active .register{
+  visibility: visible;
+}
+.container.active .login{
+  visibility: hidden;
+}
+
+.toggle-box{
+  /* background: red; */
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+}
+.toggle-box::before{
+  content: '';
+  /* background: blue; */
+
+  background: linear-gradient(to right, #1a2a6c, #b21f1f, #fdbb2d);
+  width: 300%;
+  left: -250%;
+  height: 100%;
+  position: absolute;
+  z-index: 2;
+  border-radius: 150px; 
+  /* transition: .6s ease-in-out; */
+}
+
+.container.active .toggle-box::before{
+  left: 50%;
+}
+
+.toggle-panel{
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 2;
+  /* transition: .6s ease-in-out; */
+}
+.toggle-right{
+  right: -50%;
+  /* transition-delay: 1.2s; */
+}
+.toggle-left{
+  left: 0;
+  /* transition-delay: 1.2s; */
+}
+.container.active .toggle-left{
+  left: -50%;
+  /* transition-delay: .6s; */
+}
+.container.active .toggle-right{
+  right: 0;
+  /* transition-delay: .6s ; */
+}
+
+.login-email input{
+  width: 100%;  
+  padding: 10px 50px 13px 20px;
+  border-radius: 5px;
+  border: none;
+  background: silver;
+}
+.login-email input::placeholder{
+  color: #888;
+}
+.login-email i{
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.register-username input{
+  width: 60%;
+  padding: 10px 50px 13px 20px;
+  border-radius: 5px;
+  border: none;
+  background: silver;
+}
+.register-username input::placeholder{
+  color: #888;
+}
+.register-username i{
+  position: absolute;
+  right: 99px;
+
+}

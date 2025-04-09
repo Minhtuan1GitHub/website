@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Main</title>
+
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!------ Include the above in your HEAD tag ---------->
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+
+  <!-- get bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <!-- link css -->
+  <link rel="stylesheet" href="/css/main.css">
+  <!-- link icon -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- get swiper -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
+</head>
+<body>
+  
+  <div class="container-fluid p-3">
+    <div class="container">
+      <nav class="navbar fixed-top navbar-expand-lg bg-white"> 
+        <div class="container">
+          <a class="navbar-brand d-flex justify-content-center align-items-center p-2 m-0 gap-2" href="#">
+            <img src="/image/logo.jpg" alt="Logo" style="width: 40px;" class="rounded-pill">
+            <h4 class="logo-text m-0">Brand</h4>
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header ">
+              <h5 class="offcanvas-title " id="offcanvasNavbarLabel">Menu</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body d-flex justify-content-sm-center align-items-center flex-column flex-lg-row">
+              <ul class="navbar-nav justify-content-center flex-grow-1 pe-3 align-items-center align-items-sm-center gap-5" >
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="#">Women</a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">Men</a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">Kid</a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">Baby</a>
+                </li>
+              </ul>
+              <div class="d-flex gap-4 ">
+                <a href="#" class="button">
+                  <i class="bi bi-globe-asia-australia fs-5"></i>
+                </a>
+                <a href="#" class="button">
+                  <i class="bi bi-bag-heart fs-5"></i>
+                </a>
+                <a href="#" class="button">
+                  <i class="bi bi-cart4 fs-5"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </div>
+
+  <div class="container mt-5 border-bottom">
+    <div class="row g-5">
+      <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+        <div class="card align-items-center border-0">
+          <a href="/html/item.html" class="img-item">
+            <img src="/image/item.avif" alt="Item" style="width: 60px;">
+          </a>
+          <h6 class="card-title">Outerwear</h6>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+        <div class="card align-items-center border-0">
+          <a href="#" class="img-item">
+            <img src="/image/item.avif" alt="Item" style="width: 60px;">
+          </a>
+          <h6 class="card-title">Outerwear</h6>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+        <div class="card align-items-center border-0">
+          <a href="#" class="img-item">
+            <img src="/image/item.avif" alt="Item" style="width: 60px;">
+          </a>
+          <h6 class="card-title">Outerwear</h6>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+        <div class="card align-items-center border-0">
+          <a href="#" class="img-item">
+            <img src="/image/item.avif" alt="Item" style="width: 60px;">
+          </a>
+          <h6 class="card-title">Outerwear</h6>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+        <div class="card align-items-center border-0">
+          <a href="#" class="img-item">
+            <img src="/image/item.avif" alt="Item" style="width: 60px;">
+          </a>
+          <h6 class="card-title">Outerwear</h6>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+        <div class="card align-items-center border-0">
+          <a href="#" class="img-item">
+            <img src="/image/item.avif" alt="Item" style="width: 60px;">
+          </a>
+          <h6 class="card-title">Outerwear</h6>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+        <div class="card align-items-center border-0">
+          <a href="#" class="img-item">
+            <img src="/image/item.avif" alt="Item" style="width: 60px;">
+          </a>
+          <h6 class="card-title">Outerwear</h6>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+        <div class="card align-items-center border-0">
+          <a href="#" class="img-item">
+            <img src="/image/item.avif" alt="Item" style="width: 60px;">
+          </a>
+          <h6 class="card-title">Outerwear</h6>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+        <div class="card align-items-center border-0">
+          <a href="#" class="img-item">
+            <img src="/image/item.avif" alt="Item" style="width: 60px;">
+          </a>
+          <h6 class="card-title">Outerwear</h6>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+        <div class="card align-items-center border-0">
+          <a href="#" class="img-item">
+            <img src="/image/item.avif" alt="Item" style="width: 60px;">
+          </a>
+          <h6 class="card-title">Outerwear</h6>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+        <div class="card align-items-center border-0">
+          <a href="#" class="img-item">
+            <img src="/image/item.avif" alt="Item" style="width: 60px;">
+          </a>
+          <h6 class="card-title">Outerwear</h6>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+        <div class="card align-items-center border-0">
+          <a href="#" class="img-item">
+            <img src="/image/item.avif" alt="Item" style="width: 60px;">
+          </a>
+          <h6 class="card-title">Outerwear</h6>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+        <div class="card align-items-center border-0">
+          <a href="#" class="img-item">
+            <img src="/image/item.avif" alt="Item" style="width: 60px;">
+          </a>
+          <h6 class="card-title">Outerwear</h6>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+        <div class="card align-items-center border-0">
+          <a href="#" class="img-item">
+            <img src="/image/item.avif" alt="Item" style="width: 60px;">
+          </a>
+          <h6 class="card-title">Outerwear</h6>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+        <div class="card align-items-center border-0">
+          <a href="#" class="img-item">
+            <img src="/image/item.avif" alt="Item" style="width: 60px;">
+          </a>
+          <h6 class="card-title">Outerwear</h6>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+        <div class="card align-items-center border-0">
+          <a href="#" class="img-item">
+            <img src="/image/item.avif" alt="Item" style="width: 60px;">
+          </a>
+          <h6 class="card-title">Outerwear</h6>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+        <div class="card align-items-center border-0">
+          <a href="#" class="img-item">
+            <img src="/image/item.avif" alt="Item" style="width: 60px;">
+          </a>
+          <h6 class="card-title">Outerwear</h6>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+        <div class="card align-items-center border-0">
+          <a href="#" class="img-item">
+            <img src="/image/item.avif" alt="Item" style="width: 60px;">
+          </a>
+          <h6 class="card-title">Outerwear</h6>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+        <div class="card align-items-center border-0">
+          <a href="#" class="img-item">
+            <img src="/image/item.avif" alt="Item" style="width: 60px;">
+          </a>
+          <h6 class="card-title">Outerwear</h6>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+        <div class="card align-items-center border-0">
+          <a href="#" class="img-item">
+            <img src="/image/item.avif" alt="Item" style="width: 60px;">
+          </a>
+          <h6 class="card-title">Outerwear</h6>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+        <div class="card align-items-center border-0">
+          <a href="#" class="img-item">
+            <img src="/image/item.avif" alt="Item" style="width: 60px;">
+          </a>
+          <h6 class="card-title">Outerwear</h6>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+        <div class="card align-items-center border-0">
+          <a href="#" class="img-item">
+            <img src="/image/item.avif" alt="Item" style="width: 60px;">
+          </a>
+          <h6 class="card-title">Outerwear</h6>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+        <div class="card align-items-center border-0">
+          <a href="#" class="img-item">
+            <img src="/image/item.avif" alt="Item" style="width: 60px;">
+          </a>
+          <h6 class="card-title">Outerwear</h6>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+        <div class="card align-items-center border-0">
+          <a href="#" class="img-item">
+            <img src="/image/item.avif" alt="Item" style="width: 60px;">
+          </a>
+          <h6 class="card-title">Outerwear</h6>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+        <div class="card align-items-center border-0">
+          <a href="#" class="img-item">
+            <img src="/image/item.avif" alt="Item" style="width: 60px;">
+          </a>
+          <h6 class="card-title">Outerwear</h6>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+        <div class="card align-items-center border-0">
+          <a href="#" class="img-item">
+            <img src="/image/item.avif" alt="Item" style="width: 60px;">
+          </a>
+          <h6 class="card-title">Outerwear</h6>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="container-fluid mt-5 mb-5">
+    <div class="container mb-3">
+      <a href="#" class=" d-flex gap-2">
+        <i class="bi bi-shop"></i>
+        Store location
+      </a>
+    </div>
+    <div class="container d-flex justify-content-between">
+      <h3>About TABAO</h3>
+      <a href="#">VIEW ALL</a>
+    </div>
+    <div class="contrainer">
+      <div class="row g-4 m-0 p-0 d-flex">
+        <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+          <div class="card" style="width: 170px;">
+            <img src="/image/itemCard.jpg" alt="Item " style="width: 170px;">
+            <h6>LifeWear Collection 2025 Spring/Summer</h6>
+            <p>Sunny Moment</p>
+          </div>
+        </div>
+        <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+          <div class="card" style="width: 170px;">
+            <img src="/image/itemCard.jpg" alt="Item " style="width: 170px;">
+            <h6>LifeWear Collection 2025 Spring/Summer</h6>
+            <p>Sunny Moment</p>
+          </div>
+        </div>
+        <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+          <div class="card" style="width: 170px;">
+            <img src="/image/itemCard.jpg" alt="Item " style="width: 170px;">
+            <h6>LifeWear Collection 2025 Spring/Summer</h6>
+            <p>Sunny Moment</p>
+          </div>
+        </div>
+        <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+          <div class="card" style="width: 170px;">
+            <img src="/image/itemCard.jpg" alt="Item " style="width: 170px;">
+            <h6>LifeWear Collection 2025 Spring/Summer</h6>
+            <p>Sunny Moment</p>
+          </div>
+        </div>
+        <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+          <div class="card" style="width: 170px;">
+            <img src="/image/itemCard.jpg" alt="Item " style="width: 170px;">
+            <h6>LifeWear Collection 2025 Spring/Summer</h6>
+            <p>Sunny Moment</p>
+          </div>
+        </div> 
+        <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+          <div class="card" style="width: 170px;">
+            <img src="/image/itemCard.jpg" alt="Item " style="width: 170px;">
+            <h6>LifeWear Collection 2025 Spring/Summer</h6>
+            <p>Sunny Moment</p>
+          </div>
+        </div> 
+        <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+          <div class="card" style="width: 170px;">
+            <img src="/image/itemCard.jpg" alt="Item " style="width: 170px;">
+            <h6>LifeWear Collection 2025 Spring/Summer</h6>
+            <p>Sunny Moment</p>
+          </div>
+        </div> 
+        <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+          <div class="card" style="width: 170px;">
+            <img src="/image/itemCard.jpg" alt="Item " style="width: 170px;">
+            <h6>LifeWear Collection 2025 Spring/Summer</h6>
+            <p>Sunny Moment</p>
+          </div>
+        </div> 
+        <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+          <div class="card" style="width: 170px;">
+            <img src="/image/itemCard.jpg" alt="Item " style="width: 170px;">
+            <h6>LifeWear Collection 2025 Spring/Summer</h6>
+            <p>Sunny Moment</p>
+          </div>
+        </div> 
+        <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+          <div class="card" style="width: 170px;">
+            <img src="/image/itemCard.jpg" alt="Item " style="width: 170px;">
+            <h6>LifeWear Collection 2025 Spring/Summer</h6>
+            <p>Sunny Moment</p>
+          </div>
+        </div>  
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid mt-5 mb-5">
+    <div class="container d-flex align-items-center justify-content-between mb-5">
+      <h3>Special Collaborations</h3>
+      <a href="#">VIEW ALL</a>
+    </div>
+    
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" style="width:250px;">
+          <a href="#"><img src="/image/swiper.jpg" alt="Item"></a>
+        </div>
+        <div class="swiper-slide"style="width: 250px;" >
+          <a href="#"><img src="/image/swiper.jpg" alt="Item"></a>
+        </div>
+        <div class="swiper-slide"style="width: 250px;" >
+          <a href="#"><img src="/image/swiper.jpg" alt="Item"></a>
+        </div>
+        <div class="swiper-slide"style="width: 250px;" >
+          <a href="#"><img src="/image/swiper.jpg" alt="Item"></a>
+        </div>
+        <div class="swiper-slide"style="width: 250px;" >
+          <a href="#"><img src="/image/swiper.jpg" alt="Item"></a>
+        </div>
+        <div class="swiper-slide"style="width: 250px;" >
+          <a href="#"><img src="/image/swiper.jpg" alt="Item"></a>
+        </div>
+        <div class="swiper-slide"style="width: 250px;" >
+          <a href="#"><img src="/image/swiper.jpg" alt="Item"></a>
+        </div>
+        <div class="swiper-slide"style="width: 250px;" >
+          <a href="#"><img src="/image/swiper.jpg" alt="Item"></a>
+        </div>
+        <div class="swiper-slide"style="width: 250px;" >
+          <a href="#"><img src="/image/swiper.jpg" alt="Item"></a>
+        </div>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+
+<div class="contrainer-fluid fixed-bottom d-flex flex-column " style="background: white;">
+
+    <div class="container input-group mb-3 mt-2" >
+      <input type="text" class="form-control" placeholder="Search by keyword" aria-label="Recipient's username" aria-describedby="button-addon2" style="height: 50px; border-top-left-radius: 50px; border-bottom-left-radius: 50px; border-top: 1px solid black; border-bottom: 1px solid black; border-left: 1px solid black; border-right: none;" >
+      <button class="btn btn-outline-secondary" type="button" id="button-addon2" style="border-top-right-radius: 50px; border-bottom-right-radius: 50px; border-right: 1px solid black; border-left: none; ">
+        <a href="#">
+          <i class="bi bi-camera"></i>
+        </a>
+      </button>
+    </div>
+
+    <div class="container d-flex justify-content-evenly mb-3">
+      <a href="home.html"><i class="bi bi-house fs-3"></i></a>
+      <a href="home.html"><i class="bi bi-x-lg fs-1"></i></i></a>
+      <a href="/html/login.html"><i class="bi bi-person fs-3"></i></a>
+    </div>
+</div>
+  
+  <footer class="dk-footer">
+    <div class="contrainer-fluid " style="margin-bottom: 150px; background: #000000;">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 footer-info">
+            <div class="dk-footer-box-info p-1 " style="background: #A7ED10;">
+              
+              <div class="container d-flex justify-content-center ">
+                <a href="#" class="footer-logo">
+                  <img src="/image/8dff5703-b060-4914-ba33-da8fdde083fd-removebg-preview.png" alt="footer-logo" style="width: 150px;">
+                </a>
+              </div>
+
+              <div class="container mt-2">
+                <p class="footer-info-text" style="max-width: 100%; font-size: 14px; color: #000000">
+                  Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator.
+                </p>  
+              </div>
+
+              <div class="container">
+                <div class="footer-social-link">
+                  <h3 style="color: #000000">Follow us</h3>
+                  <ul class="d-flex justify-content-evenly p-0">
+                    <li>
+                      <a href="#"><i class="bi bi-facebook fs-5" style="color: blue;"></i></a>
+                    </li>
+                    <li>
+                      <a href="#"><i class="bi bi-github fs-5" style="color: black;"></i></a>
+                    </li>
+                    <li>
+                      <a href="#"><i class="bi bi-instagram fs-5" style="color: orange;"></i></a>
+                    </li>
+                    <li>
+                      <a href="#"><i class="bi bi-google fs-5" style="color: red"></i></a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            
+            </div>
+          </div>
+
+          <div class="col-lg-9  d-flex flex-column justify-content-evenly">
+            <div class="row p-1">
+              <div class="col">
+                <div class="contact-us d-flex align-items-center g-0 p-0" style="gap: 10px;">
+                  <div class="contact-icon mb-4">
+                    <i class="bi bi-map fs-2" style="color: #A7ED10"></i>
+                  </div>
+                  <div class="contact-info">
+                    <h3 style="color: #ffffff">Ho Chi Minh City</h3>
+                    <p style="color: white;">1168/9 Le Van Luong Nha Be</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col">
+                <div class="contact-us d-flex align-items-center g-0 p-0" style="gap: 10px;">
+                  <div class="contact-icon mb-4">
+                    <i class="bi bi-phone fs-2" style="color: #A7ED10"></i>
+                  </div>
+                  <div class="contact-info">
+                    <h3 style="color: white;">+83 382494117</h3>
+                    <p style="color: white;">Give us a call</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row p-1">
+              <div class="col">
+                <div class="footer-widget ">
+                  <div class="section-heading">
+                    <h3 style="color: white;">Useful links</h3>
+                    <span class="animate-border border-black"></span>
+                  </div>
+                  <div class="container d-flex" style="gap: 10px; ">
+                    <ul>
+                      <li>
+                        <a href="#" style="color: #b5b5b5">About us</a>
+                      </li>
+                      <li>
+                        <a href="#" style="color: silver;">Services</a>
+                      </li>
+                      <li>
+                        <a href="#" style="color: silver;">Projects</a>
+                      </li>
+                      <li>
+                        <a href="#" style="color: silver;">Our team</a>
+                      </li>
+                    </ul>
+                    <ul>
+                      <li>
+                        <a href="#" style="color: silver;">Contact us</a>
+                      </li>
+                      <li>
+                        <a href="#" style="color: silver;">Blog</a>
+                      </li>
+                      <li>
+                        <a href="#" style="color: silver;">Testimonial</a>
+                      </li>
+                      <li>
+                        <a href="#" style="color: silver;">Faq</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="footer-widget">
+                  <div class="section-heading">
+                    <h3 style="color: white;">Subscribe</h3>
+                    <span class="animate-border border-black"></span>
+                  </div>
+                  <p style="color: white;">
+                    Reference site about Lorem Ipsum, giving information on its origins, as well
+                  </p>
+                  <form action="#">
+                    <div class="row">
+                      <div class="col d-flex">
+                        <input type="email" class="form-control" style="border-radius: 0; border-top-left-radius: 100px; border-bottom-left-radius: 100px; border: none;" placeholder="Email Address">
+                        <button type="submit" style="border-top-right-radius: 100px; border-bottom-right-radius: 100px; border: none; background: #A7ED10;">
+                          <i class="bi bi-send" style="color: #000000"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="copyright container-fluid mt-2" style="background-color: #A7ED10;">
+        <div class="container">
+          <div class="row" style="padding-top: 5px; padding-bottom: 5px; ">
+            <div class="col d-flex align-items-center">
+              <span style="color: #000000;">
+                Copyright © 2019, All Right Reserved Seobin
+              </span>
+            </div>
+            <div class="col">
+              <div class="copyright-menu">
+                <ul class="d-flex align-items-center p-0 m-0 justify-content-end" style="gap: 20px; color: #000000;">
+                  <li>
+                    <a href="#">Home</a>
+                  </li>
+                  <li>
+                    <a href="#">Terms</a>
+                  </li>
+                  <li>
+                    <a href="#">Privacy Policy</a>
+                  </li>
+                  <li>
+                    <a href="#">Contact</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+ 
+
+  <!-- get swiper -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+  <!-- get bootstrap -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+  <script src="/javascript/main.js"></script>
+</body>
+</html>

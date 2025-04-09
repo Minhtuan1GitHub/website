@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Item</title>
+  <!-- link css -->
+  <link rel="stylesheet" href="/css/item.css">
+  <!-- get bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <!-- link icon -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- Link Swiper's CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+</head>
+<body>
+  
+
+
+  <div class="container-fluid mt-4">
+    <div class="container" style="display: flex; align-items: center; justify-content: start;">
+      <ul class=" mt-5 " style="list-style: none; gap: 20px; display: flex; justify-content: center;">
+        <li><a href="#" style="text-decoration: none;"><span>All Outerwear</span></a></li>
+        <li><a href="#" style="text-decoration: none;"><span>All Outerwear</span></a></li>
+        <li><a href="#" style="text-decoration: none;"><span>All Outerwear</span></a></li>
+        <li><a href="#" style="text-decoration: none;"><span>All Outerwear</span></a></li>
+        <li><a href="#" style="text-decoration: none;"><span>All Outerwear</span></a></li>
+        <li><a href="#" style="text-decoration: none;"><span>All Outerwear</span></a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container-fluid mb-3">
+    <div class="container">
+      <h3 class="d-flex m-0">Ourterwear</h3>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="container d-flex justify-content-between">
+      <div class="">
+        <i class="bi bi-shop"></i>
+        <span>Select a store to search store stock</span>
+      </div>
+      <div class="">
+        <a href="#">Select store</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="container d-flex" style=" position: sticky; top: 0; gap: 10px;">
+      <div class="dropdown ">
+        <button class="btn dropdown-toggle "data-bs-toggle="dropdown" style="border: 1px solid #888; border-radius: 100px; font-size: 12px;">
+          In-stock: online only
+        </button>
+        <ul class="dropdown-menu">
+          <li>
+            <div class="container" style="width: 500px;">
+
+              <div class="d-flex justify-content-between mb-3">
+                <span>Results: 39 items</span>
+                <i class="bi bi-x-lg"></i>
+              </div>
+
+              <div class="d-flex justify-content-between mb-2">
+                <span>Select a store to search store stock</span>
+                <a href="#">Select store</a>
+              </div>
+
+              <div>
+                <span>Select how you want to search our stock:</span>
+
+                <div class="form-check">
+                  <input type="radio" class="form-check-input" id="radio1" name="optradio" value="option1" checked>
+                  Online or in-store
+                  <label class="form-check-label" for="radio1"></label>
+                </div>
+                <div class="form-check">
+                  <input type="radio" class="form-check-input" id="radio2" name="optradio" value="option2">
+                  Online only
+                  <label class="form-check-label" for="radio2"></label>
+                </div>
+                <div class="form-check">
+                  <input type="radio" class="form-check-input" id="radio2" name="optradio" value="option2">
+                  In-store only
+                  <label class="form-check-label" for="radio2"></label>
+                </div>
+              
+
+              </div>
+
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="dropdown ">
+        <button class="btn dropdown-toggle "data-bs-toggle="dropdown" style="border: 1px solid #888; border-radius: 100px; font-size: 12px;">
+          Category
+        </button>
+        <ul class="dropdown-menu p-3">
+          <li>
+            <div class="container" style="width: 500px;">
+
+              <div class="d-flex justify-content-between mb-3">
+                <span>Results: 39 items</span>
+                <i class="bi bi-x-lg"></i>
+              </div>
+
+              <select class="form-select">
+                <option>All</option>
+                <option>Jackets</option>
+                <option>Vest</option>
+                <option>T-Shirt</option>
+              </select>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="dropdown ">
+        <button class="btn dropdown-toggle "data-bs-toggle="dropdown" style="border: 1px solid #888; border-radius: 100px; font-size: 12px;">
+          Sale
+        </button>
+        <ul class="dropdown-menu">
+          <li>
+            <div class="container" style="width: 500px;">
+
+              <div class="d-flex justify-content-between mb-3">
+                <span>Results: 39 items</span>
+                <i class="bi bi-x-lg"></i>
+              </div>
+
+              <div>
+                <span>Option</span>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                  <label class="form-check-label" for="flexCheckDefault">
+                    Sale
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                  <label class="form-check-label" for="flexCheckChecked">
+                    Select Colors/Sizes Only
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                  <label class="form-check-label" for="flexCheckChecked">
+                    Made with recycled materials
+                  </label>
+                </div>  
+
+              </div>
+
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="dropdown ">
+        <button class="btn dropdown-toggle "data-bs-toggle="dropdown" style="border: 1px solid #888; border-radius: 100px; font-size: 12px;">
+          Size
+        </button>
+        <ul class="dropdown-menu">
+          <li>
+            <div class="container" style="width: 500px;">
+
+              <div class="d-flex justify-content-between mb-3">
+                <span>Results: 39 items</span>
+                <i class="bi bi-x-lg"></i>
+              </div>
+
+              <div>
+                <span>Size</span>
+                <div class="row mb-3">
+                  <div class="col">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                      XS
+                    </label>
+                  </div>
+                  <div class="col">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                      M
+                    </label>
+                  </div>
+                  <div class="col">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                      XS
+                    </label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                      S
+                    </label>
+                  </div>
+                  <div class="col">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                      L
+                    </label>
+                  </div>
+                  <div class="col">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                      3XL
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="dropdown ">
+        <button class="btn dropdown-toggle "data-bs-toggle="dropdown" style="border: 1px solid #888; border-radius: 100px; font-size: 12px;">
+          Color
+        </button>
+        <ul class="dropdown-menu">
+          <li>
+            <div class="container" style="width: 500px;">
+
+              <div class="d-flex justify-content-between mb-3">
+                <span>Results: 39 items</span>
+                <i class="bi bi-x-lg"></i>
+              </div>
+
+              <div>
+                <span>Size</span>
+                <div class="row mb-3">
+                  <div class="col">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                      XS
+                    </label>
+                  </div>
+                  <div class="col">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                      M
+                    </label>
+                  </div>
+                  <div class="col">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                      XS
+                    </label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                      S
+                    </label>
+                  </div>
+                  <div class="col">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                      L
+                    </label>
+                  </div>
+                  <div class="col">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                      3XL
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="dropdown ">
+        <button class="btn dropdown-toggle "data-bs-toggle="dropdown" style="border: 1px solid #888; border-radius: 100px; font-size: 12px;">
+          Price
+        </button>
+        <ul class="dropdown-menu">
+          <li>
+            <div class="container" style="width: 500px;">
+
+              <div class="d-flex justify-content-between mb-3">
+                <span>Results: 39 items</span>
+                <i class="bi bi-x-lg"></i>
+              </div>
+
+              <div>
+                <span>Size</span>
+                <div class="row mb-3">
+                  <div class="col">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                      XS
+                    </label>
+                  </div>
+                  <div class="col">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                      M
+                    </label>
+                  </div>
+                  <div class="col">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                      XS
+                    </label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                      S
+                    </label>
+                  </div>
+                  <div class="col">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                      L
+                    </label>
+                  </div>
+                  <div class="col">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                      3XL
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="container d-flex justify-content-between">
+      <span class="" style="">Results: 6 items</span>
+      <div style="">
+        <i class="bi bi-sort-down-alt"></i>
+        <span>Sort by</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="container">
+      <div style="">
+        <div class="row g-0 m-0 p-0" style="">
+          <div class="col-lg-3  col-sm-6 ">
+            <div class="card" style=" border-radius: 0px; border: none;">
+              <a href="/html/sell.html">
+                <img class="card-img-top" src="layout/images/outerwear/item1.avif" alt="Card image" style="width:100%">
+              </a>
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="d-flex" style="gap: 7px;">
+                    <div style="width: 15px; height: 15px; border-radius: 50%; background: red;"></div>
+                    <div style="width: 15px; height: 15px; border-radius: 50%; background: blue;"></div>
+                    <div style="width: 15px; height: 15px; border-radius: 50%; background: yellowgreen;"></div>
+                  </div>
+                  <i class="bi bi-heart fs-5"></i>
+                </div>
+                <div class="d-flex flex-column">
+                  <span>UNISEX, XXS-3XL</span>
+                  <span>Zip-Up Blouson Jacket</span>
+                  <span>$59.90</span>
+                  <i class="bi bi-star">4.6</i>
+                </div>  
+
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-6 ">
+            <div class="card" style="  border-radius: 0px; border: none;">
+              <img class="card-img-top" src="layout/images/outerwear/item1.avif" alt="Card image" style="width:100%">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="d-flex" style="gap: 7px;">
+                    <div style="width: 15px; height: 15px; border-radius: 50%; background: red;"></div>
+                    <div style="width: 15px; height: 15px; border-radius: 50%; background: blue;"></div>
+                    <div style="width: 15px; height: 15px; border-radius: 50%; background: yellowgreen;"></div>
+                  </div>
+                  <i class="bi bi-heart fs-5"></i>
+                </div>
+                <div class="d-flex flex-column">
+                  <span>UNISEX, XXS-3XL</span>
+                  <span>Zip-Up Blouson Jacket</span>
+                  <span>$59.90</span>
+                  <i class="bi bi-star">4.6</i>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3  col-sm-6 ">
+            <div class="card" style=" border-radius: 0px; border: none;">
+              <img class="card-img-top" src="layout/images/outerwear/item1.avif" alt="Card image" style="width:100%">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="d-flex" style="gap: 7px;">
+                    <div style="width: 15px; height: 15px; border-radius: 50%; background: red;"></div>
+                    <div style="width: 15px; height: 15px; border-radius: 50%; background: blue;"></div>
+                    <div style="width: 15px; height: 15px; border-radius: 50%; background: yellowgreen;"></div>
+                  </div>
+                  <i class="bi bi-heart fs-5"></i>
+                </div>
+                <div class="d-flex flex-column">
+                  <span>UNISEX, XXS-3XL</span>
+                  <span>Zip-Up Blouson Jacket</span>
+                  <span>$59.90</span>
+                  <i class="bi bi-star">4.6</i>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3  col-sm-6">
+            <div class="card" style=" border-radius: 0px; border: none;">
+              <img class="card-img-top" src="layout/images/outerwear/item1.avif" alt="Card image" style="width:100%">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="d-flex" style="gap: 7px;">
+                    <div style="width: 15px; height: 15px; border-radius: 50%; background: red;"></div>
+                    <div style="width: 15px; height: 15px; border-radius: 50%; background: blue;"></div>
+                    <div style="width: 15px; height: 15px; border-radius: 50%; background: yellowgreen;"></div>
+                  </div>
+                  <i class="bi bi-heart fs-5"></i>
+                </div>
+                <div class="d-flex flex-column">
+                  <span>UNISEX, XXS-3XL</span>
+                  <span>Zip-Up Blouson Jacket</span>
+                  <span>$59.90</span>
+                  <i class="bi bi-star">4.6</i>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-6">
+            <div class="card" style=" border-radius: 0px; border: none;">
+              <img class="card-img-top" src="layout/images/outerwear/item1.avif" alt="Card image" style="width:100%">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="d-flex" style="gap: 7px;">
+                    <div style="width: 15px; height: 15px; border-radius: 50%; background: red;"></div>
+                    <div style="width: 15px; height: 15px; border-radius: 50%; background: blue;"></div>
+                    <div style="width: 15px; height: 15px; border-radius: 50%; background: yellowgreen;"></div>
+                  </div>
+                  <i class="bi bi-heart fs-5"></i>
+                </div>
+                <div class="d-flex flex-column">
+                  <span>UNISEX, XXS-3XL</span>
+                  <span>Zip-Up Blouson Jacket</span>
+                  <span>$59.90</span>
+                  <i class="bi bi-star">4.6</i>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-6">
+            <div class="card" style=" border-radius: 0px; border: none;">
+              <img class="card-img-top" src="layout/images/outerwear/item1.avif" alt="Card image" style="width:100%">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="d-flex" style="gap: 7px;">
+                    <div style="width: 15px; height: 15px; border-radius: 50%; background: red;"></div>
+                    <div style="width: 15px; height: 15px; border-radius: 50%; background: blue;"></div>
+                    <div style="width: 15px; height: 15px; border-radius: 50%; background: yellowgreen;"></div>
+                  </div>
+                  <i class="bi bi-heart fs-5"></i>
+                </div>
+                <div class="d-flex flex-column">
+                  <span>UNISEX, XXS-3XL</span>
+                  <span>Zip-Up Blouson Jacket</span>
+                  <span>$59.90</span>
+                  <i class="bi bi-star">4.6</i>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-6">
+            <div class="card" style=" border-radius: 0px; border: none;">
+              <img class="card-img-top" src="layout/images/outerwear/item1.avif" alt="Card image" style="width:100%">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="d-flex" style="gap: 7px;">
+                    <div style="width: 15px; height: 15px; border-radius: 50%; background: red;"></div>
+                    <div style="width: 15px; height: 15px; border-radius: 50%; background: blue;"></div>
+                    <div style="width: 15px; height: 15px; border-radius: 50%; background: yellowgreen;"></div>
+                  </div>
+                  <i class="bi bi-heart fs-5"></i>
+                </div>
+                <div class="d-flex flex-column">
+                  <span>UNISEX, XXS-3XL</span>
+                  <span>Zip-Up Blouson Jacket</span>
+                  <span>$59.90</span>
+                  <i class="bi bi-star">4.6</i>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-6">
+            <div class="card" style=" border-radius: 0px; border: none;">
+              <img class="card-img-top" src="layout/images/outerwear/item1.avif" alt="Card image" style="width:100%">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="d-flex" style="gap: 7px;">
+                    <div style="width: 15px; height: 15px; border-radius: 50%; background: red;"></div>
+                    <div style="width: 15px; height: 15px; border-radius: 50%; background: blue;"></div>
+                    <div style="width: 15px; height: 15px; border-radius: 50%; background: yellowgreen;"></div>
+                  </div>
+                  <i class="bi bi-heart fs-5"></i>
+                </div>
+                <div class="d-flex flex-column">
+                  <span>UNISEX, XXS-3XL</span>
+                  <span>Zip-Up Blouson Jacket</span>
+                  <span>$59.90</span>
+                  <i class="bi bi-star">4.6</i>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-6">
+            <div class="card" style=" border-radius: 0px; border: none;">
+              <img class="card-img-top" src="layout/images/outerwear/item1.avif" alt="Card image" style="width:100%">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="d-flex" style="gap: 7px;">
+                    <div style="width: 15px; height: 15px; border-radius: 50%; background: red;"></div>
+                    <div style="width: 15px; height: 15px; border-radius: 50%; background: blue;"></div>
+                    <div style="width: 15px; height: 15px; border-radius: 50%; background: yellowgreen;"></div>
+                  </div>
+                  <i class="bi bi-heart fs-5"></i>
+                </div>
+                <div class="d-flex flex-column">
+                  <span>UNISEX, XXS-3XL</span>
+                  <span>Zip-Up Blouson Jacket</span>
+                  <span>$59.90</span>
+                  <i class="bi bi-star">4.6</i>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-6">
+            <div class="card" style=" border-radius: 0px; border: none;">
+              <img class="card-img-top" src="layout/images/outerwear/item1.avif" alt="Card image" style="width:100%">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="d-flex" style="gap: 7px;">
+                    <div style="width: 15px; height: 15px; border-radius: 50%; background: red;"></div>
+                    <div style="width: 15px; height: 15px; border-radius: 50%; background: blue;"></div>
+                    <div style="width: 15px; height: 15px; border-radius: 50%; background: yellowgreen;"></div>
+                  </div>
+                  <i class="bi bi-heart fs-5"></i>
+                </div>
+                <div class="d-flex flex-column">
+                  <span>UNISEX, XXS-3XL</span>
+                  <span>Zip-Up Blouson Jacket</span>
+                  <span>$59.90</span>
+                  <i class="bi bi-star">4.6</i>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-6">
+            <div class="card" style=" border-radius: 0px; border: none;">
+              <img class="card-img-top" src="layout/images/outerwear/item1.avif" alt="Card image" style="width:100%">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="d-flex" style="gap: 7px;">
+                    <div style="width: 15px; height: 15px; border-radius: 50%; background: red;"></div>
+                    <div style="width: 15px; height: 15px; border-radius: 50%; background: blue;"></div>
+                    <div style="width: 15px; height: 15px; border-radius: 50%; background: yellowgreen;"></div>
+                  </div>
+                  <i class="bi bi-heart fs-5"></i>
+                </div>
+                <div class="d-flex flex-column">
+                  <span>UNISEX, XXS-3XL</span>
+                  <span>Zip-Up Blouson Jacket</span>
+                  <span>$59.90</span>
+                  <i class="bi bi-star">4.6</i>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Swiper -->
+  <div class="container-fluid">
+    <div class="container">
+      <h3>Best Sellers</h3>
+    </div>
+    <div class="container">
+      <div id="demo" class="carousel slide" data-bs-ride="carousel">
+
+        <!-- Indicators/dots -->
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+          <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+          <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+        </div>
+      
+        <div class="carousel-inner">
+
+  
+            <div class="carousel-item active">
+              <div class="row g-0">
+                <div class="col">
+                  <div class="card" style=" border-radius: 0px; border: none;">
+                    <img class="card-img-top" src="layout/images/outerwear/item.avif" alt="Card image" style="width:100%; border-radius: 0px ;">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex" style="gap: 7px;">
+                          <div style="width: 15px; height: 15px; border-radius: 50%; background: red;"></div>
+                          <div style="width: 15px; height: 15px; border-radius: 50%; background: blue;"></div>
+                          <div style="width: 15px; height: 15px; border-radius: 50%; background: yellowgreen;"></div>
+                        </div>
+                        <i class="bi bi-heart fs-5"></i>
+                      </div>
+                      <div class="d-flex flex-column">
+                        <span>UNISEX, XXS-3XL</span>
+                        <span>Zip-Up Blouson Jacket</span>
+                        <span>$59.90</span>
+                        <i class="bi bi-star">4.6</i>
+                      </div>
+      
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="card" style=" border-radius: 0px; border: none;">
+                    <img class="card-img-top" src="layout/images/outerwear/item1.avif" alt="Card image" style="width:100%; border-radius: 0px ;">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex" style="gap: 7px;">
+                          <div style="width: 15px; height: 15px; border-radius: 50%; background: red;"></div>
+                          <div style="width: 15px; height: 15px; border-radius: 50%; background: blue;"></div>
+                          <div style="width: 15px; height: 15px; border-radius: 50%; background: yellowgreen;"></div>
+                        </div>
+                        <i class="bi bi-heart fs-5"></i>
+                      </div>
+                      <div class="d-flex flex-column">
+                        <span>UNISEX, XXS-3XL</span>
+                        <span>Zip-Up Blouson Jacket</span>
+                        <span>$59.90</span>
+                        <i class="bi bi-star">4.6</i>
+                      </div>
+      
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="card" style=" border-radius: 0px; border: none;">
+                    <img class="card-img-top" src="layout/images/outerwear/item1.avif" alt="Card image" style="width:100%; border-radius: 0px ;">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex" style="gap: 7px;">
+                          <div style="width: 15px; height: 15px; border-radius: 50%; background: red;"></div>
+                          <div style="width: 15px; height: 15px; border-radius: 50%; background: blue;"></div>
+                          <div style="width: 15px; height: 15px; border-radius: 50%; background: yellowgreen;"></div>
+                        </div>
+                        <i class="bi bi-heart fs-5"></i>
+                      </div>
+                      <div class="d-flex flex-column">
+                        <span>UNISEX, XXS-3XL</span>
+                        <span>Zip-Up Blouson Jacket</span>
+                        <span>$59.90</span>
+                        <i class="bi bi-star">4.6</i>
+                      </div>
+      
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="card" style=" border-radius: 0px; border: none;">
+                    <img class="card-img-top" src="layout/images/outerwear/item1.avif" alt="Card image" style="width:100%; border-radius: 0px ;">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex" style="gap: 7px;">
+                          <div style="width: 15px; height: 15px; border-radius: 50%; background: red;"></div>
+                          <div style="width: 15px; height: 15px; border-radius: 50%; background: blue;"></div>
+                          <div style="width: 15px; height: 15px; border-radius: 50%; background: yellowgreen;"></div>
+                        </div>
+                        <i class="bi bi-heart fs-5"></i>
+                      </div>
+                      <div class="d-flex flex-column">
+                        <span>UNISEX, XXS-3XL</span>
+                        <span>Zip-Up Blouson Jacket</span>
+                        <span>$59.90</span>
+                        <i class="bi bi-star">4.6</i>
+                      </div>
+      
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="row g-0">
+                <div class="col">
+                  <div class="card" style=" border-radius: 0px; border: none;">
+                    <img class="card-img-top" src="layout/images/outerwear/item1.avif" alt="Card image" style="width:100%; border-radius: 0px ;">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex" style="gap: 7px;">
+                          <div style="width: 15px; height: 15px; border-radius: 50%; background: red;"></div>
+                          <div style="width: 15px; height: 15px; border-radius: 50%; background: blue;"></div>
+                          <div style="width: 15px; height: 15px; border-radius: 50%; background: yellowgreen;"></div>
+                        </div>
+                        <i class="bi bi-heart fs-5"></i>
+                      </div>
+                      <div class="d-flex flex-column">
+                        <span>UNISEX, XXS-3XL</span>
+                        <span>Zip-Up Blouson Jacket</span>
+                        <span>$59.90</span>
+                        <i class="bi bi-star">4.6</i>
+                      </div>
+      
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="card" style=" border-radius: 0px; border: none;">
+                    <img class="card-img-top" src="layout/images/outerwear/item1.avif" alt="Card image" style="width:100%; border-radius: 0px ;">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex" style="gap: 7px;">
+                          <div style="width: 15px; height: 15px; border-radius: 50%; background: red;"></div>
+                          <div style="width: 15px; height: 15px; border-radius: 50%; background: blue;"></div>
+                          <div style="width: 15px; height: 15px; border-radius: 50%; background: yellowgreen;"></div>
+                        </div>
+                        <i class="bi bi-heart fs-5"></i>
+                      </div>
+                      <div class="d-flex flex-column">
+                        <span>UNISEX, XXS-3XL</span>
+                        <span>Zip-Up Blouson Jacket</span>
+                        <span>$59.90</span>
+                        <i class="bi bi-star">4.6</i>
+                      </div>
+      
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="card" style=" border-radius: 0px; border: none;">
+                    <img class="card-img-top" src="layout/images/outerwear/item1.avif" alt="Card image" style="width:100%; border-radius: 0px ;">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex" style="gap: 7px;">
+                          <div style="width: 15px; height: 15px; border-radius: 50%; background: red;"></div>
+                          <div style="width: 15px; height: 15px; border-radius: 50%; background: blue;"></div>
+                          <div style="width: 15px; height: 15px; border-radius: 50%; background: yellowgreen;"></div>
+                        </div>
+                        <i class="bi bi-heart fs-5"></i>
+                      </div>
+                      <div class="d-flex flex-column">
+                        <span>UNISEX, XXS-3XL</span>
+                        <span>Zip-Up Blouson Jacket</span>
+                        <span>$59.90</span>
+                        <i class="bi bi-star">4.6</i>
+                      </div>
+      
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="card" style=" border-radius: 0px; border: none;">
+                    <img class="card-img-top" src="layout/images/outerwear/item1.avif" alt="Card image" style="width:100%; border-radius: 0px ;">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex" style="gap: 7px;">
+                          <div style="width: 15px; height: 15px; border-radius: 50%; background: red;"></div>
+                          <div style="width: 15px; height: 15px; border-radius: 50%; background: blue;"></div>
+                          <div style="width: 15px; height: 15px; border-radius: 50%; background: yellowgreen;"></div>
+                        </div>
+                        <i class="bi bi-heart fs-5"></i>
+                      </div>
+                      <div class="d-flex flex-column">
+                        <span>UNISEX, XXS-3XL</span>
+                        <span>Zip-Up Blouson Jacket</span>
+                        <span>$59.90</span>
+                        <i class="bi bi-star">4.6</i>
+                      </div>
+      
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="row g-0">
+                <div class="col">
+                  <div class="card" style=" border-radius: 0px; border: none;">
+                    <img class="card-img-top" src="layout/images/outerwear/item1.avif" alt="Card image" style="width:100%; border-radius: 0px ;">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex" style="gap: 7px;">
+                          <div style="width: 15px; height: 15px; border-radius: 50%; background: red;"></div>
+                          <div style="width: 15px; height: 15px; border-radius: 50%; background: blue;"></div>
+                          <div style="width: 15px; height: 15px; border-radius: 50%; background: yellowgreen;"></div>
+                        </div>
+                        <i class="bi bi-heart fs-5"></i>
+                      </div>
+                      <div class="d-flex flex-column">
+                        <span>UNISEX, XXS-3XL</span>
+                        <span>Zip-Up Blouson Jacket</span>
+                        <span>$59.90</span>
+                        <i class="bi bi-star">4.6</i>
+                      </div>
+      
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="card" style=" border-radius: 0px; border: none;">
+                    <img class="card-img-top" src="layout/images/outerwear/item1.avif" alt="Card image" style="width:100%; border-radius: 0px ;">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex" style="gap: 7px;">
+                          <div style="width: 15px; height: 15px; border-radius: 50%; background: red;"></div>
+                          <div style="width: 15px; height: 15px; border-radius: 50%; background: blue;"></div>
+                          <div style="width: 15px; height: 15px; border-radius: 50%; background: yellowgreen;"></div>
+                        </div>
+                        <i class="bi bi-heart fs-5"></i>
+                      </div>
+                      <div class="d-flex flex-column">
+                        <span>UNISEX, XXS-3XL</span>
+                        <span>Zip-Up Blouson Jacket</span>
+                        <span>$59.90</span>
+                        <i class="bi bi-star">4.6</i>
+                      </div>
+      
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="card" style=" border-radius: 0px; border: none;">
+                    <img class="card-img-top" src="layout/images/outerwear/item1.avif" alt="Card image" style="width:100%; border-radius: 0px ;">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex" style="gap: 7px;">
+                          <div style="width: 15px; height: 15px; border-radius: 50%; background: red;"></div>
+                          <div style="width: 15px; height: 15px; border-radius: 50%; background: blue;"></div>
+                          <div style="width: 15px; height: 15px; border-radius: 50%; background: yellowgreen;"></div>
+                        </div>
+                        <i class="bi bi-heart fs-5"></i>
+                      </div>
+                      <div class="d-flex flex-column">
+                        <span>UNISEX, XXS-3XL</span>
+                        <span>Zip-Up Blouson Jacket</span>
+                        <span>$59.90</span>
+                        <i class="bi bi-star">4.6</i>
+                      </div>
+      
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="card" style=" border-radius: 0px; border: none;">
+                    <img class="card-img-top" src="layout/images/outerwear/item1.avif" alt="Card image" style="width:100%; border-radius: 0px ;">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex" style="gap: 7px;">
+                          <div style="width: 15px; height: 15px; border-radius: 50%; background: red;"></div>
+                          <div style="width: 15px; height: 15px; border-radius: 50%; background: blue;"></div>
+                          <div style="width: 15px; height: 15px; border-radius: 50%; background: yellowgreen;"></div>
+                        </div>
+                        <i class="bi bi-heart fs-5"></i>
+                      </div>
+                      <div class="d-flex flex-column">
+                        <span>UNISEX, XXS-3XL</span>
+                        <span>Zip-Up Blouson Jacket</span>
+                        <span>$59.90</span>
+                        <i class="bi bi-star">4.6</i>
+                      </div>
+      
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      
+        
+        <!-- Left and right controls/icons -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev"  style=" left: -6.4%;">
+          <i class="bi bi-arrow-left-circle-fill fs-3" style=" color: black;"></i>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next" style="right: -6.4%;">
+          <i class="bi bi-arrow-right-circle-fill fs-3" style="color: black;"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- get bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <!-- link javascript -->
+  <script src="/javascript/item.js"></script>
+

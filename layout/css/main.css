@@ -1,0 +1,85 @@
+ul{
+  list-style: none;
+}
+
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+}
+.swiper {
+  width: 100%;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+.swiper-slide {
+  background-position: center;
+  background-size: cover;
+  width: 300px;
+  height: 300px;
+}
+.swiper-pagination{ 
+  position: relative !important;  /**/
+  margin-top: 25px;
+}
+.bi{
+  color: black;
+}
+.nav-link {
+  color: black !important; /* Màu mặc định */
+  font-size: 20px !important;
+  text-decoration: none; /* Bỏ gạch chân mặc định */
+  position: relative; /* Để sử dụng ::after chính xác */
+  display: inline-block; /* Giúp đường gạch căn chỉnh đúng */
+  transition: color 0.3s ease-in-out; /* Hiệu ứng màu */
+}
+
+.nav-link::after {
+  content: ""; /* Tạo phần tử ảo */
+  position: absolute; /* Đặt vị trí */
+  width: 0; /* Mặc định ẩn đường gạch */
+  height: 3px; /* Độ dày của đường gạch */
+  bottom: 0; /* Gạch nằm dưới */
+  left: 0; /* Bắt đầu từ bên trái */
+  background-color: white; /* Màu của đường gạch */
+  transition: width 0.3s ease-in-out; /* Hiệu ứng kéo dài */
+}
+
+.nav-link:hover {
+  color: red !important; /* Đổi màu chữ khi hover */
+}
+
+.nav-link:hover::after {
+  width: 100%; /* Kéo dài đường gạch khi hover */
+}
+.swiper-pagination-bullet{
+  background: white !important;
+  opacity: 0.8;
+}
+.swiper-pagination-bullet-active{
+  background: red !important; 
+  transform: scale(1.5);
+  opacity: 1;
+}
+
+.card{ 
+  margin: auto;
+}
+.swiper-pagination-bullet{
+  background: black !important;
+  opacity: 0.8;
+}
+.swiper-pagination-bullet-active{
+  background: red !important; 
+  transform: scale(1.5);
+  opacity: 1;
+}
+a{
+  text-decoration: none;
+  color: black;
+  transition: 0.3 ease;
+}
+a:hover{
+  color: red;
+}
+

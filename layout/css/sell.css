@@ -1,0 +1,28 @@
+.radio-container{
+  display: inline-flex;
+  border-radius: 0;
+  user-select: none;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #888;
+  padding: 3px;
+  cursor: pointer;
+  width: 30px;
+  font-size: 10px;
+}
+
+.radio-custom {
+  position: absolute;
+  appearance: none;
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+
+.radio-custom:checked + span{
+  background: black;
+  color: white;
+  border: 1px solid;
+  
+}
+
