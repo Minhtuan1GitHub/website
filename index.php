@@ -144,7 +144,7 @@
                     header('location: index.php?page=viewlike');
                 }
                 break;
-            case 'viewlike':
+            case 'viewlike': 
                 include "view/header1.php";
                 include "view/viewlike.php";
                 include "view/footer1.php";
