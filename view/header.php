@@ -39,7 +39,7 @@
         <div class="container">
           <a class="navbar-brand d-flex justify-content-center align-items-center p-2 m-0 gap-2" href="index.php">
             <img src="layout/images/logo/cute.jpg" alt="Logo" style="width: 40px;" class="rounded-pill">
-            <h4 class="logo-text m-0">Brand</h4>
+            <h4 class="logo-text m-0">TumiShop</h4>
           </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>

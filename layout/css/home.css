@@ -67,6 +67,7 @@
 
 .nav-link:hover {
   color: black !important; /* Đổi màu chữ khi hover */
+  font-weight: bold !important;
 } 
 
 .nav-link:hover::after {

@@ -28,6 +28,7 @@
                             <div style="width: 15px; height: 15px; border-radius: 50%; background: blue;"></div>
                             <div style="width: 15px; height: 15px; border-radius: 50%; background: yellowgreen;"></div>
                           </div>
+                          
                           <form action="index.php?page=addlike" method="post">
                             <button style="border: none; background: none;" type="submit" name="addlike">
                               <i class="bi bi-heart fs-5"></i>
@@ -35,6 +36,7 @@
                           </form>
                         </div>
                         <div class="d-flex flex-column">
+                          <span style="text-transform: uppercase; font-weight: bold">'.$name_item.'</span>
                           <span>UNISEX, XXS-3XL</span>
                           <span>Zip-Up Blouson Jacket</span>
                           <span>$'.$price.'</span>
@@ -257,6 +259,7 @@
   }
   a:hover{
     color: red;
+    font-weight: bold;
   }
 </style>
 

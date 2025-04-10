@@ -294,8 +294,10 @@
                     user_update($email, $password, $name, $district, $phone, $date, $gender, $role ,$id_user);
                     //out
                           $phanloai = get_phanploai();
-                include "view/header1.php";
+                    include "view/header1.php";
                     include "view/member_comfirm.php";
+                    include "view/footer.php";
+                    include "view/find.php";
                 }
                 break;
             case 'updatepassword':

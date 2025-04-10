@@ -52,6 +52,7 @@ $html_breadcrumb .= '<li class="breadcrumb-item"><a href="index.php">Home</a></l
     }
     a:hover {
         color: red;
+        font-weight: bold;
     }
 </style>
 

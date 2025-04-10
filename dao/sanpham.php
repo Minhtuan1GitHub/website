@@ -40,7 +40,7 @@ function get_dssp_home($limi){
 }
 
 function get_voucher($limi){
-    $sql = " SELECT * from voucher order by id_voucher desc limit ".$limi;
+    $sql = " SELECT * from voucher order by voucher_giam asc limit ".$limi;
     return pdo_query($sql);
 }
 

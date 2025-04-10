@@ -238,7 +238,8 @@
                     </div>
                       <div class="modal-body">
                         <!-- gui mail -->
-                    <form action="index.php?page=transfer" method="post"> 
+        
+                      <form action="index.php?page=transfer" method="post">
                         <div class="row">
 
                           <div class="col" style="display: flex; flex-direction: column;">
@@ -279,10 +280,12 @@
 
                       <div class="modal-footer">
                         <span>Nếu đã thanh toán hãy bấm vào đây</span>
-                        <input type="submit" class="btn" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" value="Đã chuyển khoản" name="transfer">
+                        <!-- button chuyen khoan -->
+                        <input  type="submit" class="btn-transfer" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" value="Đã chuyển khoản" name="transfer">
                         <!-- <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Đã chuyển khoản</button> -->
                       </div>
                     </form>
+                    <!-- gui form -->
 
                   </div>
                 </div>
@@ -311,7 +314,10 @@
                   </div>
                 </div>
               </div>
-              <button class="btn btn-primary " data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Thanh toán</button>
+              <div style="width: 100%; margin: 20px 0px">
+                <button class="btn-thanhtoan" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Thanh toán</button>
+
+              </div>
       </div>
     </div>
   </div>
@@ -324,6 +330,20 @@
     border: 1px solid black;
     padding: 10px;
     margin-bottom: 10px;
+  }
+  .btn-thanhtoan{
+    border: 1px solid black;
+    width: 100%;
+    border-radius: 100px;
+    background: transparent;
+    padding: 10px;
+    transition: 0.3s ease;
+    font-weight: bold;
+    font-size: 24 px;
+  }
+  .btn-thanhtoan:hover{
+    background: black;
+    color: white;
   }
   .btn-checkout{
     text-transform: uppercase;
@@ -365,8 +385,27 @@
   }
   a:hover{
     color: red;
+    font-weight: bold;
+  }
+  .btn-transfer{
+    background: green;
+    border: none;
+    color: white;
+    padding: 10px;
   }
 </style>
+
+<script>
+  document.getElementById("form-thanhtoan").addEventListener("submit", function (event) {
+    const diachi = "<?= $_SESSION['session_user']['diachi'] ?>";
+
+    if (!diachi || diachi.trim() === "") {
+      alert("Vui lòng cập nhật địa chỉ giao hàng trước khi thanh toán.");
+      event.preventDefault(); // Ngăn form gửi đi
+    }
+  });
+
+</script>
 
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>

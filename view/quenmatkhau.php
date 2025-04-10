@@ -70,6 +70,7 @@
   .yeucau:hover{
     background: black;
     color: white;
+    font-weight: bold;
   }
   .alert{
     border-radius: 0px;

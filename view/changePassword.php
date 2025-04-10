@@ -4,16 +4,34 @@
 
   }
 
+  $html_breadcrumb = '';
+  $html_breadcrumb .='<li class="breadcrumb-item"><a href="index.php">Home</a></li>
+                      <li class="breadcrumb-item"><a href="index.php?page=member">Thông tin</a></li>
+                      <li class="breadcrumb-item"<a href="index.php?page=member">Cập nhật mật khẩu</a></li>
+
+                      ';
+
 ?>
 
-<div class="container" style="margin-top: 100px;">
+<nav class="container" aria-label="breadcrumb" style="position: sticky; top: 0; margin-top: 0px">
+      
+      <ol class="breadcrumb">
+        <?=$html_breadcrumb;?>
+      </ol>
+</nav>
+
+
+<div class="container" style="margin-top: 0px;">
     <div class="row">
-      <div class="col thoat ">
+    <div class="col-2 thoat" style="gap: 30px">
 
-        
-        <a href="index.php?page=logout" class="exit">Đăng xuất</a>
+        <a href="index.php?page=chuyenkhoan" class="forget">Đơn hàng của bạn</a>
 
-      </div>
+        <a href="index.php?page=changePassword" class="forget">Thay đổi mật khẩu </a>
+
+        <a href="index.php?page=logout" class="exit" onclick="return confirm('Bạn có chắc chắn muốn đăng xuất không?')">Đăng xuất</a>
+
+    </div>  
         <div class="col">
           <div style="display: flex;border-bottom: 1px solid black; padding-bottom: 15px">
             <h4 class="col-5">Cập nhật mật khẩu</h4>
@@ -99,15 +117,18 @@
     flex-direction: column;
   }
 
+
   .capnhat{
     background: transparent;
     border: 1px solid black;
     border-radius: 100px;
     transition: 0.3s ease;
+    width: 20%;
   }
   .capnhat:hover{
     background: black;
     color: white;
+    font-weight: bold;
   }
   .exit{
     text-decoration: none;
@@ -120,7 +141,60 @@
   .exit:hover{
     background: black;
     color: white;
+    font-weight: bold;
   }
+  a{
+    text-decoration: none;
+    color: black;
+  }
+  a:hover{
+    color: red;
+    font-weight: bold;
+  }
+  .thoat{
+    margin-bottom: 10px;
+    display: flex;  
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .forget{
+    text-decoration: none;
+    border-radius: 100px;
+    border: 1px solid black;
+    padding: 0px 5px;
+    color: black;
+
+    margin-bottom: 5px;
+    transition: 0.3s ease;
+
+    width: 100%;
+    text-align: center;
+    
+  }
+  .forget, .exit, .capnhat{
+    padding: 10px;
+  }
+  .forget:hover{
+    background: black;
+    color: white;
+    font-weight: bold;
+  } 
+  .exit{
+    text-decoration: none;
+    border: 1px solid black;
+    /* padding: 0px 5px; */
+    color: black;
+    transition: 0.3s ease;
+    border-radius: 100px;
+    width: 100%;
+    text-align: center;
+  }
+  .exit:hover{
+    background: black;
+    color: white;
+  }
+
 </style>
 
 <script>
@@ -177,38 +251,3 @@
     } 
   },3000);
 </script>
-
-<!-- <script>
-  document.querySelector('form').addEventListener('submit',function(e){
-    const password = document.querySelector('input[name="password"]').value;
-    const gender = document.querySelector('input[name="gender"]').value;
-    const email = document.querySelector('input[name="email"]').value;
-    const date = document.querySelector('input[name="date"]').value;
-
-
-    var kituhoa = /[A-Z]/;
-    var kitudacbiet = /[!@#$%^&*(),.?":{}|<>]|[_]/;
-
-    if (password.length < 8){
-      e.preventDefault();
-      alert('Mật khẩu phải có ít nhất 8 kí tự');
-    }else if (!kituhoa.test(password)){
-      e.preventDefault();
-      alert("Mật khẩu phải có ít nhất một chữ cái viết hoa")
-    }else if (!kitudacbiet.test(password)){
-      e.preventDefault();
-      alert("Mật khẩu ít nhất phải có một kí tự đặc biệt");
-    }
-
-    if (gender != 'Nam' && gender != 'Nữ' && gender != 'Nu' && gender !=''){
-      e.preventDefault();
-      alert("Giới tính phải là nam hoặc nữ");
-    }
-
-    if (date === ""){
-      e.preventDefault();
-      alert("Vui lòng nhập ngày sinh");
-    }
-      
-  });
-</script> -->

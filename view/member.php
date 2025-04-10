@@ -6,7 +6,7 @@
 
   $html_breadcrumb = '';
   $html_breadcrumb .='<li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                      <li class="breadcrumb-item"<a href="index.php?page=member">Thông tin</li>
+                      <li class="breadcrumb-item"<a href="index.php?page=member">Thông tin</a></li>
 
                       ';
 ?>
@@ -26,7 +26,7 @@
 
         <a href="index.php?page=changePassword" class="forget">Thay đổi mật khẩu </a>
         
-        <a href="index.php?page=logout" class="exit">Đăng xuất</a>
+        <a href="index.php?page=logout" class="exit" onclick="return confirm('Bạn có chắc chắn muốn đăng xuất không?')">Đăng xuất</a>
 
       </div>
       <div class="col-10">
@@ -122,6 +122,9 @@
     text-align: center;
     
   }
+  .forget, .exit, .capnhat{
+    padding: 10px;
+  }
   .forget:hover{
     background: black;
     color: white;
@@ -131,15 +134,17 @@
     border: 1px solid black;
     border-radius: 100px;
     transition: 0.3s ease;
+    width: 20%;
   }
   .capnhat:hover{
     background: black;
     color: white;
+    font-weight: bold;
   }
   .exit{
     text-decoration: none;
     border: 1px solid black;
-    padding: 0px 5px;
+    /* padding: 0px 5px; */
     color: black;
     transition: 0.3s ease;
     border-radius: 100px;
@@ -157,6 +162,7 @@
   }
   a:hover{
     color: red;
+    font-weight: bold;
   }
 </style>
 
@@ -204,4 +210,7 @@
       alertEle.style.display="none";
     } 
   },3000);
+
+
+
 </script>
