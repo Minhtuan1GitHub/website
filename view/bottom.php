@@ -12,7 +12,7 @@
 <div class="container-fluid">
     <div class="container fixed-bottom d-flex justify-content-evenly mb-3 ">
       <a href="index.php"><i class="bi bi-house fs-3" style="padding: 5px 7px;"></i></a>
-      <a href="#"><i class="bi bi-search fs-2" style="padding: 7px 9px;"></i></a>
+      <a href="index.php?page=men"><i class="bi bi-search fs-2" style="padding: 7px 9px;"></i></a>
       <?=$html_taikhoan;?>
       <!-- <a href="index.php?page=dangnhap"><i class="bi bi-person fs-3" style="padding: 5px 7px;"></i></a> -->
     </div>

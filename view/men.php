@@ -185,7 +185,7 @@
 <nav class="container" aria-label="breadcrumb" style="position: sticky; top: 0; margin-top: 100px">
       
       <ol class="breadcrumb">
-        <?=$html_breadcrumb;?>
+        <?=$html_breadcrumb;?> 
       </ol>
 </nav>
 

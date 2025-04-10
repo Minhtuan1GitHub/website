@@ -1,56 +1,79 @@
 <?php 
+// echo '<pre>';
+// print_r($_SESSION);
+// print_r($_POST);
+// echo '</pre>';
+
+  // session_start();
   $html_cart = '';
-  // $tongtien =0;
+
+      if (isset($_SESSION['session_user']) && count($_SESSION['session_user']) >0){
+        $user = $_SESSION['session_user']['id_user'];
+      }
+
   $tongmon = 0;
-  foreach ($_SESSION['giohang'] as $index => $sp) { 
-    extract($sp);
-    $tongtiensanpham = (Int)(($price_sale==0)?$price:$price_sale) * (Int)$soluong; //tong tien
-    // $tongtien +=$tongtiensanpham;
-    $tongmon += (Int)$soluong;
-    $html_cart .= '
-        <div class="card" style="display: flex; flex-direction: row; margin-bottom: 20px; border: none; padding-bottom: 10px; border-bottom: 1px solid black; align-items: center; border-radius: 0px">
-          <img src="layout/images/outerwear/'.$img.'" alt="" style="width: 15%; height: 15%; object-fit: cover;">
-        <div class="card-body" style="display: flex; flex-direction: column;">
-          <div style="display: flex; align-items: center; justify-content: space-between;">
-            <span style="text-transform: uppercase;">'.$name_item.'</span>
-            <button style="background: transparent; border: none">
-              <i class="bi bi-heart"></i>
-            </button>
-          </div>
-          <span>Color:</span>
-          <span>Size:</span>';   
-        
-    if ($price_sale == 0) {
-      $html_cart .= '<span>$'.$price.'</span>';
-    } else {
-      $html_cart .= '<span style="color: red;">$'.$price_sale.'</span>';
+  if (isset($_SESSION['session_user']) && count($_SESSION['session_user']) > 0) {
+    $user = $_SESSION['session_user']['id_user'];
+    $tongmon = 0;
+    $tongtiensanpham = 0;
+    if (isset($_SESSION['giohang'][$user]) && !empty($_SESSION['giohang'][$user])) {
+        foreach ($_SESSION['giohang'][$user] as $index => $sp) {
+            extract($sp);
+            $tongtien = (int)(($price_sale == 0) ? $price : $price_sale) * (int)$soluong;
+            $tongmon += (int)$soluong;
+            $tongtiensanpham+=$tongtien;
+            $html_cart .= '
+                <div class="card" style="display: flex; flex-direction: row; margin-bottom: 20px; border: none; padding-bottom: 10px; border-bottom: 1px solid black; align-items: center; border-radius: 0px">
+                  <img src="layout/images/outerwear/'.$img.'" alt="" style="width: 15%; height: 15%; object-fit: cover;">
+                <div class="card-body" style="display: flex; flex-direction: column;">
+                  <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <span style="text-transform: uppercase;">'.$name_item.'</span>
+                    <button style="background: transparent; border: none">
+                      <i class="bi bi-heart"></i>
+                    </button>
+                  </div>
+                  <span>Color:</span>
+                  <span>Size:</span>';   
+                
+            if ($price_sale == 0) {
+                $html_cart .= '<span>$'.$price.'</span>';
+            } else {
+                $html_cart .= '<span style="color: red;">$'.$price_sale.'</span>';
+            }
+          
+            if ($description != '') {
+                $html_cart .= '<span>'.$description.'</span>';
+            }
+          
+            $html_cart .= '
+              <div class="counter" style="width:15%; background: #888; border-radius: 100px; display: flex; justify-content: space-between; align-items: center;">
+                <button class="decrease" data-index="'.$index.'" style="border: none; background: transparent; color: white;">
+                  <i class="bi bi-dash fs-4"></i>
+                </button>
+                <span class="count" id="count-'.$index.'" style="color: white;">'.$soluong.'</span>
+                <button class="increase" data-index="'.$index.'" style="border: none; background: transparent; color: white;">
+                  <i class="bi bi-plus fs-4"></i>
+                </button>
+              </div>
+              <a class="xoasanpham" href="index.php?page=remove&id='.$index.'" onclick="return confirm(\'Bạn có chắc chắn muốn xóa sản phẩm này không?\')">Remove</a>
+            ';
+            if ($limit_date_sale != '0000-00-00') {
+                $date = date("d F", strtotime($limit_date_sale));
+                $html_cart .= '<span style="color: red;">Limited-Time Offer until: '.$date.'</span>';
+            }
+            $html_cart .= '
+              <span>Tổng tiền: <span class="font-weight-bold fs-5">'.$tongtien.'</span></span>
+            </div>
+          </div>';
+        }
     }
+  
 
-    if ($description != '') {
-      $html_cart .= '<span>'.$description.'</span>';
-    }
+} 
 
-    $html_cart .= '
-      <div class="counter" style="width:15%; background: #888; border-radius: 100px; display: flex; justify-content: space-between; align-items: center;">
-        <button class="decrease" data-index="'.$index.'" style="border: none; background: transparent; color: white;">
-          <i class="bi bi-dash fs-4"></i>
-        </button>
-        <span class="count" id="count-'.$index.'" style="color: white;">'.$soluong.'</span>
-        <button class="increase" data-index="'.$index.'" style="border: none; background: transparent; color: white;">
-          <i class="bi bi-plus fs-4"></i>
-        </button>
-      </div>
-      <a class="xoasanpham" href="index.php?page=remove&id='.$index.'" onclick="return confirm(\'Bạn có chắc chắn muốn xóa sản phẩm này không?\')">Remove</a>
-    ';
-    if ($limit_date_sale !='0000-00-00'){
-      $date = date("d F",strtotime($limit_date_sale));
-      $html_cart .= '<span style="color: red;">Limited-Time Offer until: '.$date.'</span>';
-    }
-    $html_cart .='
-      <span>Tổng tiền: <span class="font-weight-bold fs-5">'.$tongtiensanpham.'</span></span>
-    </div>
-  </div>';
-  }
+
+  // thong tin 
+  $html_thongtin = '';
 
 
   $html_voucher = '';
@@ -86,6 +109,7 @@
                       ';
 
 ?>
+
 
 
 
@@ -128,24 +152,24 @@
 
           <div style="display: flex; justify-content: space-between;">
             <span>Tổng tiền sản phẩm</span>
-            <span>$<?=$tongdonhang?></span>    
+            <span>$<?=$tongtiensanpham?></span>    
           </div>
           <div style="display: flex; justify-content: space-between;">
             <span>Phí vận chuyển</span>
-            <span>$1</span>
+            <span>$<?=$phivanchuyen?></span>
           </div>
           <div style="display: flex; justify-content: space-between;">
-            <span>Tổng tiền</span>  
-            <span>$45.4</span>
+            <span>Tong tien</span>
+            <span><?=$tongtienvaphivanchuyen?></span>  
           </div>
           <div style="display: flex; justify-content: space-between;">
             <span>Thuế VAT</span>
-            <span>$0.21</span>      
+            <span><?=$thue?></span>      
           </div>
           
           <div style="display: flex; justify-content: space-between; margin-top: 10px; border-top: 1px solid black;" class="font-weight-bold fs-4">
             <span>Tổng tiền</span>
-            <span><?=$tongdonhang_giamgia?></span>
+            <span><?php if (isset($_SESSION['tien'])) echo $_SESSION['tien'];?></span>
           </div>
           <div></div>
         </div>
@@ -163,7 +187,7 @@
         </button>
 
         <div class="modal" id="myModal">
-          <div class="modal-dialog modal-lg">
+          <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
               <!-- header -->
               <div class="modal-header">
@@ -177,7 +201,7 @@
                   <div>
                     <form action="index.php?page=viewcart&voucher=1" method="post">
                       <!-- input hidden de luu tong tien -->
-                      <input type="hidden" name="tongdonhang" value="<?=$tongdonhang?>">
+                      <input type="hidden" name="tongdonhang" value="<?=$tongtiensanpham?>">
                       <input type="text" name="mavoucher" placeholder="Nhập mã">
                       <input type="submit" value="Thêm">
                     </form>
@@ -193,29 +217,101 @@
                     <form action="index.php?page=viewcart&voucher=2" method="post">
                       <?=$html_voucher;?>
                       <div>
-                      <input type="hidden" name="tongdonhang" value="<?=$tongdonhang?>">
-                        <!-- <button class="btn btn-dark" type="button" data-bs-dismiss="modal">Áp dụng</button> -->
+                      <input type="hidden" name="tongdonhang" value="<?=$tongtiensanpham?>">
                         <input type="submit" value="Thêm">
                       </div>
                     </form>
                   </div>
 
                 </div>
-              </div>
-              <!-- modal footer -->
-              <!-- <div class="modal-footer">
-                <button class="btn btn-dark" type="button" data-bs-dismiss="modal">Áp dụng</button>
-                <button class="btn btn-danger" type="button" data-bs-dismiss="modal">Hủy bỏ</button>
-              </div> -->
-              
+              </div>              
             </div>
           </div>
-        </div>
-          
+        </div> 
 
-        <button class="container-checkout">
-          <span class="btn-checkout">check out</span>
-        </button>
+              <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Xác thực thông tin và thanh toán</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                      <div class="modal-body">
+                        <!-- gui mail -->
+                    <form action="index.php?page=transfer" method="post"> 
+                        <div class="row">
+
+                          <div class="col" style="display: flex; flex-direction: column;">
+                            <div class="thongtinkhachhang" style="margin-bottom: 100px;">
+                              <div class="title">Thông tin của bạn</div>
+                              <div style="display: flex; flex-direction: column">
+                                <span name="ten">Tên: <?=$_SESSION['session_user']['ten']?></span>
+                                <span>Số điện thoại: <?=$_SESSION['session_user']['dienthoai']?></span>
+                                <span>Địa chỉ: <?=$_SESSION['session_user']['diachi']?></span>
+                              </div>
+                            </div>
+                            <div class="thongtindonhang">
+                              <div class="thongtindonhang">
+                                <div class="title">Thông tin đơn hàng</div>
+                                <div style="display: flex; flex-direction: column">
+                                <?php
+                                  $timestamp = time();
+                                  $random_string = strtoupper(substr(bin2hex(random_bytes(2)), 0, 4));                                  
+                                  $ma_don_hang = $_SESSION['session_user']['id_user'] . '-' . $timestamp . '-' . $random_string;
+                                ?>
+                                  <input type="hidden" name="madonhang" value="<?=$ma_don_hang;?>">
+                                  <span> Mã đơn hàng: <?=$ma_don_hang?></span>
+                                  <span>Tổng tiền: <?=$_SESSION['tien']?></span>                              
+                                </div>
+
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="col">
+                            <span style="color: red; font-weight: bold">Quét mã và chuyển đúng số tiền cho đơn hàng của bạn. </span>
+                            <span stye="color: black !important">Người bán sẽ kiểm tra trông giây lát</span>
+                            <img src="layout/images/momo.jpg" alt="QR MOMO" style="width: 100%;">
+                          </div>
+
+                      </div>
+                      </div>
+
+                      <div class="modal-footer">
+                        <span>Nếu đã thanh toán hãy bấm vào đây</span>
+                        <input type="submit" class="btn" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" value="Đã chuyển khoản" name="transfer">
+                        <!-- <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Đã chuyển khoản</button> -->
+                      </div>
+                    </form>
+
+                  </div>
+                </div>
+              </div>
+              <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Lời cảm ơn</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <?php
+                        $voucher_tang = "chucbanvuive"; 
+                      ?>
+                      <span>Cảm ơn bạn vì đã lựa chọn sản phẩm của chúng tôi giữa hàng triệu những sản phẩm ngoài kia. Chúng tôi xin tặng bạn voucher <span style="color: red; font-weight: bold"> <?=$voucher_tang?> </span>thay lời cảm ơn đến bạn.</span>
+                    </div>
+                    <div class="modal-footer">
+                      <a href="index.php">
+                                <input type="submit" class="btn " data-bs-toggle="modal" value="Hẹn gặp lại">
+
+                      </a>
+                      <!-- <button  class="btn btn-primary"  data-bs-toggle="modal">Hẹn gặp lại</button> -->
+                      <!-- data-bs-target="#exampleModalToggle" -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button class="btn btn-primary " data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Thanh toán</button>
       </div>
     </div>
   </div>
@@ -241,6 +337,10 @@
   }
   .xoasanpham:hover{
     color: red;
+  }
+  .title{
+    font-weight: bold;
+    font-size: 20px;
   }
 
   .container-xoatatcasanpham{

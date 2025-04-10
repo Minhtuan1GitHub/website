@@ -44,12 +44,12 @@ function get_voucher($limi){
     return pdo_query($sql);
 }
 
-function get_dssp($keyword,$dm_id,$limi){
+function get_dssp($keyword,$dm_id,$limi,$id_phanloai){
     $sql = "SELECT item.* 
             FROM item  
             join danhmuc
             on item.dm_id = danhmuc.dm_id
-            where 1";
+            where item.id_phanloai = ?";
 
     if ($dm_id > 0){    
         $sql .=" AND item.dm_id=".$dm_id;
@@ -59,51 +59,51 @@ function get_dssp($keyword,$dm_id,$limi){
     }
 
     $sql .=" order by item.id desc limit ".$limi; //parameter limit
-    return pdo_query($sql);
+    return pdo_query($sql, $id_phanloai);
 }
 
-function get_dsspHot($dm_id,$limi){
-    $sql = "SELECT * FROM item where 1";
+function get_dsspHot($dm_id,$limi, $id_phanloai){
+    $sql = "SELECT * FROM item where id_phanloai = ?";
 
     if ($dm_id > 0){    
         $sql .=" AND dm_id=".$dm_id;
     }
 
     $sql .=" order by view desc limit ".$limi; //parameter limit
-    return pdo_query($sql);
+    return pdo_query($sql,$id_phanloai);
 }
 
-function get_dsspLike($dm_id,$limi){
-    $sql = "SELECT * FROM item where 1";
+function get_dsspLike($dm_id,$limi,$id_phanloai){
+    $sql = "SELECT * FROM item where id_phanloai = ?";
 
     if ($dm_id > 0){    
         $sql .=" AND dm_id=".$dm_id;
     }
 
     $sql .=" order by love desc limit ".$limi; //parameter limit
-    return pdo_query($sql);
+    return pdo_query($sql,$id_phanloai);
 }
 
-function get_dsspNew($dm_id,$limi){
-    $sql = "SELECT * FROM item where new = 1";
+function get_dsspNew($dm_id,$limi,$id_phanloai){
+    $sql = "SELECT * FROM item where id_phanloai = ?";
 
     if ($dm_id > 0){    
         $sql .=" AND dm_id=".$dm_id;
     }
 
     $sql .=" order by love desc limit ".$limi; //parameter limit
-    return pdo_query($sql);
+    return pdo_query($sql,$id_phanloai);
 }
 
-function get_dsspSale($dm_id,$limi){
-    $sql = "SELECT item.*, danhmuc.name FROM item join danhmuc on danhmuc.dm_id = item.dm_id where item.sale = 1";
+function get_dsspSale($dm_id,$limi,$id_phanloai){
+    $sql = "SELECT item.*, danhmuc.name FROM item join danhmuc on danhmuc.dm_id = item.dm_id where item.sale = 1 and item.id_phanloai = ?";
 
     if ($dm_id > 0){     
         $sql .=" AND item.dm_id=".$dm_id;
     }
 
     $sql .=" order by item.price_sale desc limit ".$limi; //parameter limit
-    return pdo_query($sql);
+    return pdo_query($sql,$id_phanloai);
 }
 
 

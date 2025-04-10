@@ -41,9 +41,9 @@ require_once 'pdo.php';
 //  * @return array mảng loại truy vấn được
 //  * @throws PDOException lỗi truy vấn
 //  */
-function dm_all(){
-    $sql = "SELECT * FROM danhmuc where dm_big = 0 order by stt asc";
-    return pdo_query($sql);
+function dm_all($id_phanloai){
+    $sql = "SELECT * FROM danhmuc where id_phanloai = ? order by stt asc";
+    return pdo_query($sql, $id_phanloai);
 }
 
 function dm_big($limy){
@@ -59,6 +59,15 @@ function get_name_dm($dm_id){
     return $kq["name"];
 }
 
+function get_phanploai(){
+    $sql = "SELECT *
+            from phanloai
+            -- join danhmuc
+            -- on phanloai.id_phanloai = danhmuc.id_phanloai
+            -- where id_phanloai !=0;
+            ";
+    return pdo_query($sql);
+}
 
 // /**
 //  * Truy vấn một loại theo mã

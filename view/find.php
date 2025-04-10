@@ -7,7 +7,7 @@
     $html_taikhoan .='<a href="index.php?page=dangnhap"><i class="bi bi-person fs-3"></i></a>';
   } 
 ?>
-
+ 
 <div class="container-fluid fixed-bottom d-flex flex-column" style="background: white; ">
 
 
@@ -18,7 +18,7 @@
 
   <div class="container d-flex justify-content-evenly mb-3">
     <a href="index.php"><i class="bi bi-house fs-3"></i></a>
-    <a href="home.html"><i class="bi bi-x-lg fs-1"></i></i></a>
+    <a href="index.php"><i class="bi bi-x-lg fs-1"></i></i></a>
     <?=$html_taikhoan;?>
     <!-- <a href="index.php?page=dangnhap"><i class="bi bi-person fs-3"></i></a> -->
   </div>

@@ -9,6 +9,8 @@
 ?>
 
 <div class="container" style="margin-top: 100px;">
+<h4 style="border-bottom: 1px solid black; padding-bottom: 10px">Cập nhật thông tin</h4>
+
     <div class="row">
       <div class="col">
         
@@ -16,7 +18,6 @@
 
       </div>
       <div class="col">
-        <h4 style="border-bottom: 1px solid black; padding-bottom: 10px"></h4>
           <table class="table ">
               <tr>
                 <td><label for="email">Email</label></td>

@@ -6,7 +6,7 @@
 
   $html_breadcrumb = '';
   $html_breadcrumb .='<li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                      <li class="breadcrumb-item active"aria-current="page">Thông tin</li>
+                      <li class="breadcrumb-item"<a href="index.php?page=member">Thông tin</li>
 
                       ';
 ?>
@@ -20,7 +20,9 @@
 
 <div class="container" style="margin-top: 0px;">
     <div class="row">
-      <div class="col-2 thoat ">
+      <div class="col-2 thoat" style="gap: 30px">
+
+        <a href="index.php?page=chuyenkhoan" class="forget">Đơn hàng của bạn</a>
 
         <a href="index.php?page=changePassword" class="forget">Thay đổi mật khẩu </a>
         

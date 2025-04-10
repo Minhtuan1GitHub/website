@@ -3,7 +3,7 @@ require_once 'pdo.php';
 
 function user_insert($email, $password){
     $sql = "INSERT INTO user(email, password) VALUES (?, ?)";
-    pdo_execute($sql, $email, $password);
+    pdo_execute($sql, $email, $password); 
 }
 
 function user_select_by_email($email){
@@ -60,6 +60,13 @@ function get_user($id_user){
     $sql = "SELECT * from user where id_user =? ";
     return pdo_query_one($sql, $id_user);
 }
+
+function get_id ($email){
+    $sql = "SELECT id_user from user where email = ?";
+    return pdo_query_one($sql, $email);
+}
+
+// function khachhang()
 
 
 // function khach_hang_update($ma_kh, $mat_khau, $ho_ten, $email, $hinh, $kich_hoat, $vai_tro){

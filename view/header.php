@@ -1,3 +1,16 @@
+<?php
+  $html_phanloai = '';
+  foreach ($phanloai as $pl) {
+    extract($pl);
+    $html_phanloai .='
+                      <li class="nav-item">
+                      <a href="index.php?page='.$name_phanloai.'" class="nav-link"><span style="text-transform:capitalize;">'.$name_phanloai.'</span></a>
+                      </li>
+                    ';
+  }
+ 
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,7 +52,8 @@
             <div class="offcanvas-body d-flex justify-content-sm-center align-items-center flex-column flex-lg-row">
               <ul class="navbar-nav justify-content-center flex-grow-1 pe-3 align-items-center align-items-sm-center gap-5" >
                 <?=$dm_big;?> 
-                <li class="nav-item">
+                <?=$html_phanloai;?>
+                <!-- <li class="nav-item">
                   <a class="nav-link active" aria-current="page" href="index.php?page=women"><span>Women</span></a>
                 </li>
                 <li class="nav-item">
@@ -50,7 +64,7 @@
                 </li>
                 <li class="nav-item">
                   <a href="index.php?page=baby" class="nav-link"><span>Kid</span></a>
-                </li>
+                </li> -->
               </ul>
               <div class="d-flex gap-4 ">
                 <a href="#" class="button">
@@ -59,9 +73,15 @@
                 <a href="#" class="button">
                   <i class="bi bi-bag-heart fs-5"></i>
                 </a>
-                <a href="index.php?page=viewcart" class="button">
-                  <i class="bi bi-cart4 fs-5"></i>
-                </a>
+                <?php
+                  if (isset($_SESSION['session_user']) && count($_SESSION['session_user']) > 0){
+                    echo '
+                          <a href="index.php?page=viewcart" class="button">
+                            <i class="bi bi-cart4 fs-5"></i>
+                          </a>
+                        ';
+                  }
+                ?>  
               </div>
             </div>
           </div>

@@ -188,148 +188,6 @@
               HTML;
               }
               ?>
-
-
-            <!-- <div id="carouselExample" class="carousel slide">
-              <div class="carousel-inner">
-                <div class="carousel-item active">
-                  <div class="row g-0">
-  
-                    <div class="col-lg-4">
-                      <div class="card" style="border: none;">
-                        <bi class="bi-heart btn" style="position: absolute; right: 0"></bi>
-                        <img src="layout/images/style/<?=$img_style?>" alt="">
-                        <div class="card-body" style="display: flex; gap: 10px; align-items: center;">
-                          <img src="layout/images/style/<?=$img?>" alt="" style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">
-                          <div style="display: flex; flex-direction: column;">
-                            <span><?=$name_style_1?></span>
-                            <span>Size: <?=$size_style_1?></span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-lg-4">
-                      <div class="card" style="border: none;">
-                        <bi class="bi-heart btn" style="position: absolute; right: 0"></bi>
-                        <img src="layout/images/outerwear/item2.avif" alt="">
-                        <div class="card-body" style="display: flex; gap: 10px; align-items: center;">
-                          <img src="layout/images/outerwear/item2.avif" alt="" style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">
-                          <div style="display: flex; flex-direction: column;">
-                            <span><?=$name_style_2?></span>
-                            <span><?=$size_style_2?></span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-lg-4">
-                      <div class="card" style="border: none;">
-                        <bi class="bi-heart btn" style="position: absolute; right: 0"></bi>
-                        <img src="layout/images/outerwear/item2.avif" alt="">
-                        <div class="card-body" style="display: flex; gap: 10px; align-items: center;">
-                          <img src="/image/bg.jpg" alt="" style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">
-                          <div style="display: flex; flex-direction: column;">
-                            <span>Alan 5' 11''</span>
-                            <span>Size: M</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="carousel-item">
-                  <div class="row g-0">
-                    <div class="col-lg-4">
-                      <div class="card" style="border: none;">
-                        <img src="layout/images/outerwear/item2.avif" alt="">
-                        <div class="card-body" style="display: flex; gap: 10px; align-items: center;">
-                          <img src="/image/bg.jpg" alt="" style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">
-                          <div style="display: flex; flex-direction: column;">
-                            <span>Alan 5' 11''</span>
-                            <span>Size: M</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-lg-4">
-                      <div class="card" style="border: none;">
-                        <img src="layout/images/outerwear/item2.avif" alt="">
-                        <div class="card-body" style="display: flex; gap: 10px; align-items: center;">
-                          <img src="/image/bg.jpg" alt="" style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">
-                          <div style="display: flex; flex-direction: column;">
-                            <span>Alan 5' 11''</span>
-                            <span>Size: M</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-lg-4">
-                      <div class="card" style="border: none;">
-                        <img src="layout/images/outerwear/item2.avif" alt="">
-                        <div class="card-body" style="display: flex; gap: 10px; align-items: center;">
-                          <img src="/image/bg.jpg" alt="" style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">
-                          <div style="display: flex; flex-direction: column;">
-                            <span>Alan 5' 11''</span>
-                            <span>Size: M</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                </div>
-                </div>
-                <div class="carousel-item">
-                  <div class="row g-0">
-                    <div class="col-lg-4">
-                      <div class="card" style="border: none;">
-                        <img src="layout/images/outerwear/item2.avif" alt="">
-                        <div class="card-body" style="display: flex; gap: 10px; align-items: center;">
-                          <img src="/image/bg.jpg" alt="" style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">
-                          <div style="display: flex; flex-direction: column;">
-                            <span>Alan 5' 11''</span>
-                            <span>Size: M</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-lg-4">
-                      <div class="card" style="border: none;">
-                        <img src="layout/images/outerwear/item2.avif" alt="">
-                        <div class="card-body" style="display: flex; gap: 10px; align-items: center;">
-                          <img src="/image/bg.jpg" alt="" style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">
-                          <div style="display: flex; flex-direction: column;">
-                            <span>Alan 5' 11''</span>
-                            <span>Size: M</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-lg-4">
-                      <div class="card" style="border: none;">
-                        <img src="layout/images/outerwear/item2.avif" alt="">
-                        <div class="card-body" style="display: flex; gap: 10px; align-items: center;">
-                          <img src="/image/bg.jpg" alt="" style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">
-                          <div style="display: flex; flex-direction: column;">
-                            <span>Alan 5' 11''</span>
-                            <span>Size: M</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev" style="left: -5.9%; top: -30%;">
-                <i class="bi bi-arrow-left fs-4" aria-hidden="true" style="background: #888; color: white;"></i>
-                <span class="visually-hidden">Previous</span>
-              </button>
-              <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next" style="right: -5.9%; top: -30%;">
-                <i class="bi bi-arrow-right fs-4" aria-hidden="true" style="background: #888; color: white;"></i>
-                <span class="visually-hidden">Next</span>
-              </button>
-            </div> -->
-
           </div>
 
           <div>
@@ -549,7 +407,7 @@
               <input type="hidden" name="description" value="<?=$description?>">
               <input type="hidden" name="soluong" value="<?=$soluong?>">
               <input type="hidden" name="limit_date_sale" value="<?=$limit_date_sale?>">
-              <button type="submit" name="addcart" style="width: 100%; border-radius: 100px; border: none; background: black; height: 50px;">
+              <button type="submit" name="addcart" style="width: 100%; border-radius: 100px; border: none; background: black; height: 50px;"<?php if (!isset($_SESSION['session_user']) || count($_SESSION['session_user']) === 0) echo 'onclick="dangnhap(); return false;"'; ?>>>
                   <i class="bi bi-cart fs-5" style="color: white;"></i>
                   <span style="color: white;">Add to cart</span>
               </button>
@@ -575,7 +433,17 @@
     color: red;
   }
 </style>
+<script>
+  function dangnhap(){
+    Swal.fire({
+      icon: 'info',
+      title: 'Bạn chưa truy cập vào tài khoản',
+      html: "Nếu chưa có tài khoản hãy nhấn vào <a href='index.php?page=dangnhap' style='text-decoration:none;'><i class='bi bi-person fs-3'></i></a> để đăng kí miễn phí",
+      confirmButtonText: 'OK'
+    });  
+  }
 
+</script>
 
 
 
@@ -583,4 +451,6 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 <!-- get javascript -->
-<script src="layout/javascript/sell.js"></script>
+<!-- <script src="layout/javascript/sell.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+

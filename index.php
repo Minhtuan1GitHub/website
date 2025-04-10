@@ -3,8 +3,8 @@
     session_start();
     ob_start();
 
-    if (!isset($_SESSION["giohang"])){
-        $_SESSION["giohang"]=[];
+    if (!isset($_SESSION["giohang"][$id_user])){
+        $_SESSION["giohang"][$id_user]=[];
     }
     // ini_set('display_errors', 1);
     // ini_set('display_startup_errors', 1);
@@ -18,10 +18,11 @@
   include "dao/voucher.php";
   include "dao/user.php";
   include "dao/mail.php";
+  include "dao/bill.php";
 
   if (!isset($_GET['page'])) {
 
-
+        $phanloai = get_phanploai();
         include "view/header.php";
 
 
@@ -35,8 +36,9 @@
 
             case 'men': // Khi chọn Men
 
+                      $phanloai = get_phanploai();
                 include "view/header1.php";
-                $dsdm =dm_all();  
+                $dsdm =dm_all(1);  
 
                 $keyword ="";
                 $titlePage =""; 
@@ -58,15 +60,15 @@
                   $titlePage ="".$keyword;  
                 }
 
-                $dssp = get_dssp($keyword,$dm_id,20);   
+                $dssp = get_dssp($keyword,$dm_id,20,1);   
 
-                $dsspHot = get_dsspHot($dm_id,4);
+                $dsspHot = get_dsspHot($dm_id,4,1);
 
-                $dsspLike =get_dsspLike($dm_id,4);
+                $dsspLike =get_dsspLike($dm_id,4,1);
 
-                $dsspNew = get_dsspNew($dm_id,4);
+                $dsspNew = get_dsspNew($dm_id,4,1);
 
-                $dsspSale = get_dsspSale($dm_id,4);
+                $dsspSale = get_dsspSale($dm_id,4,1);
                 
 
                 include "view/men.php";
@@ -80,6 +82,7 @@
             
             
             case 'sanphamchitiet':
+                $phanloai = get_phanploai();
                 include "view/header1.php";
 
                 if (isset($_GET['idpro'])){
@@ -96,18 +99,18 @@
 
                 }else{
 
-                    $dsdm =dm_all();
+                    $dsdm =dm_all(1);
 
-                    $dssp = get_dssp($keyword,$dm_id,10);   
+                    $dssp = get_dssp($keyword,$dm_id,10,1);   
 
 
-                    $dsspHot = get_dsspHot($dm_id,4);
+                    $dsspHot = get_dsspHot($dm_id,4,0);
     
-                    $dsspLike =get_dsspLike($dm_id,4);
+                    $dsspLike =get_dsspLike($dm_id,4,1);
     
-                    $dsspNew = get_dsspNew($dm_id,4);
+                    $dsspNew = get_dsspNew($dm_id,4,1);
     
-                    $dsspSale = get_dsspSale($dm_id,4);
+                    $dsspSale = get_dsspSale($dm_id,4,1);
                     include "view/men.php";
                 }
 
@@ -119,24 +122,36 @@
                 
             case 'addcart':
 
+                if (isset($_SESSION['session_user']) && count($_SESSION['session_user'])>0){
 
-                if (isset($_POST["addcart"])){
-                    // lay du lieu ve 
+                    if (isset($_POST["addcart"])){
+
+                        $id_user = $_SESSION['session_user']['id_user'];
+
+                        // lay du lieu ve 
+                        $id = $_POST["id"];
+                        $img = $_POST["img"];
+                        $price = $_POST["price"];
+                        $name_item = $_POST["name_item"];
+                        $price_sale = $_POST["price_sale"];
+                        $description = $_POST["description"];
+                        $soluong = $_POST["soluong"];
+                        $limit_date_sale = $_POST["limit_date_sale"];
+
+                        $sp = array("id"=>$id,"img"=>$img, "price"=>$price, "name_item" =>$name_item, "price_sale"=>$price_sale,"description"=>$description, "soluong"=>$soluong, "limit_date_sale"=>$limit_date_sale);
+                        // day vao gio hang
+                        if (!isset($_SESSION["giohang"][$id_user])) {
+                            $_SESSION["giohang"][$id_user] = [];
+                        }
+                        array_push($_SESSION["giohang"][$id_user], $sp);
+                        // check xem them vao gio hang chua
+                        // echo var_dump($_SESSION["giohang"]);
+                        header('location: index.php?page=viewcart'); //lam viec voi session phai chuyen trang
+                    }
+                }else{
                     $id = $_POST["id"];
-                    $img = $_POST["img"];
-                    $price = $_POST["price"];
-                    $name_item = $_POST["name_item"];
-                    $price_sale = $_POST["price_sale"];
-                    $description = $_POST["description"];
-                    $soluong = $_POST["soluong"];
-                    $limit_date_sale = $_POST["limit_date_sale"];
-
-                    $sp = array("id"=>$id,"img"=>$img, "price"=>$price, "name_item" =>$name_item, "price_sale"=>$price_sale,"description"=>$description, "soluong"=>$soluong, "limit_date_sale"=>$limit_date_sale);
-                    // day vao gio hang
-                    array_push($_SESSION["giohang"],$sp);
-                    // check xem them vao gio hang chua
-                    // echo var_dump($_SESSION["giohang"]);
-                    header('location: index.php?page=viewcart'); //lam viec voi session phai chuyen trang
+                    $_SESSION['tb_chuadangnhap'] = "Bạn chưa truy cập vào tài khoản";
+                    header('location: index.php?page=sanphamchitiet&idpro='.$id.'');
                 }
                 break;
             case 'addlike':
@@ -145,37 +160,45 @@
                 }
                 break;
             case 'viewlike': 
+                      $phanloai = get_phanploai();
                 include "view/header1.php";
                 include "view/viewlike.php";
                 include "view/footer1.php";
                 include "view/find.php";
                 break;
             case 'remove':
-                if (isset($_GET['id'])){
-                    $id = $_GET['id'];
-                    if (isset($_SESSION["giohang"][$id])){
-                        unset($_SESSION["giohang"][$id]);
+                if (isset($_SESSION['session_user']) &&count($_SESSION['session_user'])>0){
+                    $user = $_SESSION['session_user']['id_user'];
+
+                    if (isset($_GET['id'])){
+                        $id = $_GET['id'];
+                        if(isset($_SESSION["giohang"][$user][$id])){
+                            unset($_SESSION["giohang"][$user][$id]);
+                        }
+                    }
+                    if (empty($_SESSION["giohang"][$user])){
+                        header('location: index.php?page=men');
+                        exit();
                     }
                 }
-                if (empty($_SESSION["giohang"])){
-                    header('location: index.php?page=men');
-                    exit();
-                }
+
                 header('location: index.php?page=viewcart');
                 break;
 
             case 'viewcart':
                 //xoa gio hang
                 if (isset($_GET['del']) && ($_GET['del']==1)){
-                    unset($_SESSION["giohang"]);
-                    // $_SESSION["giohang"]=[];
-                    header('location: index.php?page=men');
+                    if (isset($_SESSION['session_user']) && count($_SESSION['session_user'])>0){
+                        $user = $_SESSION['session_user']['id_user'];
+                            unset($_SESSION["giohang"][$user]);
+                        header('location: index.php?page=men');
+                    }
                 }else{
                     //khong xoa thi lam viec tai day
                     //check xem gio hang co ton tai khong
-                    if (isset($_SESSION['giohang'])){
-                        $tongdonhang = get_tongdonhang();
-                    }
+                    if (isset($_SESSION['session_user']) && count($_SESSION['session_user'])>0){
+                        $user = $_SESSION['session_user']['id_user'];
+                    
                         $giatrivoucher = 0;
                     if (isset($_GET['voucher']) && ($_GET['voucher']==1)){
                         $tongdonhang = $_POST['tongdonhang'];
@@ -192,11 +215,13 @@
                         
    
                         $giatrivoucher = getVoucher($id_voucher);
-                        
+                        // header('location: index.php');
                     }
-
-                        $tongdonhang_giamgia = $tongdonhang - ($tongdonhang * ($giatrivoucher/100));
                 }
+
+                        $_SESSION['tien']= $tongdonhang - ($tongdonhang * ($giatrivoucher/100));
+                }
+                      $phanloai = get_phanploai();
                 include "view/header1.php";
 
                 $voucher = get_voucher(10);
@@ -206,6 +231,7 @@
                 break;
 
             case 'dangnhap':
+                      $phanloai = get_phanploai();
                 include "view/header1.php";
                 include "view/dangnhap.php";
                 include "view/find.php";
@@ -244,7 +270,8 @@
             case 'member':
 
                 if(isset($_SESSION['session_user']) && (count($_SESSION['session_user'])>0)){
-                    include "view/header1.php";
+                          $phanloai = get_phanploai();
+                include "view/header1.php";
                     include "view/member.php";
                     include "view/footer.php";
                     include "view/find.php";
@@ -266,7 +293,8 @@
                     // xu li
                     user_update($email, $password, $name, $district, $phone, $date, $gender, $role ,$id_user);
                     //out
-                    include "view/header1.php";
+                          $phanloai = get_phanploai();
+                include "view/header1.php";
                     include "view/member_comfirm.php";
                 }
                 break;
@@ -305,7 +333,8 @@
 
 
 
-                    include "view/header1.php";
+                          $phanloai = get_phanploai();
+                include "view/header1.php";
                     include "view/changePassword.php";
                     include "view/footer.php";
                     include "view/find.php";
@@ -314,13 +343,16 @@
                 break;
             
             case 'dangky':
+                      $phanloai = get_phanploai();
                 include "view/header1.php";
                 include "view/dangky.php";
                 include "view/find.php";
                 break;
             case 'quenmatkhau':
+                $phanloai = get_phanploai();
                 include "view/header1.php";
                 include "view/quenmatkhau.php";
+                include "view/find.php";
                 break;
             case 'forgetpassword':
                 //input
@@ -349,6 +381,57 @@
                 //out
                     // header('location: index.php?page=quenmatkhau');
                 break;
+            case 'transfer':
+                $email = '';
+                $ten = '';
+                if (isset($_POST["transfer"]) && ($_POST["transfer"])){
+                    if (isset($_SESSION['session_user']) && ($_SESSION['session_user'])){
+                        if (isset($_SESSION['session_user']['email']) && ($_SESSION['session_user']['email'])){
+                            $email = $_SESSION['session_user']['email'];
+                        }
+                        if (isset($_SESSION['session_user']['id_user']) && ($_SESSION['session_user']['id_user'])){
+                            $id_user = $_SESSION['session_user']['id_user'];
+                        }
+                        if (isset($_SESSION['session_user']['ten']) && ($_SESSION['session_user']['ten'])){
+                            $ten = $_SESSION['session_user']['ten'];
+                        }
+                        if (isset($_SESSION['session_user']['dienthoai']) && ($_SESSION['session_user']['dienthoai'])){
+                            $sodienthoai = $_SESSION['session_user']['dienthoai'];
+                        }
+                        if (isset($_SESSION['session_user']['diachi']) && ($_SESSION['session_user']['diachi'])){
+                            $diachi = $_SESSION['session_user']['diachi'];
+                        }
+                        $madonhang = $_POST['madonhang'];
+                        if (isset($_SESSION['tien'])){
+                            $tongtien = $_SESSION['tien'];
+                        }
+
+
+                        // $email = $_SESSION['session_user']['email'];
+                        // $ten = $_SESSION['session_user']['ten'];
+                        // $sodienthoai = $_SESSION['session_user']['sodienthoai'];
+                        // $diachi = $_SESSION['session_user']['diachi'];
+
+                        // $madonhang = $_POST['madonhang'];
+                        // $tongtien = $_SESSION['tien'];
+                        add_bill($madonhang, $id_user, $tongtien, $sodienthoai, $diachi, $ten);
+                        sendmail1($email, $ten, $sodienthoai, $diachi, $madonhang, $tongtien);
+                        header('location: index.php?page=chuyenkhoan');
+
+                    }
+                }
+                break;
+            case 'chuyenkhoan':
+                $phanloai = get_phanploai();
+                include "view/header1.php";
+                if (isset($_SESSION['session_user']) && count($_SESSION['session_user'])){
+                    $id_user = $_SESSION['session_user']['id_user'];
+                    $get_bill = bill_by_id($id_user);
+                }
+                include "view/chuyenkhoan.php";
+                include "view/footer.php";
+                include "view/find.php";
+                break;
             case 'adduser':
                 //kiem tra ton tai thi moi lay du lieu
                 if (isset($_POST["dangky"]) && ($_POST["dangky"])){
@@ -361,11 +444,13 @@
                         
                         user_insert($email, $password);
                         $alert = "<div class='alert alert-success mt-2' id ='myAlert' role = 'alert'>Đăng ký thành công</div>";
-                        include "view/header1.php";
+                              $phanloai = get_phanploai();
+                include "view/header1.php";
                         include "view/dangnhap.php";
                     }else{
                         $alert = "<div class='alert alert-danger mt-2' id ='myAlert' role = 'alert'>Email đã tồn tại. Vui lòng sử dụng email khác.</div>";                        
-                        include "view/header1.php";
+                              $phanloai = get_phanploai();
+                include "view/header1.php";
                         include "view/dangky.php";
                     }
                 }
@@ -375,19 +460,91 @@
 
 
             case 'women':
+
+
+                $phanloai = get_phanploai();
+                include "view/header1.php";
+                $dsdm =dm_all(0); 
+
+                $keyword ="";
+                $titlePage =""; 
+                
+                if(!isset($_GET['dm_id'])){
+                    $dm_id=0;
+                }else{
+                    $dm_id = $_GET['dm_id'];
+                    $titlePage=get_name_dm($dm_id);
+                }
+
+                $dssp = get_dssp($keyword,$dm_id,20,0); 
+                $dsspHot = get_dsspHot($dm_id,4,0);
+                $dsspLike =get_dsspLike($dm_id,4,0);
+
+                $dsspNew = get_dsspNew($dm_id,4,0);
+
+                $dsspSale = get_dsspSale($dm_id,4,0);
+                
+                
+
                 include "view/women.php";
+
+                include "view/footer1.php";
+                include "view/find.php";
                 break;
                 
                     
-            case 'kids':
+            case 'kid':
+
+                $phanloai = get_phanploai();
+                include "view/header1.php";
+                $dsdm =dm_all(2); 
+
+                $keyword ="";
+                $titlePage =""; 
+                
+                if(!isset($_GET['dm_id'])){
+                    $dm_id=0;
+                }else{
+                    $dm_id = $_GET['dm_id'];
+                    $titlePage=get_name_dm($dm_id);
+                }
+
+                $dssp = get_dssp($keyword,$dm_id,20,2);  
+                
+
                 include "view/kid.php";
+
+                include "view/footer1.php";
+                include "view/find.php";
                 break; 
 
             case 'baby':
+                $phanloai = get_phanploai();
+                include "view/header1.php";
+                $dsdm =dm_all(3); 
+
+                $keyword ="";
+                $titlePage =""; 
+                
+                if(!isset($_GET['dm_id'])){
+                    $dm_id=0;
+                }else{
+                    $dm_id = $_GET['dm_id'];
+                    $titlePage=get_name_dm($dm_id);
+                }
+
+                $dssp = get_dssp($keyword,$dm_id,20,3);  
+                
+
                 include "view/baby.php";
+
+                include "view/footer1.php";
+                include "view/find.php";
+                break; 
                 break;
 
             default:
+                $phanloai = get_phanploai();
                 include "view/header.php";
                 $dssp_new = get_dssp_home(10);
 

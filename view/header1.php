@@ -1,8 +1,22 @@
+<?php
+  $html_phanloai = '';
+  foreach ($phanloai as $pl) {
+    extract($pl);
+    $html_phanloai .='
+                      <li class="nav-item">
+                      <a href="index.php?page='.$name_phanloai.'" class="nav-link"><span style="text-transform:capitalize;">'.$name_phanloai.'</span></a>
+                      </li>
+                    ';
+  }
+ 
+?>
+
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"> 
 
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /> 
   <title>Home</title>
   <link rel = "website icon" type = "png" href = "layout/images/logo/cute.jpg">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
@@ -37,18 +51,8 @@
             </div>
             <div class="offcanvas-body d-flex justify-content-sm-center align-items-center flex-column flex-lg-row">
               <ul class="navbar-nav justify-content-center flex-grow-1 pe-3 align-items-center align-items-sm-center gap-5" >
-                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="#">Women</a>
-                </li>
-                <li class="nav-item">
-                  <a href="index.php?page=men" class="nav-link">Men</a>
-                </li>
-                <li class="nav-item">
-                  <a href="#" class="nav-link">Kid</a>
-                </li>
-                <li class="nav-item">
-                  <a href="#" class="nav-link">Baby</a>
-                </li>
+              <?=$html_phanloai;?>
+
               </ul>
               <div class="d-flex gap-4 ">
                 <a href="#" class="button">
@@ -57,9 +61,18 @@
                 <a href="index.php?page=viewlike" class="button">
                   <i class="bi bi-bag-heart fs-5"></i>
                 </a>
-                <a href="index.php?page=viewcart" class="button">
+                <?php
+                  if (isset($_SESSION['session_user']) && count($_SESSION['session_user']) > 0){
+                    echo '
+                          <a href="index.php?page=viewcart" class="button">
+                            <i class="bi bi-cart4 fs-5"></i>
+                          </a>
+                        ';
+                  }
+                ?>  
+                <!-- <a href="index.php?page=viewcart" class="button">
                   <i class="bi bi-cart4 fs-5"></i>
-                </a>
+                </a> -->
               </div>
             </div>
           </div>
