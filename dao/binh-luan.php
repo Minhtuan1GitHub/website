@@ -21,7 +21,7 @@ function binh_luan_delete($ma_bl){
     else{
         pdo_execute($sql, $ma_bl);
     }
-}
+} 
 
 function binh_luan_select_all(){
     $sql = "SELECT * FROM binh_luan bl ORDER BY ngay_bl DESC";

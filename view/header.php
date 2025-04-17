@@ -28,10 +28,18 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <!-- link icon -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- AOS CSS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
 </head>
 
+
 <body>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
 
   <div class="container-fluid">
     <div class="container">
@@ -53,18 +61,7 @@
               <ul class="navbar-nav justify-content-center flex-grow-1 pe-3 align-items-center align-items-sm-center gap-5" >
                 <?=$dm_big;?> 
                 <?=$html_phanloai;?>
-                <!-- <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="index.php?page=women"><span>Women</span></a>
-                </li>
-                <li class="nav-item">
-                  <a href="index.php?page=men" class="nav-link"><span>Men</span></a>
-                </li>
-                <li class="nav-item">
-                  <a href="index.php?page=kid" class="nav-link"><span>Baby</span></a>
-                </li>
-                <li class="nav-item">
-                  <a href="index.php?page=baby" class="nav-link"><span>Kid</span></a>
-                </li> -->
+
               </ul>
               <div class="d-flex gap-4 ">
                 <a href="#" class="button">
@@ -74,12 +71,19 @@
                   <i class="bi bi-bag-heart fs-5"></i>
                 </a>
                 <?php
-                  if (isset($_SESSION['session_user']) && count($_SESSION['session_user']) > 0){
+                  if (isset($_SESSION['session_user']) && count($_SESSION['session_user']) > 0 && $_SESSION['session_user']['role'] ==0){
                     echo '
                           <a href="index.php?page=viewcart" class="button">
                             <i class="bi bi-cart4 fs-5"></i>
                           </a>
                         ';
+                  }
+                  if (isset($_SESSION['session_user']['role']) && $_SESSION['session_user']['role'] ==1){
+                    echo '
+                          <a href="index.php?page=admin">
+                            <i class="bi bi-kanban fs-5"></i>
+                          </a>
+                          ';
                   }
                 ?>  
               </div>

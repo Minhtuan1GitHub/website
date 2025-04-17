@@ -20,6 +20,7 @@
     <h4 style="border-bottom: 1px solid black; padding-bottom: 10px">Đăng ký</h4>
     <div class="row">
       <div class="col">
+        <!-- form dang ky -->
         <form action="index.php?page=adduser" method="post" class="form-dangky">
 
           <div class="form-email">
@@ -41,7 +42,7 @@
           <div class="form-confirmpassword">
             <label for="password" class="form-label">Xác nhận mật khẩu</label>
             <div class="input-group">
-              <input type="comfirmpassword" class="form-control" id="confirmpassword" placeholder="Nhập mật khẩu" name="password">
+              <input type="password" class="form-control" id="confirmpassword" placeholder="Nhập mật khẩu" name="confirmpassword">
               <span class="input-group-text" id="togglePassword">
                 <i class="bi bi-eye-slash" class="eye-icon" id="hienpass2" onclick="nhanvao2()"></i>
               </span>

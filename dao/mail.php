@@ -56,16 +56,17 @@ function sendmail1($email, $ten, $sodienthoai, $diachi, $madonhang, $tongtien){
       $mail->SMTPSecure = 'ssl';  // encryption TLS/SSL 
       $mail->Port = 465;  // port to connect to                
       $mail->setFrom('minhtuank27tdtu@gmail.com', 'Tumi' ); 
-      $mail->addAddress($email); 
+      $mail->addAddress('nguyenminhtuan061205@gmail.com'); //email nguoi ban
       $mail->isHTML(true);  // Set email format to HTML
       $mail->Subject = 'Đơn đặt hàng';
       $noidungthu = "
                             <h2>Xác nhận đơn hàng</h2>
-                            <p>Xin chào " . htmlspecialchars($ten) . ",</p>
+                            <p>Xin chào Tumi,</p>
                             <p>Cảm ơn bạn đã đặt hàng tại Tumi. Dưới đây là thông tin đơn hàng của bạn:</p>
                             <ul>
                                 <li><strong>Mã đơn hàng:</strong> " . htmlspecialchars($madonhang) . "</li>
                                 <li><strong>Tổng tiền:</strong> $" . number_format($tongtien, 2) . "</li>
+                                <li><strong>Tên người đặt:</strong> " . htmlspecialchars($ten)  . "</li>                                
                                 <li><strong>Địa chỉ giao hàng:</strong> " . htmlspecialchars($diachi) . "</li>
                                 <li><strong>Số điện thoại:</strong> " . htmlspecialchars($sodienthoai) . "</li>
                             </ul>

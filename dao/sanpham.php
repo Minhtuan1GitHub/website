@@ -135,6 +135,41 @@ function get_style_by_id($id){
     return pdo_query_one($sql, $id);
 }
 
+function get_size_by_id($id){
+    $sql = "SELECT * from size join product on product.id_size = size.id where product.id_item = ? and product.stock !=0";
+    $sql .= " order by product.id_size asc";
+    return pdo_query($sql, $id);
+} 
+
+function get_color_by_id($id){
+    $sql = "SELECT * from color join product on product.id_color = color.id where product.id_item = ? and product.stock !=0";
+    $sql .= " order by product.id_size desc";
+    return pdo_query($sql, $id);
+}
+
+function getavg($id){
+    $sql = "SELECT avg(sao) as avg_sao from binhluan where id = ?";
+    return pdo_query_one($sql, $id);
+}
+
+function getsize($id){
+    $sql ="SELECT * from product join size on size.id = product.id_size where product.id_item = ?";
+    return pdo_query($sql, $id);
+}
+// function getsizebycolor($id_item,$id_color){
+//     $sql = "SELECT size
+//             from product
+//             join size on size.id = product.id_size
+//             join color on color.id = product.id_color
+//             where  product.id_item = ?  and product.id_color = ?";
+//     return pdo_query($sql, $id_item, $id_color);
+// }
+function getcolor($id){
+    $sql ="SELECT * from product join color on color.id = product.id_color where product.id_item = ?";
+    return pdo_query($sql, $id);
+}
+
+
 // function get_style($id,$limi){
 //     $sql = "SELECT *
 //             from style

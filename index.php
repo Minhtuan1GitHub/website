@@ -2,6 +2,8 @@
     // mo cua session
     session_start();
     ob_start();
+    
+
 
     if (!isset($_SESSION["giohang"][$id_user])){
         $_SESSION["giohang"][$id_user]=[];
@@ -19,6 +21,7 @@
   include "dao/user.php";
   include "dao/mail.php";
   include "dao/bill.php";
+  include "dao/binhluan.php";
 
   if (!isset($_GET['page'])) {
 
@@ -36,7 +39,7 @@
 
             case 'men': // Khi chọn Men
 
-                      $phanloai = get_phanploai();
+                $phanloai = get_phanploai();
                 include "view/header1.php";
                 $dsdm =dm_all(1);  
 
@@ -91,6 +94,38 @@
                     $hinhanhlienquan = get_image_by_id($id);
                     $style = get_style_by_id($id);
 
+                    if (isset($_POST['guibinhluan'])){
+                        $id_user = $_SESSION['session_user']['id_user'];
+                        $id = $_GET['idpro'];
+                        $noidung = $_POST['noidung'];
+                        $size = $_POST['size'];
+                        $color = $_POST['color'];
+                        $nickname = $_POST['nickname'];
+                        $sao = $_POST['rating'];
+                        date_default_timezone_set('Asia/Ho_Chi_Minh');
+                        $date = date("l jS \of F Y h:i:s A");
+
+                        $ten = $_SESSION['session_user']['ten'];
+                        $diachi = $_SESSION['session_user']['diachi'];
+
+                        $birthDate = new DateTime($_SESSION['session_user']['sinhnhat']);
+                        $today = new DateTime();
+                        $age = $today->diff($birthDate)->y;
+
+                        binhluan_insert($id_user, $id, $noidung, $size, $color, $sao, $nickname, $date, $ten, $age, $diachi); 
+                        header("location: index.php?page=sanphamchitiet&idpro=$id");          
+                    }
+
+                    $danhsachbinhluan = binhluan_all($id,4);
+
+                    $getcolor = get_color_by_id($id);
+
+                    
+                    // $getsize =getsizebycolor($_SESSION['idpro'],$_SESSION['id_color']); 
+                    $getsize = get_size_by_id($id);
+ 
+                    $getavg = getavg($id);
+                    $count_binhluan = binhluan_count($id);
                     include "view/sanphamchitiet.php";
                     $dm_id = get_dm_id($id);
                     $dssp_lienquan = get_dssp_lienquan($dm_id, $id, 10);
@@ -137,13 +172,28 @@
                         $description = $_POST["description"];
                         $soluong = $_POST["soluong"];
                         $limit_date_sale = $_POST["limit_date_sale"];
-
-                        $sp = array("id"=>$id,"img"=>$img, "price"=>$price, "name_item" =>$name_item, "price_sale"=>$price_sale,"description"=>$description, "soluong"=>$soluong, "limit_date_sale"=>$limit_date_sale);
+                        $size = $_POST["size"];
+                        $color = $_POST["color"];
+                        $sp = array("id"=>$id,"img"=>$img, "price"=>$price, "name_item" =>$name_item, "price_sale"=>$price_sale,"description"=>$description, "soluong"=>$soluong, "limit_date_sale"=>$limit_date_sale, "size"=>$size, "color"=>$color);
                         // day vao gio hang
                         if (!isset($_SESSION["giohang"][$id_user])) {
                             $_SESSION["giohang"][$id_user] = [];
                         }
-                        array_push($_SESSION["giohang"][$id_user], $sp);
+
+                        $tontai = false;
+                        foreach ($_SESSION["giohang"][$id_user] as $key => $item) {
+                            if ($item['id'] == $id){
+                                $_SESSION["giohang"][$id_user][$key]['soluong'] +=$soluong;
+                                $tontai = true;
+                                break;
+                            }
+                        }
+                        if (!$tontai){
+                            array_push($_SESSION["giohang"][$id_user], $sp);
+
+                        }
+
+
                         // check xem them vao gio hang chua
                         // echo var_dump($_SESSION["giohang"]);
                         header('location: index.php?page=viewcart'); //lam viec voi session phai chuyen trang
@@ -251,9 +301,17 @@
                     if(is_array($kq) && (count($kq))){
                         $_SESSION['session_user'] = $kq;
                         $_SESSION['tb_dangnhap'] = 'Đăng nhập thành công';
-                        //out
-                        header('location: index.php?page=member');                                
-                    }else{
+                        
+                        if (isset($_SESSION['trang']) && $_SESSION['trang'] == "sanphamchitiet"){
+                            header('location: index.php?page=sanphamchitiet&idpro='.$_SESSION['idpro']);
+                            unset($_SESSION['trang']);
+                            unset($_SESSION['idpro']);
+                        }else{
+                            header('location: index.php?page=member');
+                        }
+                                                  
+                    }
+                    else{
                         $_SESSION['tb_dangnhap'] = "Tài khoản không tồn tại";
                         //out
                         header('location: index.php?page=dangnhap');
@@ -263,6 +321,7 @@
             case 'logout':
                 if (isset($_SESSION['session_user']) && ($_SESSION['session_user'])>0){
                     unset($_SESSION['session_user']);
+                    unset($_SESSION['trang']);
                 }
                 header('location: index.php');
                 break;
@@ -290,8 +349,13 @@
                     $gender = $_POST["gender"];
                     $role = 0;
                     $id_user = $_POST["id_user"];
+                    date_default_timezone_set('Asia/Ho_Chi_Minh');
+
+                    $birthDate = new DateTime($date);
+                    $today = new DateTime();
+                    $age = $today->diff($birthDate)->y;
                     // xu li
-                    user_update($email, $password, $name, $district, $phone, $date, $gender, $role ,$id_user);
+                    user_update($email, $password, $name, $district, $phone, $date, $gender, $role, $age ,$id_user);
                     //out
                           $phanloai = get_phanploai();
                     include "view/header1.php";
@@ -386,7 +450,10 @@
             case 'transfer':
                 $email = '';
                 $ten = '';
+                
                 if (isset($_POST["transfer"]) && ($_POST["transfer"])){
+
+
                     if (isset($_SESSION['session_user']) && ($_SESSION['session_user'])){
                         if (isset($_SESSION['session_user']['email']) && ($_SESSION['session_user']['email'])){
                             $email = $_SESSION['session_user']['email'];
@@ -409,18 +476,12 @@
                         }
 
 
-                        // $email = $_SESSION['session_user']['email'];
-                        // $ten = $_SESSION['session_user']['ten'];
-                        // $sodienthoai = $_SESSION['session_user']['sodienthoai'];
-                        // $diachi = $_SESSION['session_user']['diachi'];
-
-                        // $madonhang = $_POST['madonhang'];
-                        // $tongtien = $_SESSION['tien'];
                         add_bill($madonhang, $id_user, $tongtien, $sodienthoai, $diachi, $ten);
                         sendmail1($email, $ten, $sodienthoai, $diachi, $madonhang, $tongtien);
                         header('location: index.php?page=chuyenkhoan');
 
                     }
+
                 }
                 break;
             case 'chuyenkhoan':
@@ -446,8 +507,8 @@
                         
                         user_insert($email, $password);
                         $alert = "<div class='alert alert-success mt-2' id ='myAlert' role = 'alert'>Đăng ký thành công</div>";
-                              $phanloai = get_phanploai();
-                include "view/header1.php";
+                        $phanloai = get_phanploai();
+                        include "view/header1.php";
                         include "view/dangnhap.php";
                     }else{
                         $alert = "<div class='alert alert-danger mt-2' id ='myAlert' role = 'alert'>Email đã tồn tại. Vui lòng sử dụng email khác.</div>";                        
@@ -543,8 +604,27 @@
                 include "view/footer1.php";
                 include "view/find.php";
                 break; 
-                break;
+            case 'danhgia':
+                $phanloai = get_phanploai();
+                include "view/header1.php";
+                if (isset($_SESSION['idpro'])){
+                    $id = $_SESSION['idpro'];
+                }
+                $danhsachbinhluan = binhluan_all($id,10);
+                $count_binhluan = binhluan_count($id);
 
+                include "view/danhgia.php";
+                include "view/find.php";
+                include "view/footer.php";
+                break;
+            case 'admin':
+                include "view/admin.php";
+                break;
+            case 'color':
+                // if (!isset($_POST['color'])){
+                //     $_SESSION['id_color'] =1;
+                // }
+                break;
             default:
                 $phanloai = get_phanploai();
                 include "view/header.php";

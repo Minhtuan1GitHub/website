@@ -40,9 +40,9 @@ function checkNewPassword($newPassword, $comfirmNewPassword){
     return false;
 }
 
-function user_update($email, $password, $name, $district, $phone, $date, $gender, $role ,$id_user){
-    $sql = "UPDATE user set email = ?, password = ?, ten = ?, diachi = ?, dienthoai = ?, sinhnhat = ?, gioitinh = ?, role = ?  where id_user=? ";
-    pdo_execute($sql, $email, $password, $name, $district, $phone, $date, $gender, $role ,$id_user);
+function user_update($email, $password, $name, $district, $phone, $date, $gender, $role, $age ,$id_user){
+    $sql = "UPDATE user set email = ?, password = ?, ten = ?, diachi = ?, dienthoai = ?, sinhnhat = ?, gioitinh = ?, role = ?, age = ?  where id_user=? ";
+    pdo_execute($sql, $email, $password, $name, $district, $phone, $date, $gender, $role, $age ,$id_user);
 }
 
 function user_update_password ($password, $id_user){

@@ -1,4 +1,9 @@
 <?php 
+    // echo '<pre>';
+    // print_r($_SESSION);
+    // print_r($_POST);
+    // print_r($_GET); 
+    // echo '</pre>';
   $html_sanphamchitiet = '';
 
     if ($sanphamchitiet){
@@ -7,6 +12,7 @@
     extract($hinhanhlienquan);
 
     extract($style);
+
     $link='index.php?page=men&dm_id='.$dm_id; 
     $html_breadcrumb = '';
     $html_breadcrumb .='<li class="breadcrumb-item"><a href="index.php">Home</a></li>
@@ -17,11 +23,96 @@
                           $html_breadcrumb .='<li class="breadcrumb-item active" aria-current="page">'.$name_item.'</li>
                           ';
                         }
+  $html_binhluan = '';
+  foreach ($danhsachbinhluan as $binhluan) {
+    extract($binhluan);
+    $html_binhluan .='
+    
+      <div style="border-bottom: 1px solid black; margin-bottom: 20px; padding-bottom: 10px">
+        <div style="display: flex; justify-content: space-between"> 
+          <div style = "font-weight: bold ">
+            '.$nickname.'
+          </div>
+          <div>
+            '.$date.'
+          </div>
+        </div>
 
 
- 
+      <div>
+          <div style="margin-top: 10px">
+            ';
+          if ($binhluan['sao']<2){
+            $html_binhluan .='<i class="bi bi-star-fill"></i>';
+          }else if ($binhluan['sao']<3){
+            $html_binhluan .='<i class="bi bi-star-fill"></i>';
+            $html_binhluan .='<i class="bi bi-star-fill"></i>';
+          }else if ($binhluan['sao']<4){
+            $html_binhluan .='<i class="bi bi-star-fill"></i>';
+            $html_binhluan .='<i class="bi bi-star-fill"></i>';
+          }else{
+            $html_binhluan .='<i class="bi bi-star-fill"></i>';
+            $html_binhluan .='<i class="bi bi-star-fill"></i>';
+            $html_binhluan .='<i class="bi bi-star-fill"></i>';
+            $html_binhluan .='<i class="bi bi-star-fill"></i>';
+            $html_binhluan .='<i class="bi bi-star-fill"></i>';
+          }
+          $html_binhluan .= '
+          </div>
+
+          <div>
+            <span>Đã mua size: '.$size.'</span> 
+          </div>
+          <div>
+            <span>Đã mua màu: '.$color.'</span>
+          </div>
+        </div>
+        <div style ="margin: 10px 0px">
+        '.$noidung.'
+        </div>
+        <div style="display: flex; justify-content: end; gap: 10px">
+          <div>
+            '.$ten.'
+          </div>
+          <div>
+            '.$age.'
+          </div>
+          <div>
+            '.$diachi.'
+          </div>
+        </div>
+
+
+
+        
+      </div>
+    
+    ';
+  }
+
+  $html_size = '';
+  foreach ($getsize as $sz) {
+    extract($sz);
+    $html_size .= 
+                    // ''.$size.'' ;
+                    '
+                    <div class="container-size">
+                    <div class="size"> 
+                      <input type = "radio" name = "size" id="size-'.$size.'" value="'.$size.'">
+                      <label for="size-'.$size.'">'.$size.'</label>
+                    </div>
+                    </div>
+                    ';
+  }
+
+
+
+  extract($getavg); 
+  
+  
 
 ?>
+
 
 <nav class="container" aria-label="breadcrumb" style="position: sticky; top: 0; margin-top: 100px">
       
@@ -29,6 +120,8 @@
         <?=$html_breadcrumb;?>
       </ol>
 </nav>
+
+
 
 
 <div class="container-fluid" style="margin-top: 0px;">
@@ -68,7 +161,7 @@
 
           <div>
             <h4>Description</h4>
-            <span>Product ID: <?=$id?> </span>
+            <span>Product ID: <?=$sanphamchitiet['id']?> </span>
           </div>
 
           <div>
@@ -190,238 +283,244 @@
               ?>
           </div>
 
-          <div>
-            <div style="display: flex; align-items: center; justify-content: space-between;">
-              <h4>Reviews</h4>
-              <div>
-                <i class="bi bi-pen"></i>
-                <a href="#">Write a review</a>
-              </div>              
-            </div>  
-            <span>
-              <div>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-half"></i>
+              <div style="display: flex; justify-content: space-between; margin: 10px 0px">
+                <h3>Bình luận</h3>
+                <div style="display: flex; align-items: center; gap: 0px; justify-content: space-between">
+                  <i class="bi bi-pen"></i>
+                  <button class="btn" data-bs-toggle="modal" data-bs-target="#binhluan">Viết bình luận</button>
+                </div>
               </div>
-            </span>
-          </div>
 
-          <div>
-            <div style="border-bottom: 2px solid #888; padding-bottom: 10px;">
-              <div style="display: flex; align-items: center; justify-content: space-between;">
-                <span>Great functional piece</span>
-                <span>3/15/2025</span>
-              </div>
               <div>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-half"></i>
+                <?=$html_binhluan;?>
               </div>
-              <div style="display: flex; flex-direction: column;">
-                <span>Purchased size: XXL</span>
-                <span>Purchased color: 57 OLIVE</span>
-                <span>How it fits: True to size</span>
-              </div>
-              <p>
-                Very happy with this one. Light, great for layering, sleeves cuff nicely, pairs up well with most bottoms I've tried. The inside pockets were a nice surprise as well, very convenient! Just be sure to follow care instructions so it stays nice.
-              </p>
-              <div style="display: flex; align-items: center; justify-content: end; gap: 40px;">
-                <div>
-                  <i class="bi bi-flag-fill"></i>
-                  <a href="#" style="text-decoration: none;">Report</a>
-                </div>
-                <div style="border: 1px solid #888; border-radius: 100px; padding: 5px;">
-                  <i class="bi bi-magic"></i>
-                  <button type="button" style="border: none; background: transparent;">Helpful</button>
-                </div>
-              </div>
-            </div>
-            <div>
-              <div style="display: flex; align-items: center; justify-content: space-between;">
-                <span>Great functional piece</span>
-                <span>3/15/2025</span>
-              </div>
-              <div>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-half"></i>
-              </div>
-              <div style="display: flex; flex-direction: column;">
-                <span>Purchased size: XXL</span>
-                <span>Purchased color: 57 OLIVE</span>
-                <span>How it fits: True to size</span>
-              </div>
-              <p>
-                Very happy with this one. Light, great for layering, sleeves cuff nicely, pairs up well with most bottoms I've tried. The inside pockets were a nice surprise as well, very convenient! Just be sure to follow care instructions so it stays nice.
-              </p>
-              <div style="display: flex; align-items: center; justify-content: end; gap: 40px;">
-                <div>
-                  <i class="bi bi-flag-fill"></i>
-                  <a href="#" style="text-decoration: none;">Report</a>
-                </div>
-                <div style="border: 1px solid #888; border-radius: 100px; padding: 5px;">
-                  <i class="bi bi-magic"></i>
-                  <button type="button" style="border: none; background: transparent;">Helpful</button>
-                </div>
-              </div>
-            </div>
-          </div>
 
+              <!-- modal -->
+              <?php
+                if (isset($_SESSION['session_user']) && (count($_SESSION['session_user']) >0)){
+                  $_SESSION['idpro'] = $sanphamchitiet['id'];
+                ?>
+                  <div class="modal" id="binhluan">
+                  <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content">
+                      <!-- header -->
+                      <div class="modal-header">
+  
+                      </div>
+                      <!-- body -->
+                      <div class="modal-body">
+                        <form action="index.php?page=sanphamchitiet&idpro=<?=$sanphamchitiet['id']?>" method="post">
+                          <div style="display: flex; flex-direction: column">
+                            <span>Nội dung bình luận</span>
+                            <textarea name="noidung" id="noidung" style="width: 100%; height: 200px"></textarea>
+                            <span>Size</span>
+                            <input type="text" name="size" id="size">
+                            <span>Color</span>
+                            <input type="text" name="color" id="color">
+                            <div class="rating">
+                              <input value="5" name="rating" id="star5" type="radio">
+                              <label for="star5"></label>
+                              <input value="4" name="rating" id="star4" type="radio">
+                              <label for="star4"></label>
+                              <input value="3" name="rating" id="star3" type="radio">
+                              <label for="star3"></label>
+                              <input value="2" name="rating" id="star2" type="radio">
+                              <label for="star2"></label>
+                              <input value="1" name="rating" id="star1" type="radio">
+                              <label for="star1"></label>
+                            </div>
+                            <!-- <span>Sao</span>
+                            <input type="text" name="sao" id="sao"> -->
+                            <span>Nickname</span>
+                            <input type="text" name="nickname" id="nickname"> 
+                          </div>
+
+                          <div style="display: flex; justify-content: end">
+                            <input type="submit" name="guibinhluan" value="Gửi" onclick="gui(event)">
+                          </div>
+                        </form>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                  
+                <?php 
+                  }else{
+                ?>
+                  <div class="modal" id="binhluan">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+
+                      <!-- header -->
+                      <div class="modal-header">
+                        <span>Thông báo</span>
+                        <button class="btn-close" data-bs-dismiss="modal"></button>
+                      </div>
+
+                      <!-- body -->
+                      <div class="modal-body">
+                        <span class="body-tb">Bạn cần phải đăng nhập để có thể bình luận</span>
+                        <?php 
+                          $_SESSION['trang'] = "sanphamchitiet";
+                          $_SESSION['idpro'] = $sanphamchitiet['id'];
+                        ?>
+                        <span>Nhấn vào <a href="index.php?page=dangnhap" class="i bi bi-person fs-4"></a> để đăng nhập</span>
+                        <span>Nhấn vào <a href="index.php?page=dangky" class="i bi bi-person-fill-add fs-4"></a> để đăng ký</span>
+                      </div>
+  
+                    </div>
+                  </div>
+                </div>
+                    <?php
+                  
+                  }?>
+    
+ 
           
 
 
         </div>
         <!-- col -->
-        <div class="col-lg-5" style="display: flex; flex-direction: column; ">
+      <div class="col-lg-5" style="display: flex; flex-direction: column; ">
 
-          <div style="position: sticky; top: 100px;">
-            <div style="display: flex; align-items: center; justify-content: space-between;">
-              <span style="text-transform: uppercase; color: black; "><?=$name_item?></span>
-              <div>
-                <a href="#">
-                  <i class="bi bi-box-arrow-in-up"></i>
-                </a>
-                <a href="#">
-                  <i class="bi bi-heart"></i>
-                </a>
-              </div>
-            </div>
+        <div style="position: sticky; top: 100px;">
 
-            <div style="display: flex; flex-direction: column;">
-              <div style="display: flex;">
-                <div class="form-check">
-                    <input type="radio" class="form-check-input custom-radio" id="flexRadioDefault1" name="flexRadioDefault" style="background: red;">
-                </div>
-                <div class="form-check">
-                    <input type="radio" class="form-check-input custom-radio" id="flexRadioDefault2" name="flexRadioDefault" style="background: red;">
-                </div>
-                <div class="form-check">
-                    <input type="radio" class="form-check-input custom-radio" id="flexRadioDefault3" name="flexRadioDefault" style="background: red;">
-                </div>
-                <div class="form-check">
-                    <input type="radio" class="form-check-input custom-radio" id="flexRadioDefault4" name="flexRadioDefault" style="background: red;">
-                </div>
-              </div>
-              <span>Color: 08 Dark Gray</span>
-            </div>
-
-            <div>
-              <div style="display: flex; gap: 10px;">
-                <label class="radio-container">
-                  <input type="radio" class="radio-custom" name="flexRadioDefault">
-                  <span>XXL</span>
-                </label>
-                <label class="radio-container">
-                  <input type="radio" class="radio-custom" name="flexRadioDefault">
-                  <span>XL</span>
-                </label>
-                <label class="radio-container">
-                  <input type="radio" class="radio-custom" name="flexRadioDefault">
-                  <span>L</span>
-                </label>
-                <label class="radio-container">
-                  <input type="radio" class="radio-custom" name="flexRadioDefault">
-                  <span>M</span>
-                </label>
-                <label class="radio-container">
-                  <input type="radio" class="radio-custom" name="flexRadioDefault">
-                  <span>S</span>
-                </label>
-                <label class="radio-container">
-                  <input type="radio" class="radio-custom" name="flexRadioDefault">
-                  <span>XS</span>
-                </label>
-              </div>
-              <div style="display: flex; justify-content: space-between;">
-                <span>
-                  Size: UNISEX XXL
-                </span>
-                <span>
-                  Recommended size: -
-                </span>
-              </div>
-            </div>
-            
-            <div style="display: flex; justify-content: end; gap: 4px;">
-              
-              <i class="bi bi-rulers"></i>
-              <a href="#" style="text-decoration: none;" onclick="showAlert()">Check my size</a>
-
-
-              <div id="myAlert" class="alert d-none" role="alert">
-                <div>
-                  <span>Check my size</span>
-                  <button onclick="closeAlert()"><i class="bi bi-x-lg"></i></button>
-                </div>
-              </div>
-
-            </div>
-
-            <div style="display: flex; align-items: center; justify-content: space-between;">
-              <div>
-                <?php
-                  if ($price_sale!=0){
-                    echo "<h5 style='color: #888; text-decoration: line-through'>$".$price."</h5>";
-                    echo "<h3 style='color: red;'>$".$price_sale."</h3>";
-                  }else{
-                    echo "<h3>$".$price."</h3>";
-                  }
-                ?>
-
-
-              </div>
-              <div>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-half"></i>
-              </div>
-            </div>
-
-            <div>
-              <span>Made with recycled materials</span>
-            </div>
-
-            <div class="counter" style="background: #888; border-radius: 100px; display:flex; justify-content: space-between; width: 160px; height: 40px; align-items: center;">
-              <button id="decrease" style="border: none; background: transparent; color: white;"><i class="bi bi-dash fs-4"></i></button>
-              <span id="count" style="color: white;">0</span>
-              <button id="increase" style="border: none; background: transparent; color: white;"><i class="bi bi-plus fs-4"></i></button>
-            </div>
-
-            <div style="display: flex; justify-content: center;">
+          <div style="display: flex">
             <!-- tao form cart -->
-            <form action="index.php?page=addcart" method="post"> 
-              <input type="hidden" name="id" value="<?=$id?>">
+            <form action="index.php?page=addcart" method="post" style="display: flex; flex-direction: column; width: 100%"> 
+              <input type="hidden" name="id" value="<?=$sanphamchitiet['id']?>">
               <input type="hidden" name="img" value="<?=$img?>">
               <input type="hidden" name="price" value="<?=$price?>">
               <input type="hidden" name="name_item" value="<?=$name_item?>">
               <input type="hidden" name="price_sale" value="<?=$price_sale?>">
               <input type="hidden" name="description" value="<?=$description?>">
-              <input type="hidden" name="soluong" value="<?=$soluong?>">
               <input type="hidden" name="limit_date_sale" value="<?=$limit_date_sale?>">
+              <input type="hidden" name="size" value="<?=$size?>">
+              <input type="hidden" name="color" value="<?=$color?>">
+              <div style="display: flex; flex-direction: column">
+
+                <div style="display: flex; justify-content: space-between; text-align: center">
+                  <span style="font-size: 30px;"><?=$name_item?></span>
+                  <div style="display: flex;  align-items: center; gap: 10px">
+                    <i class="bi bi-share"></i>
+                    <i class="bi bi-heart"></i>
+                  </div>
+                </div>
+
+                  <!-- color -->
+                  <div style="display: flex; gap: 10px; margin-top: 10px; margin-bottom: 10px">
+                    <?php foreach ($getcolor as $cl): ?>
+                      <div>
+                        <input type="radio" name="color" value="<?= $cl['id_color'] ?>">
+                        <span><?= $cl['color'] ?></span>
+                      </div>
+                    <?php
+                   endforeach; ?>
+
+                  </div>
+                  <!-- size -->
+                  <div style="display: flex; gap: 10px; margin-top: 10px; margin-bottom: 10px">
+                    <?=$html_size?>
+                  </div>
+
+                <div style="display: flex; justify-content: space-between">
+                  <span style="font-size: 40px;">$<?=$price?></span>
+                  <div style="display: flex; text-align: center; gap: 10px; align-items: center">
+
+                    <?php
+                      if ($getavg['avg_sao'] == 0){
+                    ?>
+                      <div>Chưa có lượt đánh gia nào</div>
+                    <?php
+                    }else{?>
+                      <?php if (number_format($getavg['avg_sao']) <2){
+                        ?>
+                        <div>
+                          <i class="bi bi-star-half"></i>
+                        </div>
+                      <?php }else if (number_format($getavg['avg_sao'])<3){
+                        ?>
+                        <div>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-half"></i>
+                        </div>
+                      <?php }else if (number_format($getavg['avg_sao'])<4){
+                        ?>
+                        <div>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-half"></i>
+                        </div>
+                      <?php }else if (number_format($getavg['avg_sao'])<5){
+                        ?>
+                        <div>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-half"></i>
+                        </div>
+                      <?php }else{
+                        ?>
+                        <div>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-half"></i>
+                        </div>
+                      <?php }?>
+                      <a href="index.php?page=danhgia" style="color: blue;"><span>(<?=$count_binhluan?>)</span></a>
+
+                    <?php
+                    }
+                    ?>
+                    </div>
+
+                </div>
+                <div style="margin-top: 10px; margin-bottom: 10px">
+                  <?=$description?> 
+                </div>
+
+                <div style="display: flex; border: 1px solid black; width: 50%; justify-content: center; border-radius: 100px; padding: 2px; margin-top: 10px; margin-bottom: 10px">
+                  <button type="button" onclick="giam()" style="background: none; border: none"><i class="bi bi-dash fs-4"></i></button>
+                  <input name="soluong" type="number" id="tanggiam" value="1" min="1" style="border: none; display: flex; text-align: center ">
+                  <button type="button" onclick="tang()" style="background: none; border: none"><i class="bi bi-plus fs-4"></i></button>
+                  <!-- script -->
+                  <script>
+                    function giam(){
+                      const inp = document.getElementById('tanggiam');
+                      let curr = parseInt(inp.value);
+                      if (curr>1){
+                        inp.value = curr - 1;
+                      }
+                    }
+                    function tang(){
+                      const inp = document.getElementById('tanggiam');
+                      let curr =parseInt(inp.value);
+                      inp.value = curr+1;
+                    }
+                  </script>
+                </div>
+              </div>
+
               <button type="submit" name="addcart" style="width: 100%; border-radius: 100px; border: none; background: black; height: 50px;"<?php if (!isset($_SESSION['session_user']) || count($_SESSION['session_user']) === 0) echo 'onclick="dangnhap(); return false;"'; ?>>>
                   <i class="bi bi-cart fs-5" style="color: white;"></i>
                   <span style="color: white;">Add to cart</span>
               </button>
             </form>
-            </div>
           </div>
         </div>
+      </div>
 
       </div>
 
     </div>
 </div>
 
+<html>
 
+</html>
 
 <style>
   a{
@@ -432,17 +531,104 @@
   a:hover{
     color: red;
   }
+  .body-tb{
+    color: red;
+    font-size: 22px;
+    font-weight: bold;
+  }
+  .modal-body{
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .rating{
+    display: inline-block;
+  }
+  .rating input{
+    display: none;
+  }
+  .rating label{
+    float: right;
+    color: #ccc;
+    transition: 0.3s ease;
+  }
+  .rating label::before{
+    font-size: 30px;
+    content: '\2605';  
+  }
+  .rating input:checked ~ label,
+  .rating label:hover,
+  .rating label:hover~label {
+    color: black;
+    transition: 0.3s ease;
+  }
+  .container-size{
+    padding: 10px;
+    border: 1px solid black;
+    height: 45px;
+    width: 45px;
+
+  }
+  .size{
+    display: inline-block;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+
+  }
+  .size label{
+    border: 1px solid transparent;
+    text-align: center;
+    justify-content: center;
+    font-size: 13px;
+    width: 45px;
+  }
+  .size input{
+    display: none; 
+  }
+
+  .size label:hover,
+  .size input:checked ~ label{
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    background: black;
+  }
+  .size:hover{
+    border-radius: 1px solid black;
+  }
+
+
+
+
+  
+  
+
 </style>
 <script>
   function dangnhap(){
     Swal.fire({
       icon: 'info',
       title: 'Bạn chưa truy cập vào tài khoản',
-      html: "Nếu chưa có tài khoản hãy nhấn vào <a href='index.php?page=dangnhap' style='text-decoration:none;'><i class='bi bi-person fs-3'></i></a> để đăng kí miễn phí",
+      html: "Nếu chưa có tài khoản nhấn vào <a href='index.php?page=dangnhap' style='text-decoration:none;'><i class='bi bi-person fs-3'></i></a> để đăng kí miễn phí",
       confirmButtonText: 'OK'
     });  
   }
 
+  function gui(event){
+    const noidung = document.getElementById('noidung').value.trim();
+    const size = document.getElementById('size').value.trim();
+    const color = document.getElementById('color').value.trim();
+    // const sao = document.getElementById('rating').value.trim();
+    const sao = document.querySelector('input[name="rating"]:checked');
+    const nickname = document.getElementById('nickname').value.trim();
+    
+    if (noidung ==="" || size === "" || color === "" || sao === null || nickname === ""){
+      alert("vui long nhap noi dung");  
+      event.preventDefault();
+    }
+  
+  }
 </script>
 
 

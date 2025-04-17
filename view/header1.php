@@ -29,9 +29,18 @@
   <!-- link icon -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
+  <!-- AOS CSS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
 </head>
 
+
 <body>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
 
   <div class="container-fluid" style="margin-bottom: 100px;">
     <div class="container">
@@ -39,7 +48,7 @@
         <div class="container">
           <a class="navbar-brand d-flex justify-content-center align-items-center p-2 m-0 gap-2" href="index.php">
             <img src="layout/images/logo/cute.jpg" alt="Logo" style="width: 40px;" class="rounded-pill">
-            <h4 class="logo-text m-0">Brand</h4>
+            <h4 class="logo-text m-0">TumiShop</h4>
           </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -62,17 +71,21 @@
                   <i class="bi bi-bag-heart fs-5"></i>
                 </a>
                 <?php
-                  if (isset($_SESSION['session_user']) && count($_SESSION['session_user']) > 0){
+                  if (isset($_SESSION['session_user']) && count($_SESSION['session_user']) > 0 && $_SESSION['session_user']['role'] ==0) {
                     echo '
                           <a href="index.php?page=viewcart" class="button">
                             <i class="bi bi-cart4 fs-5"></i>
                           </a>
                         ';
                   }
+                  if (isset($_SESSION['session_user']['role']) && $_SESSION['session_user']['role'] ==1){
+                    echo '
+                          <a href="index.php?page=admin">
+                            <i class = "bi bi-kanban fs-5"></i>
+                          </a>
+                          ';
+                  }
                 ?>  
-                <!-- <a href="index.php?page=viewcart" class="button">
-                  <i class="bi bi-cart4 fs-5"></i>
-                </a> -->
               </div>
             </div>
           </div>

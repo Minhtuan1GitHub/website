@@ -1,8 +1,11 @@
 <?php 
-// echo '<pre>';
-// print_r($_SESSION);
-// print_r($_POST);
-// echo '</pre>';
+  // echo '<pre>';
+  // print_r($_SESSION);
+  // print_r($_POST);
+  // echo '</pre>';
+
+
+
 
   // session_start();
   $html_cart = '';
@@ -32,8 +35,8 @@
                       <i class="bi bi-heart"></i>
                     </button>
                   </div>
-                  <span>Color:</span>
-                  <span>Size:</span>';   
+                  <span>'.$color.'</span>
+                  <span>'.$size.'</span>';   
                 
             if ($price_sale == 0) {
                 $html_cart .= '<span>$'.$price.'</span>';
@@ -131,7 +134,7 @@
 
         <?=$html_cart;?>
         <?php
-          if (isset($_SESSION['giohang']) && ($_SESSION['giohang'])){
+          if (isset($_SESSION['giohang'][$_SESSION['session_user']['id_user']]) && ($_SESSION['giohang'][$_SESSION['session_user']['id_user']])){
             echo '<div class="container-xoatatcasanpham" >
                     <a class="xoatatcasanpham" href="index.php?page=viewcart&del=1" onclick="return confirm(\'Bạn có chắc chắn muốn xóa hết tất cả sản phẩm trong giỏ hàng\')">Xóa tất cả sản phẩm</a>
                   </div>';
@@ -169,7 +172,7 @@
           
           <div style="display: flex; justify-content: space-between; margin-top: 10px; border-top: 1px solid black;" class="font-weight-bold fs-4">
             <span>Tổng tiền</span>
-            <span><?php if (isset($_SESSION['tien'])) echo $_SESSION['tien'];?></span>
+            <span><?=$_SESSION['tien']?></span>
           </div>
           <div></div>
         </div>
@@ -206,7 +209,7 @@
                       <input type="submit" value="Thêm">
                     </form>
                   </div>
-                  <span>Mã giảm giá có hiệu lực <?=$html_soluongvoucher?></span>
+                  <span>Mã giảm giá có hiệu lực <?=$html_soluongvoucher?></span> </br>
                   <span>Hãy chọn mã giảm giá từ danh sách và áp dụng vào đơn hàng của bạn</span>
                   
                   <!-- <div> -->
@@ -217,8 +220,10 @@
                     <form action="index.php?page=viewcart&voucher=2" method="post">
                       <?=$html_voucher;?>
                       <div>
-                      <input type="hidden" name="tongdonhang" value="<?=$tongtiensanpham?>">
-                        <input type="submit" value="Thêm">
+                        <input type="hidden" name="tongdonhang" value="<?=$tongtiensanpham?>">
+                        <div style="display: flex; justify-content: end; padding-right: 25px">
+                          <input type="submit" value="Thêm" style="width: 70px; background: none; border: 1px solid black">
+                        </div>
                       </div>
                     </form>
                   </div>
@@ -264,6 +269,8 @@
                                   <span> Mã đơn hàng: <?=$ma_don_hang?></span>
                                   <span>Tổng tiền: <?=$_SESSION['tien']?></span>                              
                                 </div>
+
+
 
                               </div>
                             </div>
@@ -315,7 +322,16 @@
                 </div>
               </div>
               <div style="width: 100%; margin: 20px 0px">
-                <button class="btn-thanhtoan" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Thanh toán</button>
+                <?php
+                  $disable = '';
+                  if (isset($_SESSION['giohang'][$_SESSION['session_user']['id_user']])){
+                    ?>
+                    <button class="btn-thanhtoan" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Thanh toán</button> 
+                  <?php }else{
+                    ?>
+                    <button class="btn-thanhtoan" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" disabled>Thanh toán</button> 
+
+                  <?php }?>
 
               </div>
       </div>

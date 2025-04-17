@@ -109,22 +109,14 @@
               <div class="col">
                 <div class="footer-widget">
                   <div class="section-heading">
-                    <h3 style="color: white;">Subscribe</h3>
+                    <h3 style="color: white;">Location</h3>
                     <span class="animate-border border-black"></span>
                   </div>
-                  <p style="color: white;">
-                    Reference site about Lorem Ipsum, giving information on its origins, as well
-                  </p>
-                  <form action="#">
                     <div class="row">
                       <div class="col d-flex">
-                        <input type="email" class="form-control" style="border-radius: 0; border-top-left-radius: 100px; border-bottom-left-radius: 100px; border: none;" placeholder="Email Address">
-                        <button type="submit" style="border-top-right-radius: 100px; border-bottom-right-radius: 100px; border: none; background: #A7ED10;">
-                          <i class="bi bi-send" style="color: #000000"></i>
-                        </button>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3920.4342079702456!2d106.71108117506431!3d10.700953589443241!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3175312ae714e657%3A0x7e6d55af2718175f!2zMTE2OCDEkC4gTMOqIFbEg24gTMawxqFuZywgUGjGsOG7m2MgS2nhu4NuLCBRdeG6rW4gNywgSOG7kyBDaMOtIE1pbmgsIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1743470054415!5m2!1svi!2s" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                       </div>
                     </div>
-                  </form>
                 </div>
               </div>
             </div>
@@ -163,6 +155,5 @@
         </div>
       </div>
       
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3920.4342079702456!2d106.71108117506431!3d10.700953589443241!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3175312ae714e657%3A0x7e6d55af2718175f!2zMTE2OCDEkC4gTMOqIFbEg24gTMawxqFuZywgUGjGsOG7m2MgS2nhu4NuLCBRdeG6rW4gNywgSOG7kyBDaMOtIE1pbmgsIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1743470054415!5m2!1svi!2s" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
 </footer>

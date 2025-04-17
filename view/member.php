@@ -1,4 +1,8 @@
 <?php
+  // echo '<pre>';
+  // print_r($_SESSION);
+  // print_r($_POST);
+  // echo '</pre>';
   if (isset($_SESSION['session_user']) && (count($_SESSION['session_user'])>0)){
     extract($_SESSION['session_user']);
  
@@ -9,6 +13,7 @@
                       <li class="breadcrumb-item"<a href="index.php?page=member">Thông tin</a></li>
 
                       ';
+
 ?>
 
 <nav class="container" aria-label="breadcrumb" style="position: sticky; top: 0; margin-top: 0px">

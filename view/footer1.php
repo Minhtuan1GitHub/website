@@ -109,7 +109,7 @@
               <div class="col">
                 <div class="footer-widget">
                   <div class="section-heading">
-                    <h3 style="color: white;">Subscribe</h3>
+                    <h3 style="color: white;">Location</h3>
                     <span class="animate-border border-black"></span>
                   </div>
                   <p style="color: white;">

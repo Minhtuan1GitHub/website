@@ -6,8 +6,8 @@
     $link='index.php?page=women&dm_id='.$dm_id; //duong dan cho cac danh muc
     $html_dm .='<div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
                   <div class="card align-items-center border-0">
-                    <a href="'.$link.'" class="img-item">
-                      <img src="layout/images/dm/'.$img.'" alt="Item" style="width: 60px;">
+                  <a href="'.$link.'" class="img-item" data-aos="zoom-in" data-aos-duration="1500">
+                  <img class="card-img-top" src="layout/images/dm/'.$img.'" alt="Item" style="width: 60px;">
                     </a>
                     <h6 class="card-title">'.$name.'</h6>
                   </div> 
@@ -18,7 +18,11 @@
     extract($sp);
     $link ="index.php?page=sanphamchitiet&idpro=".$id;
     $html_dsdm .='<div class="col-lg-3 col-sm-6 ">
-                    <div class="card" style="border-radius: 0px ; border: none;">
+                    <div class="card" style="border-radius: 0px ; border: none;" data-aos="fade-up"
+                                                                                data-aos-duration="1500"
+                                                                                data-aos-delay="200"
+                                                                                data-aos-easing="ease-in-out"
+                                                                                data-aos-offset="200">
                       <a href="'.$link.'">
                       <img class="card-img-top " src="layout/images/outerwear/'.$img.'" alt="Card image" style="width:100%; border-radius: 0px;">
                       </a>
@@ -55,7 +59,11 @@
     extract($hot);
     $link = "index.php?page=sanphamchitiet&idpro=".$id; 
     $html_sanPhamHot .='<div class="col-lg-3 col-sm-6 ">
-                    <div class="card" style="border-radius: 0px ; border: none;">
+                    <div class="card" style="border-radius: 0px ; border: none;" data-aos="fade-up"
+                                                                                data-aos-duration="1500"
+                                                                                data-aos-delay="200"
+                                                                                data-aos-easing="ease-in-out"
+                                                                                data-aos-offset="200">
                     <a href="'.$link.'">
 
                       <img class="card-img-top" src="layout/images/outerwear/'.$img.'" alt="Card image" style="width:100%; border-radius: 0px;">
@@ -84,7 +92,11 @@
     extract($like);
     $link = "index.php?page=sanphamchitiet&idpro=".$id;
     $html_sanPhamLike .='<div class="col-lg-3 col-sm-6 ">
-                    <div class="card" style="border-radius: 0px ; border: none;">
+                    <div class="card" style="border-radius: 0px ; border: none;" data-aos="fade-up"
+                                                                                data-aos-duration="1500"
+                                                                                data-aos-delay="200"
+                                                                                data-aos-easing="ease-in-out"
+                                                                                data-aos-offset="200">
                     <a href="'.$link.'">
                       <img class="card-img-top" src="layout/images/outerwear/'.$img.'" alt="Card image" style="width:100%; border-radius: 0px;">
                     </a>
@@ -112,7 +124,11 @@
     extract($new);
     $link = "index.php?page=sanphamchitiet&idpro=".$id;
     $html_sanPhamNew .='<div class="col-lg-3 col-sm-6 ">
-                    <div class="card" style="border-radius: 0px ; border: none;">
+                    <div class="card" style="border-radius: 0px ; border: none;" data-aos="fade-up"
+                                                                                data-aos-duration="1500"
+                                                                                data-aos-delay="200"
+                                                                                data-aos-easing="ease-in-out"
+                                                                                data-aos-offset="200">
                     <a href ="'.$link.'">
                       <img class="card-img-top" src="layout/images/outerwear/'.$img.'" alt="Card image" style="width:100%; border-radius: 0px;">
                     </a>  
@@ -141,7 +157,11 @@
     extract($sale);
     $link = "index.php?page=sanphamchitiet&idpro=".$id;
     $html_sanPhamSale .='<div class="col-lg-3 col-sm-6 ">
-                    <div class="card" style="border-radius: 0px ; border: none;">
+                    <div class="card" style="border-radius: 0px ; border: none;" data-aos="fade-up"
+                                                                                data-aos-duration="1500"
+                                                                                data-aos-delay="200"
+                                                                                data-aos-easing="ease-in-out"
+                                                                                data-aos-offset="200">
                     <a href ="'.$link.' ">
                       <img class="card-img-top" src="layout/images/outerwear/'.$img.'" alt="Card image" style="width:100%; border-radius: 0px;">
                     </a> 
@@ -249,4 +269,15 @@
   a:hover{
     color: red;
   }
+  .card:hover{
+    border-color: red;
+
+  }
+  .card-img-top {
+  transition: transform 0.5s ease;
+}
+
+.card-img-top:hover {
+  transform: scale(1.1);
+}
 </style>
