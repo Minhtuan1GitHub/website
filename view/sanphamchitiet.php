@@ -482,7 +482,7 @@
                   <?=$description?> 
                 </div>
 
-                <div style="display: flex; border: 1px solid black; width: 50%; justify-content: center; border-radius: 100px; padding: 2px; margin-top: 10px; margin-bottom: 10px">
+                <div  style="display: flex; border: 1px solid black; width: 50%; justify-content: center; border-radius: 100px; padding: 2px; margin-top: 10px; margin-bottom: 10px">
                   <button type="button" onclick="giam()" style="background: none; border: none"><i class="bi bi-dash fs-4"></i></button>
                   <input name="soluong" type="number" id="tanggiam" value="1" min="1" style="border: none; display: flex; text-align: center ">
                   <button type="button" onclick="tang()" style="background: none; border: none"><i class="bi bi-plus fs-4"></i></button>

@@ -51,13 +51,13 @@
           </div>
           <div style="display: flex; justify-content: end; gap: 10px">
           <div>
-            '.$_SESSION['session_user']['ten'].'
+            '.$ten.'
           </div>
           <div>
-            '.$_SESSION['session_user']['age'].'
+          '.$age.'
           </div>
           <div>
-            '.$_SESSION['session_user']['diachi'].'
+          '.$diachi.'
           </div>
         </div>
 
@@ -85,7 +85,7 @@
 ?>
 
 
-<nav class="container" aria-label="breadcrumb" style="position: sticky; top: 0; margin-top: 100px">
+<nav class="container" aria-label="breadcrumb" style="position: sticky; top: 0; margin-top: 10px">
       
       <ol class="breadcrumb">
         <?=$html_breadcrumb;?> 
@@ -98,10 +98,17 @@
 
 <div class="container" style="display: flex; justify-content: space-between; margin-bottom: 10px">
   <span>Số lượng bình luận: <?=$count_binhluan?></span>
-  <div>
+  <div class="dropdown">
+  <a class="btn dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <i class="bi bi-funnel"></i>
-    <span>Sắp xếp theo sao</span>
-  </div>
+  </a>
+
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="#">Action</a></li>
+    <li><a class="dropdown-item" href="#">Another action</a></li>
+    <li><a class="dropdown-item" href="#">Something else here</a></li>
+  </ul>
+</div>
 </div>
 
 <div class="container">
@@ -118,3 +125,4 @@
     color: red; 
   }
 </style>
+

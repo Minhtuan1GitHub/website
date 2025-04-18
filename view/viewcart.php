@@ -4,6 +4,7 @@
   // print_r($_POST);
   // echo '</pre>';
 
+  
 
 
 
@@ -49,15 +50,18 @@
             }
           
             $html_cart .= '
-              <div class="counter" style="width:15%; background: #888; border-radius: 100px; display: flex; justify-content: space-between; align-items: center;">
-                <button class="decrease" data-index="'.$index.'" style="border: none; background: transparent; color: white;">
-                  <i class="bi bi-dash fs-4"></i>
+              <div class="counter" style="border: 1px solid black; display: flex; justify-content: space-between; width: 120px; align-items: center; border-radius: 100px">
+                <button style="border: none; background: none" onclick="giam(this)">
+                  <i class = "bi bi-dash fs-4"></i>
                 </button>
-                <span class="count" id="count-'.$index.'" style="color: white;">'.$soluong.'</span>
-                <button class="increase" data-index="'.$index.'" style="border: none; background: transparent; color: white;">
-                  <i class="bi bi-plus fs-4"></i>
+                <span class="soluong">
+                  '.$soluong.'
+                </span>
+                <button style="border: none; background: none" onclick="tang(this)">
+                  <i class = "bi bi-plus fs-4"></i>
                 </button>
               </div>
+
               <a class="xoasanpham" href="index.php?page=remove&id='.$index.'" onclick="return confirm(\'Bạn có chắc chắn muốn xóa sản phẩm này không?\')">Remove</a>
             ';
             if ($limit_date_sale != '0000-00-00') {
@@ -265,7 +269,17 @@
                                   $random_string = strtoupper(substr(bin2hex(random_bytes(2)), 0, 4));                                  
                                   $ma_don_hang = $_SESSION['session_user']['id_user'] . '-' . $timestamp . '-' . $random_string;
                                 ?>
-                                  <input type="hidden" name="madonhang" value="<?=$ma_don_hang;?>">
+                                  <input type="text" name="madonhang" value="<?=$ma_don_hang;?>">
+                                  <?php
+                                    $list_id = [];   
+                                    foreach ($_SESSION['giohang'][$_SESSION['session_user']['id_user']] as $sp) {
+                                      $list_id[] = $sp['id'];
+                                      ?>
+                                    <?php }
+                                    $id_item_json = json_encode($list_id);
+                                    ?>
+                                    <input type="hidden" name="id_item" value='<?= htmlspecialchars($id_item_json, ENT_QUOTES, "UTF-8") ?>'>                                      
+
                                   <span> Mã đơn hàng: <?=$ma_don_hang?></span>
                                   <span>Tổng tiền: <?=$_SESSION['tien']?></span>                              
                                 </div>
@@ -282,16 +296,16 @@
                             <img src="layout/images/momo.jpg" alt="QR MOMO" style="width: 100%;">
                           </div>
 
-                      </div>
-                      </div>
+                        </div>
+                        </div>
 
-                      <div class="modal-footer">
-                        <span>Nếu đã thanh toán hãy bấm vào đây</span>
-                        <!-- button chuyen khoan -->
-                        <input  type="submit" class="btn-transfer" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" value="Đã chuyển khoản" name="transfer">
-                        <!-- <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Đã chuyển khoản</button> -->
-                      </div>
-                    </form>
+                        <div class="modal-footer">
+                          <span>Nếu đã thanh toán hãy bấm vào đây</span>
+                          <!-- button chuyen khoan -->
+                          <input  type="submit" class="btn-transfer" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" value="Đã chuyển khoản" name="transfer">
+                          <!-- <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Đã chuyển khoản</button> -->
+                        </div>
+                      </form>
                     <!-- gui form -->
 
                   </div>
@@ -421,6 +435,13 @@
     }
   });
 
+  function tang(btn){
+    let counter = btn.closest('.counter');
+    let span = counter.querySelector('.soluong');
+    let curr = parseInt(span.innerText);
+    span.innerText = curr+1;
+
+  }
 </script>
 
 

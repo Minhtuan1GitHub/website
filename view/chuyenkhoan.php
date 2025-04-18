@@ -8,7 +8,12 @@ $html_breadcrumb .= '<li class="breadcrumb-item"><a href="index.php">Home</a></l
                     <li class="breadcrumb-item"><a href="index.php?page=member">Thông tin</a></li>
                         
                      <li class="breadcrumb-item active" aria-current="page">Đơn hàng của bạn</li>';
-// extract($get_bill);
+$html_chitiet = '';
+foreach ($getchitiet as $ct) {
+    $html_chitiet .='
+    ';
+}
+
 ?>
 
 <link rel="stylesheet" href="layout/css/dangky.css">
@@ -20,7 +25,7 @@ $html_breadcrumb .= '<li class="breadcrumb-item"><a href="index.php">Home</a></l
     </ol>
 </nav>
 
-<div class="container" style="margin-top: 0px;">
+<div class="container" style="margin-top: 0px; margin-bottom: 10px">
     <h4 style="padding-bottom: 10px; border-bottom: 1px solid black">Đơn hàng của bạn</h4>
     <div class="row" style="font-weight: bold; border-bottom: 1px solid black; padding: 10px 0;">
         <div class="col">Mã đơn hàng</div>
@@ -44,26 +49,11 @@ $html_breadcrumb .= '<li class="breadcrumb-item"><a href="index.php">Home</a></l
             <?= $bill['trangthai'] ?>
         </div>
         <div class="col" style="display: flex; justify-content: start">
-            <button class="chitietdon" data-bs-toggle="modal" data-bs-target="#chitietdon">Chi tiết</button>
-            <div class="modal" id="chitietdon">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <!-- header -->
-                        <div class="modal-header">
+            <form action="index.php?page=chitiet" method="post">
+                <input type="hidden" name="id_bill" value="<?=$bill['id_bill']?>">
+                <button class="chitietdon" name="chitiet">Chi tiết</button>
+            </form>
 
-                        </div>
-                        <!-- body -->
-                        <div class="modal-body">
-                            
-                        </div>
-                        <!-- footer -->
-                        <div class="modal-footer">
-
-                        </div>
-
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 <?php endforeach; ?>

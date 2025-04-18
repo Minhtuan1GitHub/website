@@ -474,13 +474,28 @@
                         if (isset($_SESSION['tien'])){
                             $tongtien = $_SESSION['tien'];
                         }
-
-
-                        add_bill($madonhang, $id_user, $tongtien, $sodienthoai, $diachi, $ten);
-                        sendmail1($email, $ten, $sodienthoai, $diachi, $madonhang, $tongtien);
-                        header('location: index.php?page=chuyenkhoan');
+                        date_default_timezone_set('Asia/Ho_Chi_Minh');
+                        $dateCreate = date("Y-m-d H:i:s");
 
                     }
+                    $list = [];
+                    if (isset($_POST['id_item'])){
+                        $id_item = $_POST['id_item'];
+                        if (is_string($id_item) && !empty($id_item)) {
+                            $list = json_decode($id_item, true);
+                            if (json_last_error() !== JSON_ERROR_NONE) {
+                                die("Lỗi giải mã JSON: " . json_last_error_msg());
+                            }
+                        }
+                    }
+
+                    add_bill($madonhang, $id_user, $tongtien, $sodienthoai, $diachi, $ten, $dateCreate);
+                    foreach ($list as $li) {
+                        add_bill_detail($madonhang, $li, 1);
+                    }
+
+                    sendmail1($email, $ten, $sodienthoai, $diachi, $madonhang, $tongtien);
+                    header('location: index.php?page=chuyenkhoan');
 
                 }
                 break;
@@ -491,9 +506,25 @@
                     $id_user = $_SESSION['session_user']['id_user'];
                     $get_bill = bill_by_id($id_user);
                 }
+                // $getchitiet = getchitiet($get_bill);
                 include "view/chuyenkhoan.php";
                 include "view/footer.php";
                 include "view/find.php";
+                break;
+            case 'chitiet':
+                if (isset($_POST['chitiet'])){
+                    $id_bill = $_POST['id_bill'];
+                    $_SESSION['getchitiet'] = $id_bill;
+                    header('location: index.php?page=chitietdonhang');
+                }else{
+                    header('location: index.php');
+                }
+                break;
+            case 'chitietdonhang':
+                $phanloai = get_phanploai();
+                include "view/header1.php";
+                $getchitiet = getchitiet($_SESSION['getchitiet']);
+                include "view/chitietdonhang.php";
                 break;
             case 'adduser':
                 //kiem tra ton tai thi moi lay du lieu
