@@ -1,9 +1,9 @@
 <?php 
-    // echo '<pre>';
-    // print_r($_SESSION);
-    // print_r($_POST);
-    // print_r($_GET); 
-    // echo '</pre>';
+      // echo '<pre>';
+      // print_r($_SESSION);
+      // print_r($_POST);
+      // print_r($_GET); 
+      // echo '</pre>';
   $html_sanphamchitiet = '';
 
     if ($sanphamchitiet){
@@ -90,20 +90,9 @@
     ';
   }
 
-  $html_size = '';
-  foreach ($getsize as $sz) {
-    extract($sz);
-    $html_size .= 
-                    // ''.$size.'' ;
-                    '
-                    <div class="container-size">
-                    <div class="size"> 
-                      <input type = "radio" name = "size" id="size-'.$size.'" value="'.$size.'">
-                      <label for="size-'.$size.'">'.$size.'</label>
-                    </div>
-                    </div>
-                    ';
-  }
+
+
+
 
 
 
@@ -348,31 +337,41 @@
                 <?php 
                   }else{
                 ?>
-                  <div class="modal" id="binhluan">
-                  <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
+                    <div class="modal fade" id="binhluan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content custom-modal">
 
-                      <!-- header -->
-                      <div class="modal-header">
-                        <span>Thông báo</span>
-                        <button class="btn-close" data-bs-dismiss="modal"></button>
-                      </div>
+                          <!-- Header -->
+                          <div class="modal-header bg-primary text-white">
+                            <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+                            <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
 
-                      <!-- body -->
-                      <div class="modal-body">
-                        <span class="body-tb">Bạn cần phải đăng nhập để có thể bình luận</span>
-                        <?php 
-                          $_SESSION['trang'] = "sanphamchitiet";
-                          $_SESSION['idpro'] = $sanphamchitiet['id'];
-                        ?>
-                        <span>Nhấn vào <a href="index.php?page=dangnhap" class="i bi bi-person fs-4"></a> để đăng nhập</span>
-                        <span>Nhấn vào <a href="index.php?page=dangky" class="i bi bi-person-fill-add fs-4"></a> để đăng ký</span>
+                          <!-- Body -->
+                          <div class="modal-body text-center">
+                            <p class="body-tb">Bạn cần phải đăng nhập để có thể bình luận</p>
+                            <?php 
+                              $_SESSION['trang'] = "sanphamchitiet";
+                              $_SESSION['idpro'] = $sanphamchitiet['id'];
+                            ?>
+                            <p>
+                              Nhấn vào 
+                              <a href="index.php?page=dangnhap" class="btn btn-outline-primary btn-sm mx-1">
+                                <i class="bi bi-person"></i> Đăng nhập
+                              </a>
+                            </p>
+                            <p>
+                              Nhấn vào 
+                              <a href="index.php?page=dangky" class="btn btn-outline-success btn-sm mx-1">
+                                <i class="bi bi-person-fill-add"></i> Đăng ký
+                              </a>
+                            </p>
+                          </div>
+
+                        </div>
                       </div>
-  
                     </div>
-                  </div>
-                </div>
-                    <?php
+                  <?php
                   
                   }?>
     
@@ -389,125 +388,137 @@
           <div style="display: flex">
             <!-- tao form cart -->
             <form action="index.php?page=addcart" method="post" style="display: flex; flex-direction: column; width: 100%"> 
-              <input type="hidden" name="id" value="<?=$sanphamchitiet['id']?>">
-              <input type="hidden" name="img" value="<?=$img?>">
-              <input type="hidden" name="price" value="<?=$price?>">
-              <input type="hidden" name="name_item" value="<?=$name_item?>">
-              <input type="hidden" name="price_sale" value="<?=$price_sale?>">
-              <input type="hidden" name="description" value="<?=$description?>">
-              <input type="hidden" name="limit_date_sale" value="<?=$limit_date_sale?>">
-              <input type="hidden" name="size" value="<?=$size?>">
-              <input type="hidden" name="color" value="<?=$color?>">
-              <div style="display: flex; flex-direction: column">
+                <div>
+                  <div>
+                    <input type="hidden" name="id" value="<?=$sanphamchitiet['id']?>">
+                    <input type="hidden" name="img" value="<?=$img?>">
+                    <input type="hidden" name="name_item" value="<?=$name_item?>">
+                    <input type="hidden" name="price_sale" value="<?=$price_sale?>">
+                    <input type="hidden" name="description" value="<?=$description?>">
+                    <input type="hidden" name="limit_date_sale" value="<?=$limit_date_sale?>">
+                    <input type="hidden" name="price" value="<?=$price?>">
+                    <div style="display: flex; flex-direction: column">
 
-                <div style="display: flex; justify-content: space-between; text-align: center">
-                  <span style="font-size: 30px;"><?=$name_item?></span>
-                  <div style="display: flex;  align-items: center; gap: 10px">
-                    <i class="bi bi-share"></i>
-                    <i class="bi bi-heart"></i>
-                  </div>
-                </div>
-
-                  <!-- color -->
-                  <div style="display: flex; gap: 10px; margin-top: 10px; margin-bottom: 10px">
-                    <?php foreach ($getcolor as $cl): ?>
-                      <div>
-                        <input type="radio" name="color" value="<?= $cl['id_color'] ?>">
-                        <span><?= $cl['color'] ?></span>
+                    <div style="display: flex; justify-content: space-between; text-align: center">
+                      <span style="font-size: 30px;"><?=$name_item?></span>
+                      <div style="display: flex;  align-items: center; gap: 10px">
+                        <i class="bi bi-share"></i>
+                        <i class="bi bi-heart"></i>
                       </div>
-                    <?php
-                   endforeach; ?>
-
-                  </div>
-                  <!-- size -->
-                  <div style="display: flex; gap: 10px; margin-top: 10px; margin-bottom: 10px">
-                    <?=$html_size?>
-                  </div>
-
-                <div style="display: flex; justify-content: space-between">
-                  <span style="font-size: 40px;">$<?=$price?></span>
-                  <div style="display: flex; text-align: center; gap: 10px; align-items: center">
-
-                    <?php
-                      if ($getavg['avg_sao'] == 0){
-                    ?>
-                      <div>Chưa có lượt đánh gia nào</div>
-                    <?php
-                    }else{?>
-                      <?php if (number_format($getavg['avg_sao']) <2){
-                        ?>
-                        <div>
-                          <i class="bi bi-star-half"></i>
-                        </div>
-                      <?php }else if (number_format($getavg['avg_sao'])<3){
-                        ?>
-                        <div>
-                          <i class="bi bi-star-fill"></i>
-                          <i class="bi bi-star-half"></i>
-                        </div>
-                      <?php }else if (number_format($getavg['avg_sao'])<4){
-                        ?>
-                        <div>
-                          <i class="bi bi-star-fill"></i>
-                          <i class="bi bi-star-fill"></i>
-                          <i class="bi bi-star-half"></i>
-                        </div>
-                      <?php }else if (number_format($getavg['avg_sao'])<5){
-                        ?>
-                        <div>
-                          <i class="bi bi-star-fill"></i>
-                          <i class="bi bi-star-fill"></i>
-                          <i class="bi bi-star-fill"></i>
-                          <i class="bi bi-star-half"></i>
-                        </div>
-                      <?php }else{
-                        ?>
-                        <div>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-half"></i>
-                        </div>
-                      <?php }?>
-                      <a href="index.php?page=danhgia" style="color: blue;"><span>(<?=$count_binhluan?>)</span></a>
-
-                    <?php
-                    }
-                    ?>
                     </div>
 
-                </div>
-                <div style="margin-top: 10px; margin-bottom: 10px">
-                  <?=$description?> 
-                </div>
+                    <!-- color -->
+                    <div style="display: flex; gap: 10px; margin-top: 10px; margin-bottom: 10px">
+                      <?php 
+                        foreach ($getColor as $cl) {
+                          ?>
+                          <button type="button" onclick="chonMau('<?=htmlspecialchars($cl['id_color'])?>')">
+                            <?=htmlspecialchars($cl['color'])?>
+                          </button>
+                        <?php }
+                      ?>
+                    </div>
+                    <!-- size -->
+                    <div style="display: flex; gap: 10px; margin-top: 10px; margin-bottom: 10px">
+                      <?php
+                        foreach ($getSize as $sz) {
+                          ?>
+                          <button type="button" onclick="chonSize('<?=htmlspecialchars($sz['id_size'])?>')">
+                            <?=htmlspecialchars($sz['size'])?>
+                          </button>
+                        <?php 
+                        }
+                      ?>
+                    </div>
 
-                <div  style="display: flex; border: 1px solid black; width: 50%; justify-content: center; border-radius: 100px; padding: 2px; margin-top: 10px; margin-bottom: 10px">
-                  <button type="button" onclick="giam()" style="background: none; border: none"><i class="bi bi-dash fs-4"></i></button>
-                  <input name="soluong" type="number" id="tanggiam" value="1" min="1" style="border: none; display: flex; text-align: center ">
-                  <button type="button" onclick="tang()" style="background: none; border: none"><i class="bi bi-plus fs-4"></i></button>
-                  <!-- script -->
-                  <script>
-                    function giam(){
-                      const inp = document.getElementById('tanggiam');
-                      let curr = parseInt(inp.value);
-                      if (curr>1){
-                        inp.value = curr - 1;
-                      }
-                    }
-                    function tang(){
-                      const inp = document.getElementById('tanggiam');
-                      let curr =parseInt(inp.value);
-                      inp.value = curr+1;
-                    }
-                  </script>
-                </div>
-              </div>
+                    <input type="hidden" name="color" value="<?= isset($_GET['color']) ? htmlspecialchars($_GET['color']) :'' ?>">
+                    <input type="hidden" name="size" value="<?= isset($_GET['size']) ? htmlspecialchars($_GET['size']) :'' ?>">
 
-              <button type="submit" name="addcart" style="width: 100%; border-radius: 100px; border: none; background: black; height: 50px;"<?php if (!isset($_SESSION['session_user']) || count($_SESSION['session_user']) === 0) echo 'onclick="dangnhap(); return false;"'; ?>>>
-                  <i class="bi bi-cart fs-5" style="color: white;"></i>
-                  <span style="color: white;">Add to cart</span>
+                    <div style="display: flex; justify-content: space-between">
+                        <span style="font-size: 40px;">$<?=$price?></span>
+                        <div style="display: flex; text-align: center; gap: 10px; align-items: center">
+
+                          <?php
+                            if ($getavg['avg_sao'] == 0){
+                          ?>
+                            <div>Chưa có lượt đánh gia nào</div>
+                          <?php
+                          }else{?>
+                            <?php if (number_format($getavg['avg_sao']) <2){
+                              ?>
+                              <div>
+                                <i class="bi bi-star-half"></i>
+                              </div>
+                            <?php }else if (number_format($getavg['avg_sao'])<3){
+                              ?>
+                              <div>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-half"></i>
+                              </div>
+                            <?php }else if (number_format($getavg['avg_sao'])<4){
+                              ?>
+                              <div>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-half"></i>
+                              </div>
+                            <?php }else if (number_format($getavg['avg_sao'])<5){
+                              ?>
+                              <div>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-half"></i>
+                              </div>
+                            <?php }else{
+                              ?>
+                              <div>
+                              <i class="bi bi-star-fill"></i>
+                              <i class="bi bi-star-fill"></i>
+                              <i class="bi bi-star-fill"></i>
+                              <i class="bi bi-star-fill"></i>
+                              <i class="bi bi-star-half"></i>
+                              </div>
+                            <?php }?>
+                            <a href="index.php?page=danhgia" style="color: blue;"><span>(<?=$count_binhluan?>)</span></a>
+
+                          <?php
+                          }
+                          ?>
+                          </div>
+
+                      </div>
+                      <div style="margin-top: 10px; margin-bottom: 10px">
+                        <?=$description?> 
+                      </div>
+
+                      <div class="counter" style="display: flex; border: 1px solid black; width: 50%; justify-content: center; border-radius: 100px; padding: 2px; margin-top: 10px; margin-bottom: 10px">
+                        <button type="button" onclick="giam()" style="background: none; border: none"><i class="bi bi-dash fs-4"></i></button>
+                        <input name="soluong" type="number" id="tanggiam" value="1" min="1" style="border: none; display: flex; text-align: center ">
+                        <button type="button" onclick="tang()" style="background: none; border: none"><i class="bi bi-plus fs-4"></i></button>
+                        <!-- script -->
+                        <script>
+                          function giam(){
+                            const inp = document.getElementById('tanggiam');
+                            let curr = parseInt(inp.value);
+                            if (curr>1){
+                              inp.value = curr - 1;
+                            }
+                          }
+                          function tang(){
+                            const inp = document.getElementById('tanggiam');
+                            let curr =parseInt(inp.value);
+                            inp.value = curr+1;
+                          }
+                        </script>
+                  </div>
+                </div>
+                
+              <button type="submit" name="addcart" style="width: 100%; border-radius: 100px; border: none; background: black; height: 50px;"<?php if (!isset($_SESSION['session_user']) || count($_SESSION['session_user']) === 0) echo 'onclick="dangnhap(); return false;"'; ?>>
+                <i class="bi bi-cart fs-5" style="color: white;"></i>
+                <span style="color: white;">Add to cart</span>
               </button>
+
             </form>
           </div>
         </div>
@@ -597,7 +608,34 @@
   .size:hover{
     border-radius: 1px solid black;
   }
+  .custom-modal {
+  border-radius: 10px;
+  overflow: hidden;
+  }
 
+  .custom-modal .modal-header {
+    border-bottom: none;
+    padding: 1rem 1.5rem;
+  }
+
+  .custom-modal .modal-body {
+    font-family: 'Arial', sans-serif;
+    padding: 2rem;
+  }
+
+  .custom-modal .modal-body p {
+    margin: 1rem 0;
+    font-size: 16px;
+  }
+
+  .custom-modal .btn {
+    transition: all 0.3s ease-in-out;
+  }
+
+  .custom-modal .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
 
 
 
@@ -628,6 +666,16 @@
       event.preventDefault();
     }
   
+  }
+  function chonMau(color){
+    const url = new URL(window.location.href);
+    url.searchParams.set("color",color);
+    window.location.href = url;
+  }
+  function chonSize(size){
+    const url = new URL(window.location.href);
+    url.searchParams.set("size",size);
+    window.location.href = url;
   }
 </script>
 

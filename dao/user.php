@@ -1,9 +1,9 @@
 <?php
 require_once 'pdo.php';
 
-function user_insert($email, $password){
-    $sql = "INSERT INTO user(email, password) VALUES (?, ?)";
-    pdo_execute($sql, $email, $password); 
+function user_insert($email, $password, $ngaydangki){
+    $sql = "INSERT INTO user(email, password, ngaydangki) VALUES (?, ?, ?)";
+    pdo_execute($sql, $email, $password, $ngaydangki); 
 }
 
 function user_select_by_email($email){
@@ -66,7 +66,85 @@ function get_id ($email){
     return pdo_query_one($sql, $email);
 }
 
-// function khachhang()
+function danhsachkhachhang(){
+    $sql = "SELECT user.*, taikhoan.background, taikhoan.color
+            from user
+            join taikhoan on taikhoan.id = user.trangthai";
+    return pdo_query($sql);
+}
+
+function getOrderById($id_user){
+    $sql = "SELECT COUNT(id_bill) AS total_orders FROM bill WHERE id_user = ?";
+    $result = pdo_query_one($sql, $id_user);
+    return $result['total_orders'];
+}
+
+function getTotalById($id_user){
+    $sql = "SELECT sum(tongtien) as total from bill where id_user = ?";
+    $result = pdo_query_one($sql, $id_user);
+    return $result['total'];
+}
+
+function getStatusById($id_user){
+    $sql = "SELECT taikhoan.trangthai
+            from taikhoan
+            join user on user.trangthai = taikhoan.id
+            where user.id_user = ?";
+    $result = pdo_query_one($sql, $id_user);
+    // return pdo_query_value($sql)
+    return $result['trangthai'];
+}
+
+function tongkhachhang(){
+    $sql = "SELECT count(id_user) as total from user";
+    $result = pdo_query_one($sql);
+    return $result['total'];
+}
+
+function khachhangmoi(){
+    $sql = "SELECT count(id_user) as total
+            from user
+            where ngaydangki >= current_date() - interval 7 day";
+    $result = pdo_query_one($sql);
+    return $result['total'];
+}
+
+function khachhangtiemnang(){
+    $sql = "SELECT count(*) as total
+            from(
+                select id_user
+                from bill
+                group by id_user
+                having sum(tongtien)>200
+            )as total";
+    $result = pdo_query_one($sql);
+    return $result['total'];
+}
+
+function khachhangkemmuasam(){
+    $sql = "SELECT count(id_user) as total
+            from user
+            where id_user not in (
+                select distinct id_user
+                from bill
+            );";
+    $result = pdo_query_one($sql);
+    return $result['total'];
+}
+
+function khoataikhoan($id_user){
+    $sql = "UPDATE user set trangthai = 2 where id_user = ?";
+    pdo_execute($sql, $id_user);
+}
+function motaikhoan($id_user){
+    $sql = "UPDATE user set trangthai = 1 where id_user = ?";
+    pdo_execute($sql, $id_user);
+}
+
+function xoataikhoan($id_user){
+    $sql = "DELETE from user where id_user = ?";
+    pdo_execute($sql, $id_user);
+}
 
 
 // function khach_hang_update($ma_kh, $mat_khau, $ho_ten, $email, $hinh, $kich_hoat, $vai_tro){

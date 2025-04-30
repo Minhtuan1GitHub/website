@@ -81,7 +81,7 @@
                   }
                   if (isset($_SESSION['session_user']['role']) && $_SESSION['session_user']['role'] ==1){
                     echo '
-                          <a href="index.php?page=admin">
+                          <a href="admin/index.php">
                             <i class = "bi bi-kanban fs-5"></i>
                           </a>
                           ';

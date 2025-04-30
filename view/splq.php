@@ -92,6 +92,16 @@
   .carousel-slide img {
     width: 100%;
   }
+  @media (max-width: 768px){ /* ipad */
+    .carousel-slide{
+      flex: 0 0 50%;
+    }
+  }
+  @media (max-width: 576px){ /* moblie */
+    .carousel-slide{
+      flex: 0 0 100%;
+    }
+  }
 </style>
 
 <script>

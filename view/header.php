@@ -34,7 +34,7 @@
 </head>
 
 
-<body>
+<body >
 
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
@@ -80,8 +80,8 @@
                   }
                   if (isset($_SESSION['session_user']['role']) && $_SESSION['session_user']['role'] ==1){
                     echo '
-                          <a href="index.php?page=admin">
-                            <i class="bi bi-kanban fs-5"></i>
+                    <a href="admin/index.php">
+                    <i class="bi bi-kanban fs-5"></i>
                           </a>
                           ';
                   }

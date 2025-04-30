@@ -1,8 +1,8 @@
 <?php
-  // echo '<pre>';
-  // print_r($_SESSION);
-  // print_r($_POST);
-  // echo '</pre>';
+  echo '<pre>';
+  print_r($_SESSION);
+  print_r($_POST);
+  echo '</pre>';
   if (isset($_SESSION['session_user']) && (count($_SESSION['session_user'])>0)){
     extract($_SESSION['session_user']);
  
@@ -24,78 +24,73 @@
 </nav>
 
 <div class="container" style="margin-top: 0px;">
-    <div class="row">
-      <div class="col-2 thoat" style="gap: 30px">
-
-        <a href="index.php?page=chuyenkhoan" class="forget">Đơn hàng của bạn</a>
-
-        <a href="index.php?page=changePassword" class="forget">Thay đổi mật khẩu </a>
-        
-        <a href="index.php?page=logout" class="exit" onclick="return confirm('Bạn có chắc chắn muốn đăng xuất không?')">Đăng xuất</a>
-
+  <div class="row">
+    <div class="col-2 thoat" style="gap: 30px">
+      <a href="index.php?page=chuyenkhoan" class="forget">Đơn hàng của bạn</a>
+      <a href="index.php?page=changePassword" class="forget">Thay đổi mật khẩu</a>
+      <a href="index.php?page=logout" class="exit" onclick="return confirm('Bạn có chắc chắn muốn đăng xuất không?')">Đăng xuất</a>
+    </div>
+    <div class="col-10">
+      <div class="row" style="display: flex; border-bottom: 1px solid black; padding-bottom: 15px;">
+        <h4 class="col-5">Thông tin của bạn</h4>
+        <?php
+        if (isset($_SESSION['tb_xacthuc']) && ($_SESSION['tb_xacthuc'])) {
+          echo "<h2 class='col alert' style='font-size: 24px; padding: 0px; color: green; justify-content: center; display: flex' id='myAlert'>" . $_SESSION['tb_xacthuc'] . "</h2>";
+          unset($_SESSION['tb_xacthuc']);
+        }
+        if (isset($_SESSION['tb_dangnhap']) && ($_SESSION['tb_dangnhap'])) {
+          echo "<h2 class='col alert' style='font-size: 24px; padding: 0px; color: green; justify-content: center; display: flex' id='myAlert'>" . $_SESSION['tb_dangnhap'] . "</h2>";
+          unset($_SESSION['tb_dangnhap']);
+        }
+        ?>
       </div>
-      <div class="col-10">
-          <div class="row" style="display: flex;border-bottom: 1px solid black; padding-bottom: 15px;">
-              <h4 class="col-5">Thông tin của bạn</h4>
-              <?php
-                if (isset($_SESSION['tb_xacthuc']) && ($_SESSION['tb_xacthuc'])){
-                  echo "<h2 class ='col alert ' style='font-size: 24px; padding: 0px; color: green; justify-content: center; display: flex' id = 'myAlert'>".$_SESSION['tb_xacthuc']."</h2>";
-                  unset($_SESSION['tb_xacthuc']);
-                }
-                if (isset($_SESSION['tb_dangnhap']) && ($_SESSION['tb_dangnhap'])){
-                  echo "<h2 class ='col alert ' style='font-size: 24px; padding: 0px; color: green; justify-content: center; display: flex' id = 'myAlert'>".$_SESSION['tb_dangnhap']."</h2>";
-                  unset($_SESSION['tb_dangnhap']);
-                } 
-              ?>
-          </div>
-          <form action="index.php?page=updateuser" method="post">
-            <table class="table ">
-                <tr>
-                  <td><label for="email">Email</label></td>
-                  <td><input type ="email" name="email" placeholder="Nhập email" value="<?=$email?>" style="width: 100%; border: none"></td>
-                </tr>
-                <tr>
-                  <td><label for="password">Mật khẩu</label></td>
-                  <td>
-                    <div class="input-group">
-                      <input type ="password" name="password" placeholder="password" value="<?=$password?>" style="width: 94.5%; border: none" readonly> <!-- redonly khoa mat khau, nhung van co the submit-->
-                      <span class="input-group-text" style="background: transparent; border: transparent">
-                        <i class="bi bi-eye-slash" id="conmat" onclick="nhanvao()"></i>
-                      </span>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><label for="name">Tên</label></td>
-                  <td><input type ="text" name="name" placeholder="Nhập tên" value="<?=$ten?>" style="width: 100%; border: none"></td>
-                </tr>
-                <tr>
-                  <td><label for="district">Địa chỉ</label></td>
-                  <td><input type ="text" name="district" placeholder="Nhập địa chỉ" value="<?=$diachi?>" style="width: 100%; border: none"></td>
-                </tr>
-                <tr>
-                  <td><label for="phone">Số điện thoại</label></td>
-                  <td><input type ="text" name="phone" placeholder="Nhập số điện thoại" value="<?=$dienthoai?>" style="width: 100%; border: none"></td>
-                </tr>
-                <tr>
-                  <td><label for="date">Ngày sinh</label></td>
-                  <td><input type ="date" name="date" placeholder="Nhập ngày sinh" value="<?=$sinhnhat?>" style="width: 100%; border: none"></td>
-                </tr>
-                <tr>
-                  <td><label for="gender">Giới tính</label></td>
-                  <td>
-                    <input type ="text" name="gender" placeholder="Nhập giới tính" value="<?=$gioitinh?>" style="width: 100%; border: none">
-                  </td>
-                </tr>
-            </table>
-            <div style="display: flex; justify-content: end; margin-bottom: 10px">
-              <input type="hidden" name = "id_user" value="<?=$id_user?>">
-              <input type="submit" name="capnhat" value="Cập nhật" class="capnhat">
+      <form action="index.php?page=updateuser" method="post">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" name="email" class="form-control" placeholder="Nhập email" value="<?=$email?>">
             </div>
-          </form>
-      </div>
-      </div>
-
+            <div class="form-group">
+              <label for="password">Mật khẩu</label>
+              <div class="input-group">
+                <input type="password" name="password" class="form-control" placeholder="password" value="<?=$password?>" readonly>
+                <span class="input-group-text" style="background: transparent; border: transparent">
+                  <i class="bi bi-eye-slash" id="conmat" onclick="nhanvao()"></i>
+                </span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="name">Tên</label>
+              <input type="text" name="name" class="form-control" placeholder="Nhập tên" value="<?=$ten?>">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="district">Địa chỉ</label>
+              <input type="text" name="district" class="form-control" placeholder="Nhập địa chỉ" value="<?=$diachi?>">
+            </div>
+            <div class="form-group">
+              <label for="phone">Số điện thoại</label>
+              <input type="text" name="phone" class="form-control" placeholder="Nhập số điện thoại" value="<?=$dienthoai?>">
+            </div>
+            <div class="form-group">
+              <label for="date">Ngày sinh</label>
+              <input type="date" name="date" class="form-control" placeholder="Nhập ngày sinh" value="<?=$sinhnhat?>">
+            </div>
+            <div class="form-group">
+              <label for="gender">Giới tính</label>
+              <input type="text" name="gender" class="form-control" placeholder="Nhập giới tính" value="<?=$gioitinh?>">
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: end; margin-bottom: 10px">
+          <input type="hidden" name="id_user" value="<?=$id_user?>">
+          <input type="submit" name="capnhat" value="Cập nhật" class="btn btn-primary">
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
 
 <style>
@@ -182,16 +177,6 @@
     var kituhoa = /[A-Z]/;
     var kitudacbiet = /[!@#$%^&*(),.?":{}|<>]|[_]/;
 
-    // if (password.length < 8){
-    //   e.preventDefault();
-    //   alert('Mật khẩu phải có ít nhất 8 kí tự');
-    // }else if (!kituhoa.test(password)){
-    //   e.preventDefault();
-    //   alert("Mật khẩu phải có ít nhất một chữ cái viết hoa")
-    // }else if (!kitudacbiet.test(password)){
-    //   e.preventDefault();
-    //   alert("Mật khẩu ít nhất phải có một kí tự đặc biệt");
-    // }
 
     if (gender != 'Nam' && gender != 'Nữ' && gender != 'Nu' && gender !=''){
       e.preventDefault();

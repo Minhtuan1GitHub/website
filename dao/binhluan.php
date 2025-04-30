@@ -16,6 +16,17 @@ function binhluan_all($id, $limi){
   return pdo_query($sql, $id);
 }
 
+function binhluan_alll($id, $order_by){
+  $sql = "SELECT binhluan.*, item.name_item, danhmuc.name, danhmuc.dm_id
+          from binhluan
+          join item on item.id = binhluan.id
+          join danhmuc on danhmuc.dm_id = item.dm_id
+          where binhluan.id = ? and binhluan.view =1";
+  $sql .= " order by binhluan.$order_by desc";
+  return pdo_query($sql, $id);
+}
+
+
 function binhluan_count($id){
   $sql = "SELECT count(id_binhluan) as count_binhluan from binhluan where id = ?";
   $result = pdo_query($sql, $id);

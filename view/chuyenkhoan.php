@@ -34,29 +34,106 @@ foreach ($getchitiet as $ct) {
         <div class="col">Địa chỉ</div>
         <div class="col-1">Tổng tiền</div>
         <div class="col">Trạng thái thanh toán</div>
+        <div class="col">Thao tác</div>
         <div class="col">Chi tiết đơn hàng</div>
+
     </div>
 
     <?php foreach ($get_bill as $bill): ?>
-    <div class="row" style="padding: 8px 0; border-bottom: 1px solid #ccc;">
-        <div class="col"><?= $bill['id_bill'] ?></div>
-        <div class="col-1"><?= $bill['ten'] ?></div>
-        <div class="col"><?= $bill['sdt'] ?></div>
-        <div class="col"><?= $bill['dc'] ?></div>
-        <div class="col-1"><?= $bill['tongtien'] ?>₫</div>
-        <div class="col" style="background: <?=$bill['background']?>; color: <?=$bill['color']?>; font-weight: bold; border-radius: 8px; display:flex; justify-content: center; align-items: center; gap: 3px">
-            <?= $bill['icon'] ?>
-            <?= $bill['trangthai'] ?>
-        </div>
-        <div class="col" style="display: flex; justify-content: start">
-            <form action="index.php?page=chitiet" method="post">
-                <input type="hidden" name="id_bill" value="<?=$bill['id_bill']?>">
-                <button class="chitietdon" name="chitiet">Chi tiết</button>
-            </form>
+        <form action="index.php?page=updateorder" method="post">
+            <div class="row" style="padding: 8px 0; border-bottom: 1px solid #ccc;">
+                <div class="col"><?= $bill['id_bill'] ?></div>
+                <div class="col-1">
+                    <?php
+                        if ($bill['id'] == 0 || $bill['id'] == 2) {
+                            ?>
+                            <input type="text" value="<?= $bill['ten']?>" style="width: 100%;" name="ten">
+                        <?php }else{
+                            ?>
+                            <input type="text" value="<?= $bill['ten']?>" style="width: 100%; background: none; border: none" disabled>
+                        <?php }
+                    ?>
+                </div>
+                <div class="col">
+                    <?php
+                            if ($bill['id'] == 0 || $bill['id'] == 2) {
+                                ?>
+                                <input type="text" value="<?= $bill['sdt']?>" style="width: 100%;" name="sdt">
+                            <?php }else{
+                                ?>
+                                <input type="text" value="<?= $bill['sdt']?>" style="width: 100%; background: none; border: none" disabled>
+                            <?php }
+                    ?>
+                </div>
+                <div class="col">
+                    <?php
+                            if ($bill['id'] == 0 || $bill['id'] == 2) {
+                                ?>
+                                <input type="text" value="<?= $bill['dc']?>" style="width: 100%;" name="dc">
+                            <?php }else{
+                                ?>
+                                <input type="text" value="<?= $bill['dc']?>" style="width: 100%; background: none; border: none" disabled>
+                            <?php }
+                    ?>
 
-        </div>
-    </div>
-<?php endforeach; ?>
+                </div>
+                <div class="col-1"><?= $bill['tongtien'] ?>₫</div>
+                <div class="col" style="background: <?=$bill['background']?>; color: <?=$bill['color']?>; font-weight: bold; border-radius: 100px; display:flex; justify-content: center; align-items: center; gap: 3px">
+                    <?= $bill['trangthai'] ?>
+                    <input type="hidden" value="<?=$bill['id']?>" name="trangthai">
+                </div>
+
+                <div class="col">
+                    <div style="display: flex; flex-direction: row; gap: 10px">
+                        <?php 
+                            if ($bill['id'] ==0 || $bill['id'] == 2){
+                                ?>
+                                
+                                    <button name="sua">
+                                        <i class="bi bi-tools"></i>
+                                        <span>Sửa</span>
+                                    </button>
+                            <?php }else {
+                                ?>
+                                <button disabled style="background: none; border: none">
+                                    <i class="bi bi-tools"></i>
+                                    <span>Sửa</span>
+                                </button>
+                            <?php }
+                        ?>
+                        <?php
+                            if ($bill['id'] ==0 || $bill['id'] == 2 || $bill['id'] == 1){
+                                ?>
+                                                            
+                                    <button name="huy" onclick="return confirm('Bạn có chắc chắc muốn xóa?') ">
+                                        <i class="bi bi-x"></i>
+                                        <span>Hủy</span>
+                                    </button>
+                            <?php }else {
+                                ?>
+                                <button disabled style="background: none; border: none">
+                                    <i class="bi bi-x-lg"></i>
+                                    <span>Hủy</span>
+                                </button>
+                            <?php }
+                        ?>
+  
+                    </div>
+                </div>
+
+                <div class="col" style="display: flex; justify-content: start">
+                    <!-- <form action="index.php?page=chitiet" method="post" style="display: flex;"> -->
+                        <input type="hidden" name="id_bill" value="<?=$bill['id_bill']?>">
+                        <div style=" display: flex;">
+                            <button class="chitietdon" name="chitiet">Chi tiết đơn hàng</button>
+                        </div>
+                    <!-- </form> -->
+                </div> 
+            </div>
+        </form>
+
+
+    <?php endforeach; ?>
 
 </div>
 
@@ -70,13 +147,30 @@ foreach ($getchitiet as $ct) {
         color: red;
         font-weight: bold;
     }
+
     .chitietdon{
         background: transparent;
-        border: none;
-
+        border: 1px solid transparent;
+        color:rgb(255, 87, 125);
+        animation: inout 2.5s ease-in-out infinite;
+    }
+    @keyframes inout{
+        0%{
+            transform: scale(1);
+        }
+        50%{
+            transform: scale(1,2);
+        }
+        100%{
+            transform: scale(1);
+        }
     }
 
 
+
 </style>
+
+
+
 
 <script src="layout/javascript/dangky.js"></script>

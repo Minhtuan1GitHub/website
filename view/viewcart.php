@@ -1,13 +1,9 @@
 <?php 
-  // echo '<pre>';
-  // print_r($_SESSION);
-  // print_r($_POST);
-  // echo '</pre>';
-
-  
-
-
-
+    // echo '<pre>';
+    // print_r($_SESSION);
+    // print_r($_POST);
+    // echo '</pre>';
+    
   // session_start();
   $html_cart = '';
 
@@ -21,9 +17,11 @@
     $tongmon = 0;
     $tongtiensanpham = 0;
     if (isset($_SESSION['giohang'][$user]) && !empty($_SESSION['giohang'][$user])) {
+      $gh = -1;
         foreach ($_SESSION['giohang'][$user] as $index => $sp) {
+          $gh+=1;
             extract($sp);
-            $tongtien = (int)(($price_sale == 0) ? $price : $price_sale) * (int)$soluong;
+            $tongtien = (int)(($price_sale == 0) ? $price : $price) * (int)$soluong;
             $tongmon += (int)$soluong;
             $tongtiensanpham+=$tongtien;
             $html_cart .= '
@@ -36,13 +34,13 @@
                       <i class="bi bi-heart"></i>
                     </button>
                   </div>
-                  <span>'.$color.'</span>
-                  <span>'.$size.'</span>';   
+                  <span>'.size($size).'</span>
+                  <span>'.color($color).'</span>';   
                 
             if ($price_sale == 0) {
                 $html_cart .= '<span>$'.$price.'</span>';
             } else {
-                $html_cart .= '<span style="color: red;">$'.$price_sale.'</span>';
+                $html_cart .= '<span style="color: red;">$'.$price.'</span>';
             }
           
             if ($description != '') {
@@ -50,17 +48,22 @@
             }
           
             $html_cart .= '
-              <div class="counter" style="border: 1px solid black; display: flex; justify-content: space-between; width: 120px; align-items: center; border-radius: 100px">
-                <button style="border: none; background: none" onclick="giam(this)">
-                  <i class = "bi bi-dash fs-4"></i>
-                </button>
-                <span class="soluong">
-                  '.$soluong.'
-                </span>
-                <button style="border: none; background: none" onclick="tang(this)">
-                  <i class = "bi bi-plus fs-4"></i>
-                </button>
-              </div>
+
+
+                <form action="index.php?page=upsl" method="post" style="border: 1px solid black; display: flex; justify-content: space-between; width: 120px; align-items: center; border-radius: 100px">
+                  <input type="hidden" name ="id_item" value="'.$gh.'">
+                  <input type="hidden" name="id_user" value="'.$_SESSION['session_user']['id_user'].'"> 
+                  <button style="border: none; background: none" name="giam">
+                    <i class = "bi bi-dash fs-4"></i>
+                  </button>
+                  <span class="soluong">
+                    '.$soluong.'
+                  </span>
+                  <button style="border: none; background: none" name ="tang">
+                    <i class = "bi bi-plus fs-4"></i>
+                  </button>
+                </form>
+
 
               <a class="xoasanpham" href="index.php?page=remove&id='.$index.'" onclick="return confirm(\'Bạn có chắc chắn muốn xóa sản phẩm này không?\')">Remove</a>
             ';
@@ -77,15 +80,13 @@
   
 
 } 
-
-
   // thong tin 
   $html_thongtin = '';
 
-
   $html_voucher = '';
+  
   $html_soluongvoucher ='';
-
+  
   foreach ($voucher as $vc) {
     extract($vc);
     $slvoucher =count($voucher);
@@ -95,7 +96,7 @@
                         <div>
                         
 
-                          <input type="radio" class="form-check-input" name ="voucher_giam" id="radio'.$id_voucher.'" value="'.$id_voucher.'">
+                          <input type="radio" class="form-check-input" name ="voucher_giam" id="radio'.$id_voucher.'" value="'.$id_voucher.'" >
                           <label class="form-check-label" for="radio">'.$voucher_giam.'% - '.$voucher_name.'</label>
                         </div>  
                         <span>Expiration date: '.$voucher_date.' </span>
@@ -117,20 +118,12 @@
 
 ?>
 
-
-
-
 <nav class="container" aria-label="breadcrumb" style="position: sticky; top: 0; margin-top: 100px">
       
       <ol class="breadcrumb">
         <?=$html_breadcrumb;?>
       </ol>
 </nav>
-
-  
-
-
-
 
 <div class="container" style="margin-top: 0px;">
     <div class="row" style="justify-content: space-between;">
@@ -176,7 +169,22 @@
           
           <div style="display: flex; justify-content: space-between; margin-top: 10px; border-top: 1px solid black;" class="font-weight-bold fs-4">
             <span>Tổng tiền</span>
-            <span><?=$_SESSION['tien']?></span>
+            <div style="display: flex; flex-direction: column">
+              <?php if ($_SESSION['tien']>0){
+                ?>
+                <del><span><?=$tongtiensanpham?></span></del>
+
+              <?php }else{
+                ?>
+                <span><?=$tongtiensanpham?></span>
+              <?php }?>
+              <?php if ($_SESSION['tien'] > 0){
+                ?>
+                  <span><?=$_SESSION['tien']?></span>
+
+                <?php }?>
+
+            </div>
           </div>
           <div></div>
         </div>
@@ -209,16 +217,14 @@
                     <form action="index.php?page=viewcart&voucher=1" method="post">
                       <!-- input hidden de luu tong tien -->
                       <input type="hidden" name="tongdonhang" value="<?=$tongtiensanpham?>">
-                      <input type="text" name="mavoucher" placeholder="Nhập mã">
-                      <input type="submit" value="Thêm">
+                      <input type="text" name="mavoucher" id="mavoucher" placeholder="Nhập mã" >
+                      <input type="submit" value="Thêm" id="themm" disabled>
                     </form>
                   </div>
                   <span>Mã giảm giá có hiệu lực <?=$html_soluongvoucher?></span> </br>
                   <span>Hãy chọn mã giảm giá từ danh sách và áp dụng vào đơn hàng của bạn</span>
                   
-                  <!-- <div> -->
-                    <!-- <?=$html_voucher;?> -->
-                  <!-- </div> -->
+
 
                   <div>
                     <form action="index.php?page=viewcart&voucher=2" method="post">
@@ -269,11 +275,18 @@
                                   $random_string = strtoupper(substr(bin2hex(random_bytes(2)), 0, 4));                                  
                                   $ma_don_hang = $_SESSION['session_user']['id_user'] . '-' . $timestamp . '-' . $random_string;
                                 ?>
-                                  <input type="text" name="madonhang" value="<?=$ma_don_hang;?>">
+                                  <input type="hidden" name="madonhang" value="<?=$ma_don_hang;?>">
                                   <?php
                                     $list_id = [];   
                                     foreach ($_SESSION['giohang'][$_SESSION['session_user']['id_user']] as $sp) {
-                                      $list_id[] = $sp['id'];
+                                      // $list_id[] = $sp['id'];
+                                      $list_id[] = [
+                                        'id' => $sp['id'],
+                                        'soluong' => $sp['soluong'],
+                                        'size' => $sp['size'],
+                                        'color' => $sp['color']
+                                        
+                                      ];
                                       ?>
                                     <?php }
                                     $id_item_json = json_encode($list_id);
@@ -281,7 +294,17 @@
                                     <input type="hidden" name="id_item" value='<?= htmlspecialchars($id_item_json, ENT_QUOTES, "UTF-8") ?>'>                                      
 
                                   <span> Mã đơn hàng: <?=$ma_don_hang?></span>
-                                  <span>Tổng tiền: <?=$_SESSION['tien']?></span>                              
+                                  <input type="hidden" name="tongtien" value="<?=$tongtiensanpham?>">
+                                  <?php
+                                    if ($_SESSION['tien'] >0){
+                                      ?>
+                                      <span>Tổng tiền: <?=$_SESSION['tien']?></span>
+                                    <?php }else{
+                                      ?>
+                                      <span>Tổng tiền: <?=$tongtiensanpham?></span>
+                                    <?php }
+                                  ?>
+                        
                                 </div>
 
 
@@ -440,8 +463,28 @@
     let span = counter.querySelector('.soluong');
     let curr = parseInt(span.innerText);
     span.innerText = curr+1;
-
   }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const mavoucher = document.getElementById('mavoucher');
+    const them = document.getElementById('themm');
+
+    function check() {
+      if (mavoucher.value.trim() === '') {
+        them.disabled = true;
+        them.type = "password";
+      } else {
+        them.disabled = false; // Nếu có chữ thì mở nút
+        them.type = "password";
+
+      }
+    }
+
+    check(); // Kiểm tra ngay khi load trang
+    mavoucher.addEventListener('input', check); // Kiểm tra mỗi lần người dùng gõ
+  });
+
+
 </script>
 
 

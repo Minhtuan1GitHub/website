@@ -38,34 +38,34 @@
     </div>
 
       <div class="col">
-          <h4 style="border-bottom: 1px solid black; padding-bottom: 15px">Cập nhật thông tin</h4>
+        <h4 style="border-bottom: 1px solid black; padding-bottom: 15px">Cập nhật thông tin</h4>
 
-          <table class="table ">
-              <tr>
-                <td><label for="email">Email</label></td>
-                <td><?=$email?></td>
-              </tr>
-              <tr>
-                <td><label for="name">Tên</label></td>
-                <td><?=$ten?></td>
-              </tr>
-              <tr>
-                <td><label for="district">Địa chỉ</label></td>
-                <td><?=$diachi?></td>
-              </tr>
-              <tr>
-                <td><label for="phone">Số điện thoại</label></td>
-                <td><?=$dienthoai?></td>
-              </tr>
-              <tr>
-                <td><label for="date">Ngày sinh</label></td>
-                <td><?=$sinhnhat?></td>
-              </tr>
-              <tr>
-                <td><label for="gender">Giới tính</label></td>
-                <td><?=$gioitinh?>  </td>
-              </tr>
-          </table>
+        <table class="table table-bordered">
+          <tr>
+          <th>Email</th>
+          <td><?=$email?></td>
+          </tr>
+          <tr>
+          <th>Tên</th>
+          <td><?=$ten?></td>
+          </tr>
+          <tr>
+          <th>Địa chỉ</th>
+          <td><?=$diachi?></td>
+          </tr>
+          <tr>
+          <th>Số điện thoại</th>
+          <td><?=$dienthoai?></td>
+          </tr>
+          <tr>
+          <th>Ngày sinh</th>
+          <td><?=$sinhnhat?></td>
+          </tr>
+          <tr>
+          <th>Giới tính</th>
+          <td><?=$gioitinh?></td>
+          </tr>
+        </table>
 
       </div>
     </div>

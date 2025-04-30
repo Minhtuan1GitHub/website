@@ -206,6 +206,7 @@
         <?=$html_breadcrumb;?> 
       </ol>
 </nav>
+<div>
 
 <div class="container border-bottom" style="margin-top: 0px;">
     <div class="row g-1 m-0 p-0">
@@ -304,4 +305,7 @@
   </script>
   
 </body>
+
+</div>
+
 </html>

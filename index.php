@@ -1,8 +1,7 @@
 <?php
     // mo cua session
-    session_start();
+    session_start(); 
     ob_start();
-    
 
 
     if (!isset($_SESSION["giohang"][$id_user])){
@@ -37,7 +36,7 @@
   } else {
       switch ($_GET['page']) {
 
-            case 'men': // Khi chọn Men
+            case 'men': 
 
                 $phanloai = get_phanploai();
                 include "view/header1.php";
@@ -122,7 +121,25 @@
 
                     
                     // $getsize =getsizebycolor($_SESSION['idpro'],$_SESSION['id_color']); 
-                    $getsize = get_size_by_id($id);
+                    // $getsize = get_size_by_id($id);
+                    $getColor = getColor($id);
+
+                    if (isset($_GET['color'])){
+                        $color = $_GET['color'];
+                        $getSize = getSize($color, $id);
+                    }
+
+                    // $getPrice = 0;
+                    // if (isset($_GET['color']) && isset($_GET['size'])) {
+                    //     $priceInfo = getPrice($id, $_GET['color'], $_GET['size']);
+                    //     if ($priceInfo && isset($priceInfo['price'])) {
+                    //         $getPrice = $priceInfo['price'];
+                    //     }
+                    // }
+                    if (isset($_GET['color']) && isset($_GET['size'])){
+                        $_SESSION['getPrice'] = getPrice($id, $_GET['color'],$_GET['size']);
+                    }
+
  
                     $getavg = getavg($id);
                     $count_binhluan = binhluan_count($id);
@@ -156,6 +173,7 @@
                 break;
                 
             case 'addcart':
+                unset($_SESSION['getPrice']);
 
                 if (isset($_SESSION['session_user']) && count($_SESSION['session_user'])>0){
 
@@ -172,8 +190,8 @@
                         $description = $_POST["description"];
                         $soluong = $_POST["soluong"];
                         $limit_date_sale = $_POST["limit_date_sale"];
-                        $size = $_POST["size"];
                         $color = $_POST["color"];
+                        $size = $_POST["size"];
                         $sp = array("id"=>$id,"img"=>$img, "price"=>$price, "name_item" =>$name_item, "price_sale"=>$price_sale,"description"=>$description, "soluong"=>$soluong, "limit_date_sale"=>$limit_date_sale, "size"=>$size, "color"=>$color);
                         // day vao gio hang
                         if (!isset($_SESSION["giohang"][$id_user])) {
@@ -182,7 +200,7 @@
 
                         $tontai = false;
                         foreach ($_SESSION["giohang"][$id_user] as $key => $item) {
-                            if ($item['id'] == $id){
+                            if ($item['id'] == $id && $item['color'] == $color && $item['size'] == $size){
                                 $_SESSION["giohang"][$id_user][$key]['soluong'] +=$soluong;
                                 $tontai = true;
                                 break;
@@ -213,7 +231,7 @@
                       $phanloai = get_phanploai();
                 include "view/header1.php";
                 include "view/viewlike.php";
-                include "view/footer1.php";
+                include "view/footer.php";
                 include "view/find.php";
                 break;
             case 'remove':
@@ -262,10 +280,9 @@
                     if (isset($_GET['voucher']) && ($_GET['voucher']==2)){
                         $tongdonhang = $_POST['tongdonhang'];
                         $id_voucher=  $_POST['voucher_giam'];
-                        
-   
+                        $_SESSION['voucher'] = $id_voucher;
+                         
                         $giatrivoucher = getVoucher($id_voucher);
-                        // header('location: index.php');
                     }
                 }
 
@@ -301,12 +318,18 @@
                     if(is_array($kq) && (count($kq))){
                         $_SESSION['session_user'] = $kq;
                         $_SESSION['tb_dangnhap'] = 'Đăng nhập thành công';
+                        $role = $_SESSION['session_user']['role'];
                         
+
+
                         if (isset($_SESSION['trang']) && $_SESSION['trang'] == "sanphamchitiet"){
                             header('location: index.php?page=sanphamchitiet&idpro='.$_SESSION['idpro']);
                             unset($_SESSION['trang']);
                             unset($_SESSION['idpro']);
-                        }else{
+                        }else if ($role == 1){
+                            header('location: admin/index.php');
+                        }
+                        else{
                             header('location: index.php?page=member');
                         }
                                                   
@@ -471,8 +494,10 @@
                             $diachi = $_SESSION['session_user']['diachi'];
                         }
                         $madonhang = $_POST['madonhang'];
-                        if (isset($_SESSION['tien'])){
+                        if ($_SESSION['tien']>0){
                             $tongtien = $_SESSION['tien'];
+                        }else{
+                            $tongtien = $_POST['tongtien'];
                         }
                         date_default_timezone_set('Asia/Ho_Chi_Minh');
                         $dateCreate = date("Y-m-d H:i:s");
@@ -488,13 +513,30 @@
                             }
                         }
                     }
+                    if (isset($_SESSION['voucher'])){
+                        $voucher = $_SESSION['voucher'];
+                        unset($_SESSION['voucher']);
+                    }else{
+                        $voucher = 6;
+                    }
+                    $tienbandau = $_POST['tongtien'];
 
-                    add_bill($madonhang, $id_user, $tongtien, $sodienthoai, $diachi, $ten, $dateCreate);
+                    $trangthaithanhtoan = 1;
+
+
+                    add_bill($madonhang, $id_user, $tongtien, $sodienthoai, $diachi, $ten, $dateCreate, $voucher, $tienbandau, $trangthaithanhtoan);
+
                     foreach ($list as $li) {
-                        add_bill_detail($madonhang, $li, 1);
+                        $id = $li['id'];
+                        $sl = $li['soluong'];
+                        $size = $li['size'];
+                        $color = $li['color'];
+                        $tien = $id * $tien;
+                        add_bill_detail($madonhang, $id, $sl, $tien, $size, $color);
                     }
 
                     sendmail1($email, $ten, $sodienthoai, $diachi, $madonhang, $tongtien);
+                    unset($_SESSION['giohang']);
                     header('location: index.php?page=chuyenkhoan');
 
                 }
@@ -531,12 +573,14 @@
                 if (isset($_POST["dangky"]) && ($_POST["dangky"])){
                     $email = $_POST["email"];
                     $password = $_POST["password"];
+                    date_default_timezone_set('Asia/Ho_Chi_Minh');
+                    $ngaydangki = date("Y-m-d H:i:s");
                     //xu li
                     $tontai = user_select_by_email($email);
                     $alert = '';
                     if ($tontai == false){
                         
-                        user_insert($email, $password);
+                        user_insert($email, $password, $ngaydangki);
                         $alert = "<div class='alert alert-success mt-2' id ='myAlert' role = 'alert'>Đăng ký thành công</div>";
                         $phanloai = get_phanploai();
                         include "view/header1.php";
@@ -582,7 +626,7 @@
 
                 include "view/women.php";
 
-                include "view/footer1.php";
+                include "view/footer.php";
                 include "view/find.php";
                 break;
                 
@@ -608,7 +652,7 @@
 
                 include "view/kid.php";
 
-                include "view/footer1.php";
+                include "view/footer.php";
                 include "view/find.php";
                 break; 
 
@@ -632,16 +676,29 @@
 
                 include "view/baby.php";
 
-                include "view/footer1.php";
+                include "view/footer.php";
                 include "view/find.php";
                 break; 
             case 'danhgia':
                 $phanloai = get_phanploai();
                 include "view/header1.php";
                 if (isset($_SESSION['idpro'])){
-                    $id = $_SESSION['idpro'];
+                    $id = $_SESSION['idpro'];   
                 }
-                $danhsachbinhluan = binhluan_all($id,10);
+
+                $sort = $_GET['sort'];
+                switch ($sort){
+                    case 'sortByStar':
+                        $order_by = 'sao';
+                    break;
+                    case 'sortByDate':
+                        $order_by = 'date';
+                    break;
+                    default:
+                        $order_by = 'date';
+
+                }
+                $danhsachbinhluan = binhluan_alll($id,$order_by);
                 $count_binhluan = binhluan_count($id);
 
                 include "view/danhgia.php";
@@ -656,6 +713,64 @@
                 //     $_SESSION['id_color'] =1;
                 // }
                 break;
+            case 'upsl':
+
+                if (isset($_SESSION['giohang'])){
+                    $id_user =$_POST['id_user'];
+                    $id_item = $_POST['id_item'];
+                    if (isset($_POST['tang'])){
+                        $_SESSION['giohang'][$id_user][$id_item]['soluong']+=1;
+                        header('location: index.php?page=viewcart');
+                    }
+                    if (isset($_POST['giam'])){
+                        if($_SESSION['giohang'][$id_user][$id_item]['soluong']>1){
+                            $_SESSION['giohang'][$id_user][$id_item]['soluong']-=1;
+
+                        }
+                        header('location: index.php?page=viewcart');
+                    }
+
+                }
+
+                // include "view/header1.php";
+                // $voucher = get_voucher(10);
+                // include "view/viewcart.php";
+                // include "view/find.php";
+                // include "view/footer.php";
+                break;
+            case 'updateorder':
+                if (isset($_POST['sua'])){
+                    $id_bill = $_POST['id_bill'];
+                    $ten = $_POST['ten'];
+                    $sdt = $_POST['sdt'];
+                    $dc = $_POST['dc'];
+                    $_SESSION['hah'] = $ten;
+                    
+                    updateorder($id_bill, $ten, $sdt, $dc);
+
+                    header('location: index.php?page=chuyenkhoan');
+                }
+                if (isset($_POST['huy'])){
+                    $id_bill = $_POST['id_bill'];
+                    $trangthai = '7';
+                    updatetrangthai($id_bill,$trangthai);
+                    header('location: index.php?page=chuyenkhoan');
+
+                }
+
+                if (isset($_POST['chitiet'])){
+                    $id_bill = $_POST['id_bill'];
+                    $_SESSION['getchitiet'] = $id_bill;
+                    header('location: index.php?page=chitietdonhang');
+                }
+
+                break;
+
+
+
+
+
+            
             default:
                 $phanloai = get_phanploai();
                 include "view/header.php";
@@ -667,3 +782,4 @@
       }
   }
 ?>
+ 

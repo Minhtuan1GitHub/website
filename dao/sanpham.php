@@ -40,7 +40,7 @@ function get_dssp_home($limi){
 }
 
 function get_voucher($limi){
-    $sql = " SELECT * from voucher order by voucher_giam asc limit ".$limi;
+    $sql = " SELECT * from voucher where voucher_giam >0 order by voucher_giam asc limit ".$limi;
     return pdo_query($sql);
 }
 
@@ -121,7 +121,7 @@ function get_dm_id($id){
 
 
 function get_sp_by_id($id){
-    $sql = "SELECT item.*, danhmuc.name from item left join danhmuc on danhmuc.dm_id = item.dm_id where item.id=?";
+    $sql = "SELECT item.*, danhmuc.name, product.price from item left join danhmuc on danhmuc.dm_id = item.dm_id join product on product.id_item = item.id where item.id=?";
     return pdo_query_one($sql, $id);
 }
 
@@ -152,22 +152,101 @@ function getavg($id){
     return pdo_query_one($sql, $id);
 }
 
-function getsize($id){
-    $sql ="SELECT * from product join size on size.id = product.id_size where product.id_item = ?";
+function getColor($id){
+    $sql = "SELECT distinct color.color, product.id_color
+            from color
+            join product on product.id_color = color.id
+            where product.id_item = ?";
     return pdo_query($sql, $id);
 }
-// function getsizebycolor($id_item,$id_color){
-//     $sql = "SELECT size
-//             from product
-//             join size on size.id = product.id_size
-//             join color on color.id = product.id_color
-//             where  product.id_item = ?  and product.id_color = ?";
-//     return pdo_query($sql, $id_item, $id_color);
+
+function getSize($id, $id_item){
+    $sql = "SELECT size.size, product.id_size
+            from size
+            join product on product.id_size = size.id
+            where product.id_color = ? and product.id_item = ?";
+    return pdo_query($sql, $id, $id_item);
+}
+
+function getPrice($id_item, $id_color, $id_size){
+    $sql = "SELECT price from product where id_item = ? and id_size = ? and id_color = ?";
+    $result = pdo_query_one($sql, $id_item, $id_size, $id_color);
+    return $result ? $result['price'] :0;
+}
+
+function size($id){
+    $sql = "SELECT size from size where id = ?";
+    $result = pdo_query_one($sql, $id);
+    return $result ? $result['size'] :'';
+}
+function color($id){
+    $sql = "SELECT color from color where id = ?";
+    $result = pdo_query_one($sql, $id);
+    return $result ? $result['color'] :'';
+}
+
+function getProduct($order_by){
+    $sql = "SELECT product.*, item.img, size.size, color.color
+            from product
+            join item on item.id = product.id_item
+            join size on size.id = product.id_size
+            join color on color.id = product.id_color
+            join danhmuc on danhmuc.dm_id = item.dm_id";
+    if (isset($_GET['sort'])){
+        $sql .= " where danhmuc.id_phanloai= $order_by";
+    }else{
+        $sql .= " order by product.limit_date_sale desc";
+    }
+    return pdo_query($sql);
+}
+
+function chonsanpham(){
+    $sql = "SELECT * from item";
+    return pdo_query($sql);
+}
+function chonsize(){
+    $sql = "SELECT * from size";
+    return pdo_query($sql);
+}
+function choncolor(){
+    $sql = "SELECT * from color";
+    return pdo_query($sql);
+}
+
+function themsanpham($id_item, $id_size, $id_color, $price, $stock, $limit_date_sale, $price_sale){
+    $sql = "INSERT INTO product(id_item, id_size, id_color, price, stock, limit_date_sale, price_sale) values (?,?,?,?,?,?,?)";
+    pdo_execute($sql, $id_item, $id_size, $id_color, $price, $stock, $limit_date_sale, $price_sale);
+}
+
+function sapxepdanhmuc(){
+    $sql = "SELECT * from phanloai";
+    return pdo_query($sql);
+}
+
+function xoasanpham($id, $id_color, $id_size){
+    $sql = "DELETE from product where id_item = ? and id_color = ? and id_size = ?";
+    pdo_execute($sql, $id, $id_color, $id_size);
+}
+
+function danhmuc($id_phanloai){
+    $sql = "SELECT danhmuc.name
+            from danhmuc
+            join phanloai on phanloai.id_phanloai = danhmuc.id_phanloai
+            where danhmuc.id_phanloai = ?";
+    return pdo_query($sql, $id_phanloai);
+}
+
+function updatesanpham($id_item, $id_color, $id_size, $stock){
+    $sql = "UPDATE product SET stock = ? WHERE id_item = ? AND id_color = ? AND id_size = ?";
+    return pdo_execute($sql, $stock, $id_item, $id_color, $id_size);
+}
+
+// function chonphanloai(){
+//     $sql = "SELECT name_phanloai from phanloai";
+//     return pdo_query($sql);
 // }
-function getcolor($id){
-    $sql ="SELECT * from product join color on color.id = product.id_color where product.id_item = ?";
-    return pdo_query($sql, $id);
-}
+
+
 
 
 // function get_style($id,$limi){

@@ -1,9 +1,9 @@
 <?php
-    // echo '<pre>';
-    // print_r($_SESSION);
-    // print_r($_POST);
-    // echo '</pre>';  
-
+    echo '<pre>';
+    print_r($_SESSION);
+    print_r($_POST);
+    echo '</pre>';  
+ 
     $html_binhluan = '';
     foreach ($danhsachbinhluan as $binhluan) {
       extract($binhluan);
@@ -98,15 +98,24 @@
 
 <div class="container" style="display: flex; justify-content: space-between; margin-bottom: 10px">
   <span>Số lượng bình luận: <?=$count_binhluan?></span>
-  <div class="dropdown">
+  <div class="dropstart">
   <a class="btn dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <i class="bi bi-funnel"></i>
   </a>
 
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="#">Action</a></li>
-    <li><a class="dropdown-item" href="#">Another action</a></li>
-    <li><a class="dropdown-item" href="#">Something else here</a></li>
+    <li>
+      <a class="dropdown-item" href="index.php?page=danhgia&sort=sortByStar">
+        <i class="bi bi-sort-numeric-down-alt"></i>
+        Đánh giá theo sao
+      </a>
+    </li>
+    <li>
+      <a class="dropdown-item" href="index.php?page=danhgia&sort=sortByDate">
+        <i class="bi bi-calendar2-date"></i>
+        Gần đây
+      </a>
+    </li>
   </ul>
 </div>
 </div>
