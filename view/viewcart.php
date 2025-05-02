@@ -7,77 +7,92 @@
   // session_start();
   $html_cart = '';
 
-      if (isset($_SESSION['session_user']) && count($_SESSION['session_user']) >0){
-        $user = $_SESSION['session_user']['id_user'];
-      }
-
-  $tongmon = 0;
   if (isset($_SESSION['session_user']) && count($_SESSION['session_user']) > 0) {
     $user = $_SESSION['session_user']['id_user'];
     $tongmon = 0;
     $tongtiensanpham = 0;
+  
     if (isset($_SESSION['giohang'][$user]) && !empty($_SESSION['giohang'][$user])) {
       $gh = -1;
-        foreach ($_SESSION['giohang'][$user] as $index => $sp) {
-          $gh+=1;
-            extract($sp);
-            $tongtien = (int)(($price_sale == 0) ? $price : $price) * (int)$soluong;
-            $tongmon += (int)$soluong;
-            $tongtiensanpham+=$tongtien;
-            $html_cart .= '
-                <div class="card" style="display: flex; flex-direction: row; margin-bottom: 20px; border: none; padding-bottom: 10px; border-bottom: 1px solid black; align-items: center; border-radius: 0px">
-                  <img src="layout/images/outerwear/'.$img.'" alt="" style="width: 15%; height: 15%; object-fit: cover;">
-                <div class="card-body" style="display: flex; flex-direction: column;">
-                  <div style="display: flex; align-items: center; justify-content: space-between;">
-                    <span style="text-transform: uppercase;">'.$name_item.'</span>
-                    <button style="background: transparent; border: none">
+  
+      foreach ($_SESSION['giohang'][$user] as $index => $sp) {
+        $gh += 1;
+        extract($sp);
+        // $tongtien = (int)(($price_sale == 0) ? $price : $price_sale) * (int)$soluong;
+        if ($price_sale == 0) {
+          $tongtien = (int)$price * (int)$soluong;
+        } else {
+          if ($limit_date_sale >= date("Y-m-d")) {
+            $tongtien = (int)$price_sale * (int)$soluong;
+          } else {
+            $tongtien = (int)$price * (int)$soluong;
+          }
+        }
+        $tongmon += (int)$soluong;
+        $tongtiensanpham += $tongtien;
+  
+        $html_cart .= '
+          <div class="card mb-3 shadow-sm border-0">
+            <div class="row g-0 align-items-center">
+              <div class="col-md-3">
+                <a href="index.php?page=sanphamchitiet&idpro='.$sp['id'].'"><img src="layout/images/outerwear/'.$img.'" class="img-fluid rounded-start" alt="'.$name_item.'"></a>
+              </div>
+              <div class="col-md-9">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h5 class="card-title text-uppercase">'.$name_item.'</h5>
+                    <button class="btn btn-outline-danger btn-sm" name="addlike">
                       <i class="bi bi-heart"></i>
                     </button>
                   </div>
-                  <span>'.size($size).'</span>
-                  <span>'.color($color).'</span>';   
-                
-            if ($price_sale == 0) {
-                $html_cart .= '<span>$'.$price.'</span>';
-            } else {
-                $html_cart .= '<span style="color: red;">$'.$price.'</span>';
-            }
-          
-            if ($description != '') {
-                $html_cart .= '<span>'.$description.'</span>';
-            }
-          
-            $html_cart .= '
-
-
-                <form action="index.php?page=upsl" method="post" style="border: 1px solid black; display: flex; justify-content: space-between; width: 120px; align-items: center; border-radius: 100px">
-                  <input type="hidden" name ="id_item" value="'.$gh.'">
-                  <input type="hidden" name="id_user" value="'.$_SESSION['session_user']['id_user'].'"> 
-                  <button style="border: none; background: none" name="giam">
-                    <i class = "bi bi-dash fs-4"></i>
-                  </button>
-                  <span class="soluong">
-                    '.$soluong.'
-                  </span>
-                  <button style="border: none; background: none" name ="tang">
-                    <i class = "bi bi-plus fs-4"></i>
-                  </button>
-                </form>
-
-
-              <a class="xoasanpham" href="index.php?page=remove&id='.$index.'" onclick="return confirm(\'Bạn có chắc chắn muốn xóa sản phẩm này không?\')">Remove</a>
-            ';
-            if ($limit_date_sale != '0000-00-00') {
-                $date = date("d F", strtotime($limit_date_sale));
-                $html_cart .= '<span style="color: red;">Limited-Time Offer until: '.$date.'</span>';
-            }
-            $html_cart .= '
-              <span>Tổng tiền: <span class="font-weight-bold fs-5">'.$tongtien.'</span></span>
+                  <p class="mb-1"><strong>Size:</strong> '.size($size).'</p>
+                  <p class="mb-1"><strong>Color:</strong> '.color($color).'</p>';
+  
+        if ($price_sale == 0) {
+          $html_cart .= '<p class="text-muted mb-1"><strong>Price:</strong> '.$price.' k</p>';
+        } else {
+          if ($limit_date_sale >= date("Y-m-d")) {
+            $html_cart .= '<p class="text-muted mb-1"><strong>Price:</strong> '.$price.' k</p>';         
+            $html_cart .= '<p class="text-danger mb-1"><strong>Sale Price:</strong> '.$price_sale.' k</p>';
+          }else{
+            $html_cart .= '<p class="text-muted mb-1"><strong>Price:</strong> '.$price.' k</p>';         
+          }
+        }
+  
+        if ($description != '') {
+          $html_cart .= '<p class="text-secondary"><small>'.$description.'</small></p>';
+        }
+  
+        $html_cart .= '
+                  <div class="d-flex align-items-center my-3">
+                    <form action="index.php?page=upsl" method="post" class="d-flex align-items-center">
+                      <input type="hidden" name="id_item" value="'.$gh.'">
+                      <input type="hidden" name="id_user" value="'.$_SESSION['session_user']['id_user'].'"> 
+                      <button class="btn btn-outline-secondary btn-sm" name="giam">
+                        <i class="bi bi-dash"></i>
+                      </button>
+                      <span class="mx-3">'.$soluong.'</span>
+                      <button class="btn btn-outline-secondary btn-sm" name="tang">
+                        <i class="bi bi-plus"></i>
+                      </button>
+                    </form>
+                    <a class="btn btn-outline-danger btn-sm ms-3" href="index.php?page=remove&id='.$index.'" onclick="return confirm(\'Bạn có chắc chắn muốn xóa sản phẩm này không?\')">Remove</a>
+                  </div>';
+  
+        if ($limit_date_sale >= date("Y-m-d")) {
+          $date = date("d F", strtotime($limit_date_sale));
+          $html_cart .= '<p class="text-danger"><strong>Limited-Time Offer:</strong> Until '.$date.'</p>';
+        }
+  
+        $html_cart .= '
+                  <p class="mb-0"><strong>Total:</strong>'.$tongtien.' k</p>
+                </div>
+              </div>
             </div>
           </div>';
-        }
+      }
     }
-  
+    
 
 } 
   // thong tin 
@@ -111,7 +126,6 @@
 
   $html_breadcrumb = '';
   $html_breadcrumb .='<li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                      <li class="breadcrumb-item"><a href="index.php?page=men">Men</a></li>
                       <li class="breadcrumb-item active"aria-current="page">Giỏ hàng</li>
 
                       ';
@@ -131,62 +145,66 @@
 
         <?=$html_cart;?>
         <?php
-          if (isset($_SESSION['giohang'][$_SESSION['session_user']['id_user']]) && ($_SESSION['giohang'][$_SESSION['session_user']['id_user']])){
-            echo '<div class="container-xoatatcasanpham" >
-                    <a class="xoatatcasanpham" href="index.php?page=viewcart&del=1" onclick="return confirm(\'Bạn có chắc chắn muốn xóa hết tất cả sản phẩm trong giỏ hàng\')">Xóa tất cả sản phẩm</a>
-                  </div>';
-          }else{
-            echo '<div class="alert alert-danger" style = "border-radius: 0px; font-weight: bold; color: black">Bạn chưa có sản phẩm trong giỏ hàng</div>';
-          }
-        ?>
+    if (isset($_SESSION['giohang'][$_SESSION['session_user']['id_user']]) && ($_SESSION['giohang'][$_SESSION['session_user']['id_user']])) {
+        echo '<div class="text-end">
+                <a class="btn btn-danger" href="index.php?page=viewcart&del=1" onclick="return confirm(\'Bạn có chắc chắn muốn xóa hết tất cả sản phẩm trong giỏ hàng yêu thích\')">Remove All Items</a>
+              </div>';
+    } else {
+        echo '<div class="alert alert-danger text-center" style="border-radius: 0px; font-weight: bold; color: black">
+                Bạn chưa có sản phẩm trong giỏ hàng
+              </div>';
+    }
+    ?>
 
 
         
       </div>
       <div class="col" style="display: flex; flex-direction: column;">
-        <div style="background: #DDDDDD; padding: 10px;">
-          <div style="display: flex; justify-content: space-between;margin-bottom: 10px; border-bottom: 1px solid black;" class="font-weight-bold fs-4">
-            <span>Tổng: </span>
-            <span><?=$tongmon?> mon</span>
-          </div>
+        <div>
+            <div class="order-summary">
+              <!-- Section Title -->
+              <div class="section-title d-flex justify-content-between">
+                <span>Total Items:</span>
+                <span><?=$tongmon?> items</span>
+              </div>
 
-          <div style="display: flex; justify-content: space-between;">
-            <span>Tổng tiền sản phẩm</span>
-            <span>$<?=$tongtiensanpham?></span>    
-          </div>
-          <div style="display: flex; justify-content: space-between;">
-            <span>Phí vận chuyển</span>
-            <span>$<?=$phivanchuyen?></span>
-          </div>
-          <div style="display: flex; justify-content: space-between;">
-            <span>Tong tien</span>
-            <span><?=$tongtienvaphivanchuyen?></span>  
-          </div>
-          <div style="display: flex; justify-content: space-between;">
-            <span>Thuế VAT</span>
-            <span><?=$thue?></span>      
-          </div>
-          
-          <div style="display: flex; justify-content: space-between; margin-top: 10px; border-top: 1px solid black;" class="font-weight-bold fs-4">
-            <span>Tổng tiền</span>
-            <div style="display: flex; flex-direction: column">
-              <?php if ($_SESSION['tien']>0){
-                ?>
-                <del><span><?=$tongtiensanpham?></span></del>
+              <!-- Product Total -->
+              <div class="summary-item">
+                <span>Product Total:</span>
+                <span><?=$tongtiensanpham?> k</span>
+              </div>
 
-              <?php }else{
-                ?>
-                <span><?=$tongtiensanpham?></span>
-              <?php }?>
-              <?php if ($_SESSION['tien'] > 0){
-                ?>
-                  <span><?=$_SESSION['tien']?></span>
+              <!-- Shipping Fee -->
+              <div class="summary-item">
+                <span>Shipping Fee:</span>
+                <span><?=$phivanchuyen?>k</span>
+              </div>
 
-                <?php }?>
+              <!-- Total Before Tax -->
+              <div class="summary-item">
+                <span>Subtotal:</span>
+                <span><?=$tongtienvaphivanchuyen?> k</span>
+              </div>
 
+              <!-- VAT -->
+              <div class="summary-item">
+                <span>VAT:</span>
+                <span><?=$thue?>k</span>
+              </div>
+
+              <!-- Final Total -->
+              <div class="total d-flex justify-content-between align-items-center">
+                <span>Total:</span>
+                <div>
+                  <?php if ($_SESSION['tien'] > 0) { ?>
+                    <del class="text-muted"><?=$tongtiensanpham?> k</del>
+                    <div class="discounted-price"><?=$_SESSION['tien']?> k</div>
+                  <?php } else { ?>
+                    <span><?=$tongtiensanpham?>đ</span>
+                  <?php } ?>
+                </div>
+              </div>
             </div>
-          </div>
-          <div></div>
         </div>
 
         <button class="" style="display: flex; justify-content: space-between; border: none; background: none; margin-top: 10px; border-top: 1px solid black; border-bottom: 1px solid black; padding: 10px 0px" type="button" data-bs-toggle="modal" data-bs-target="#myModal">
@@ -245,7 +263,7 @@
         </div> 
 
               <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-dialog modal-dialog-centered">
                   <div class="modal-content">
                     <div class="modal-header">
                       <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Xác thực thông tin và thanh toán</h1>
@@ -261,6 +279,7 @@
                             <div class="thongtinkhachhang" style="margin-bottom: 100px;">
                               <div class="title">Thông tin của bạn</div>
                               <div style="display: flex; flex-direction: column">
+                              
                                 <span name="ten">Tên: <?=$_SESSION['session_user']['ten']?></span>
                                 <span>Số điện thoại: <?=$_SESSION['session_user']['dienthoai']?></span>
                                 <span>Địa chỉ: <?=$_SESSION['session_user']['diachi']?></span>
@@ -295,6 +314,7 @@
 
                                   <span> Mã đơn hàng: <?=$ma_don_hang?></span>
                                   <input type="hidden" name="tongtien" value="<?=$tongtiensanpham?>">
+                                  <input type="hidden" name="tienbaclavang" value="<?php if ($_SESSION['tien'] >0){?><?=$_SESSION['tien']?><?php }else{?><?=$tongtiensanpham?><?php }?>">
                                   <?php
                                     if ($_SESSION['tien'] >0){
                                       ?>
@@ -313,28 +333,95 @@
                             </div>
                           </div>
 
-                          <div class="col">
-                            <span style="color: red; font-weight: bold">Quét mã và chuyển đúng số tiền cho đơn hàng của bạn. </span>
-                            <span stye="color: black !important">Người bán sẽ kiểm tra trông giây lát</span>
-                            <img src="layout/images/momo.jpg" alt="QR MOMO" style="width: 100%;">
-                          </div>
-
                         </div>
                         </div>
 
                         <div class="modal-footer">
-                          <span>Nếu đã thanh toán hãy bấm vào đây</span>
-                          <!-- button chuyen khoan -->
-                          <input  type="submit" class="btn-transfer" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" value="Đã chuyển khoản" name="transfer">
-                          <!-- <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Đã chuyển khoản</button> -->
+                          <input id="form-thanhtoan" type="submit" class="btn-transfer" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" value="Cash" name="cash">
+                          <input id="form-thanhtoan" type="submit" class="btn-transfer" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" value="Momo" name="momo" style="background-color: rgba(165,0,100,255);">
                         </div>
                       </form>
-                    <!-- gui form -->
 
                   </div>
                 </div>
               </div>
-              <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+              <?php
+                if (!empty($_SESSION['session_user']['ten']) && !empty($_SESSION['session_user']['dienthoai']) && !empty($_SESSION['session_user']['diachi'])) {
+                  ?>
+                  <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Lời cảm ơn</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <?php
+                            $voucher_tang = "chucbanvuive"; 
+                          ?>
+                          <span>Cảm ơn bạn vì đã lựa chọn sản phẩm của chúng tôi giữa hàng triệu những sản phẩm ngoài kia. Chúng tôi xin tặng bạn voucher <span style="color: red; font-weight: bold"> <?=$voucher_tang?> </span>thay lời cảm ơn đến bạn.</span>
+                        </div>
+                        <div class="modal-footer">
+                          <a href="index.php">
+                                    <input type="submit" class="btn " data-bs-toggle="modal" value="Hẹn gặp lại">
+
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <?php }else{
+                  ?>
+                  <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <form action="index.php?page=viewcart" method="post">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Bổ sung thông tin</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <div class="d-flex" style="flex-direction: column;">
+                              <input type="hidden" name="id_user" value="<?=$_SESSION['session_user']['id_user']?>">
+                              <?php
+                                if (empty($_SESSION['session_user']['ten'])){ ?>
+                                  <div class="mb-3">
+                                      <label for="ten" class="form-label">Tên</label>
+                                      <input type="text" class="form-control" id="ten" name="ten" placeholder="Nhập tên của bạn">
+                                  </div>
+                                <?php }
+                              ?>
+                              <?php
+                                if (empty($_SESSION['session_user']['dienthoai'])){ ?>
+                                  <div class="mb-3">
+                                    <label for="dienthoai" class="form-label">Số điện thoại</label>
+                                    <input type="tel" class="form-control" id="dienthoai" name="dienthoai" placeholder="Nhập số điện thoại của bạn">
+                                  </div>
+                                <?php }
+                              ?>
+                              <?php
+                                if (empty($_SESSION['session_user']['diachi'])){ ?>
+                                  <div class="mb-3">
+                                      <label for="diachi" class="form-label">Địa chỉ</label>
+                                      <input type="text" class="form-control" id="diachi" name="diachi" placeholder="Nhập địa chỉ của bạn">
+                                  </div>
+                                <?php }
+                              ?>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="submit" name="capnhatthongtin">
+                              <i class="bi bi-arrow-right"></i>
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+
+                <?php }
+              ?>
+              <!-- <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -352,12 +439,10 @@
                                 <input type="submit" class="btn " data-bs-toggle="modal" value="Hẹn gặp lại">
 
                       </a>
-                      <!-- <button  class="btn btn-primary"  data-bs-toggle="modal">Hẹn gặp lại</button> -->
-                      <!-- data-bs-target="#exampleModalToggle" -->
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> -->
               <div style="width: 100%; margin: 20px 0px">
                 <?php
                   $disable = '';
@@ -446,17 +531,60 @@
     color: white;
     padding: 10px;
   }
+  .order-summary {
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .order-summary .section-title {
+      font-size: 20px;
+      font-weight: bold;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+
+    .order-summary .summary-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    .order-summary .total {
+      font-size: 20px;
+      font-weight: bold;
+      border-top: 2px solid #ddd;
+      padding-top: 10px;
+      margin-top: 20px;
+    }
+
+    .order-summary del {
+      color: #888;
+    }
+
+    .order-summary .discounted-price {
+      color: #28a745;
+      font-weight: bold;
+    }
 </style>
 
 <script>
-  document.getElementById("form-thanhtoan").addEventListener("submit", function (event) {
-    const diachi = "<?= $_SESSION['session_user']['diachi'] ?>";
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("form-thanhtoan");
+            form.addEventListener("click", function (event) {
+                const diachi = "<?= $_SESSION['session_user']['diachi'] ?>";
+                const dienthoai = "<?= $_SESSION['session_user']['dienthoai'] ?>";
+                const ten = "<?= $_SESSION['session_user']['ten'] ?>";
 
-    if (!diachi || diachi.trim() === "") {
-      alert("Vui lòng cập nhật địa chỉ giao hàng trước khi thanh toán.");
-      event.preventDefault(); // Ngăn form gửi đi
-    }
-  });
+                if (!ten || ten.trim() === "" || !dienthoai || dienthoai.trim() === "" || !diachi || diachi.trim() === "") {
+                    alert("Vui lòng cập nhật đầy đủ thông tin (Tên, Số điện thoại, và Địa chỉ) trước khi thanh toán.");
+                    event.preventDefault(); // Prevent form submission
+                }
+            });
+        });
 
   function tang(btn){
     let counter = btn.closest('.counter');
@@ -483,7 +611,6 @@
     check(); // Kiểm tra ngay khi load trang
     mavoucher.addEventListener('input', check); // Kiểm tra mỗi lần người dùng gõ
   });
-
 
 </script>
 

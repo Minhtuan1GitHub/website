@@ -96,13 +96,17 @@ function get_dsspNew($dm_id,$limi,$id_phanloai){
 }
 
 function get_dsspSale($dm_id,$limi,$id_phanloai){
-    $sql = "SELECT item.*, danhmuc.name FROM item join danhmuc on danhmuc.dm_id = item.dm_id where item.sale = 1 and item.id_phanloai = ?";
+    $sql = "SELECT item.*, danhmuc.name 
+            FROM item 
+            join danhmuc on danhmuc.dm_id = item.dm_id
+            join product on product.id_item = item.id
+            where product.price_sale > 0 and item.id_phanloai = ? and product.limit_date_sale > now()";
 
     if ($dm_id > 0){     
         $sql .=" AND item.dm_id=".$dm_id;
     }
 
-    $sql .=" order by item.price_sale desc limit ".$limi; //parameter limit
+    $sql .=" order by product.price_sale desc limit ".$limi; //parameter limit
     return pdo_query($sql,$id_phanloai);
 }
 
@@ -121,7 +125,11 @@ function get_dm_id($id){
 
 
 function get_sp_by_id($id){
-    $sql = "SELECT item.*, danhmuc.name, product.price from item left join danhmuc on danhmuc.dm_id = item.dm_id join product on product.id_item = item.id where item.id=?";
+    $sql = "SELECT item.*, danhmuc.name, product.price, product.price_sale, product.limit_date_sale
+            from item 
+            left join danhmuc on danhmuc.dm_id = item.dm_id 
+            join product on product.id_item = item.id 
+            where item.id=?";
     return pdo_query_one($sql, $id);
 }
 

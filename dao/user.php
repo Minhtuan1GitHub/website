@@ -146,6 +146,12 @@ function xoataikhoan($id_user){
     pdo_execute($sql, $id_user);
 }
 
+function updateUser($id_user, $ten, $diachi, $dienthoai){
+    $sql = "UPDATE user set ten = ?, diachi = ?, dienthoai = ? where id_user = ?";
+    pdo_execute($sql, $ten, $diachi, $dienthoai, $id_user);
+}
+
+
 
 // function khach_hang_update($ma_kh, $mat_khau, $ho_ten, $email, $hinh, $kich_hoat, $vai_tro){
 //     $sql = "UPDATE khach_hang SET mat_khau=?,ho_ten=?,email=?,hinh=?,kich_hoat=?,vai_tro=? WHERE ma_kh=?";

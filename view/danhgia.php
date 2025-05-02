@@ -1,70 +1,49 @@
 <?php
-    echo '<pre>';
-    print_r($_SESSION);
-    print_r($_POST);
-    echo '</pre>';  
+    // echo '<pre>';
+    // print_r($_SESSION);
+    // print_r($_POST);
+    // echo '</pre>';  
  
     $html_binhluan = '';
     foreach ($danhsachbinhluan as $binhluan) {
       extract($binhluan);
-      $html_binhluan .='
-      
-        <div style="border-bottom: 1px solid black; margin-bottom: 20px; padding-bottom: 10px">
-          <div style="display: flex; justify-content: space-between"> 
-            <div style = "font-weight: bold ">
-              '.$nickname.'
+      $html_binhluan .= '
+        <div class="card mb-3 shadow-sm border-0 rounded">
+          <div class="card-body">
+            <!-- Header: Nickname and Date -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="card-title fw-bold text-primary mb-0">' . htmlspecialchars($nickname) . '</h5>
+              <small class="text-muted">' . htmlspecialchars($date) . '</small>
             </div>
-            <div>
-              '.$date.'
-            </div>
-          </div>
-
-          <div>
-            <div>
-              ';
-              if ($binhluan['sao']<2){
-                $html_binhluan .='<i class="bi bi-star-fill"></i>';
-              }else if ($binhluan['sao']<3){
-                $html_binhluan .='<i class="bi bi-star-fill"></i>';
-                $html_binhluan .='<i class="bi bi-star-fill"></i>';
-              }else if ($binhluan['sao']<4){
-                $html_binhluan .='<i class="bi bi-star-fill"></i>';
-                $html_binhluan .='<i class="bi bi-star-fill"></i>';
-              }else{
-                $html_binhluan .='<i class="bi bi-star-fill"></i>';
-                $html_binhluan .='<i class="bi bi-star-fill"></i>';
-                $html_binhluan .='<i class="bi bi-star-fill"></i>';
-                $html_binhluan .='<i class="bi bi-star-fill"></i>';
-                $html_binhluan .='<i class="bi bi-star-fill"></i>';
+    
+            <!-- Rating -->
+            <div class="mb-3 text-warning">';
+              for ($i = 1; $i <= 5; $i++) {
+                if ($i <= $sao) {
+                  $html_binhluan .= '<i class="fas fa-star"></i>';
+                } else {
+                  $html_binhluan .= '<i class="far fa-star"></i>';
+                }
               }
-            $html_binhluan .='</div>
-
-            <div>
-            <span>Đã mua size: '.$size.'</span> 
-          </div>
-            <div>
-              <span>Đã mua màu: '.$color.'</span>
+      $html_binhluan .= '
+            </div>
+    
+            <!-- Content: Size, Color, and Comment -->
+            <p class="mb-1"><strong>Đã mua size:</strong> ' . htmlspecialchars($size) . '</p>
+            <p class="mb-1"><strong>Đã mua màu:</strong> ' . htmlspecialchars($color) . '</p>
+            <p class="card-text mt-3">' . htmlspecialchars($noidung) . '</p>
+    
+            <!-- Footer: User Details -->
+            <div class="d-flex justify-content-end text-muted small">
+              <div class="me-3"><strong>Tên:</strong> ' . htmlspecialchars($ten) . '</div>
+              <div class="me-3"><strong>Tuổi:</strong> ' . htmlspecialchars($age) . '</div>
+              <div><strong>Địa chỉ:</strong> ' . htmlspecialchars($diachi) . '</div>
             </div>
           </div>
-          <div style ="margin: 10px 0px">
-          '.$noidung.'
-          </div>
-          <div style="display: flex; justify-content: end; gap: 10px">
-          <div>
-            '.$ten.'
-          </div>
-          <div>
-          '.$age.'
-          </div>
-          <div>
-          '.$diachi.'
-          </div>
         </div>
-
-        </div>
-      
       ';
     }
+
     $link='index.php?page=men&dm_id='.$binhluan['dm_id']; 
     $link2='index.php?page=sanphamchitiet&idpro='.$binhluan['id']; 
 
@@ -96,28 +75,29 @@
   <h3>Đánh giá</h3>
 </div>
 
-<div class="container" style="display: flex; justify-content: space-between; margin-bottom: 10px">
-  <span>Số lượng bình luận: <?=$count_binhluan?></span>
-  <div class="dropstart">
-  <a class="btn dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    <i class="bi bi-funnel"></i>
-  </a>
-
-  <ul class="dropdown-menu">
-    <li>
-      <a class="dropdown-item" href="index.php?page=danhgia&sort=sortByStar">
-        <i class="bi bi-sort-numeric-down-alt"></i>
-        Đánh giá theo sao
-      </a>
-    </li>
-    <li>
-      <a class="dropdown-item" href="index.php?page=danhgia&sort=sortByDate">
-        <i class="bi bi-calendar2-date"></i>
-        Gần đây
-      </a>
-    </li>
-  </ul>
-</div>
+<div class="container">
+    <!-- Comments Header -->
+    <div class="comments-header">
+      <span>Số lượng bình luận: <?=$count_binhluan?></span>
+      <div class="dropdown">
+        <button class="btn dropdown-toggle" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="bi bi-funnel"></i> Lọc
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="filterDropdown">
+          <li>
+            <a class="dropdown-item" href="index.php?page=danhgia&sort=sortByStar">
+              <i class="bi bi-sort-numeric-down-alt"></i> Đánh giá theo sao
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="index.php?page=danhgia&sort=sortByDate">
+              <i class="bi bi-calendar2-date"></i> Gần đây
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="container">
@@ -133,5 +113,49 @@
   a:hover{
     color: red; 
   }
+  .comments-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .comments-header span {
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .dropdown-toggle {
+      border: none;
+      background-color: #f8f9fa;
+      transition: background-color 0.3s ease;
+    }
+
+    .dropdown-toggle:hover {
+      background-color: #e9ecef;
+    }
+
+    .dropdown-menu {
+      min-width: 220px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    .dropdown-item:hover {
+      background-color: #f1f1f1;
+    }
+
+    .dropdown-item i {
+      font-size: 20px;
+      color: #007bff;
+    }
 </style>
 

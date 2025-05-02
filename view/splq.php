@@ -33,7 +33,7 @@
   }
 ?>
 
-<div class="container">
+<div>
   <h3>Sản phẩm cùng loại</h3>
   <div class="carousel-wrapper">
     <div class="carousel-container" id="carousel">

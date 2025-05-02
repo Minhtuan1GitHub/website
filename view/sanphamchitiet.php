@@ -23,72 +23,45 @@
                           $html_breadcrumb .='<li class="breadcrumb-item active" aria-current="page">'.$name_item.'</li>
                           ';
                         }
-  $html_binhluan = '';
-  foreach ($danhsachbinhluan as $binhluan) {
-    extract($binhluan);
-    $html_binhluan .='
-    
-      <div style="border-bottom: 1px solid black; margin-bottom: 20px; padding-bottom: 10px">
-        <div style="display: flex; justify-content: space-between"> 
-          <div style = "font-weight: bold ">
-            '.$nickname.'
-          </div>
-          <div>
-            '.$date.'
+    $html_binhluan = '';
+    foreach ($danhsachbinhluan as $binhluan) {
+      extract($binhluan);
+      $html_binhluan .= '
+        <div class="card mb-3 shadow-sm border-0 rounded">
+          <div class="card-body">
+            <!-- Header: Nickname and Date -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="fw-bold text-primary mb-0">' . htmlspecialchars($nickname) . '</h5>
+              <small class="text-muted">' . htmlspecialchars($date) . '</small>
+            </div>
+
+            <!-- Rating -->
+            <div class="mb-3 text-warning">';
+              for ($i = 1; $i <= 5; $i++) {
+                if ($i <= $sao) {
+                  $html_binhluan .= '<i class="fas fa-star"></i>'; // Filled star
+                } else {
+                  $html_binhluan .= '<i class="far fa-star"></i>'; // Empty star
+                }
+              }
+      $html_binhluan .= '
+            </div>
+
+            <!-- Content: Size, Color, and Comment -->
+            <p class="mb-1"><strong>Đã mua size:</strong> ' . htmlspecialchars($size) . '</p>
+            <p class="mb-1"><strong>Đã mua màu:</strong> ' . htmlspecialchars($color) . '</p>
+            <p class="card-text mt-3">' . htmlspecialchars($noidung) . '</p>
+
+            <!-- Footer: User Details -->
+            <div class="d-flex justify-content-end text-muted small">
+              <div class="me-3"><strong>Tên:</strong> ' . htmlspecialchars($ten) . '</div>
+              <div class="me-3"><strong>Tuổi:</strong> ' . htmlspecialchars($age) . '</div>
+              <div><strong>Địa chỉ:</strong> ' . htmlspecialchars($diachi) . '</div>
+            </div>
           </div>
         </div>
-
-
-      <div>
-          <div style="margin-top: 10px">
-            ';
-          if ($binhluan['sao']<2){
-            $html_binhluan .='<i class="bi bi-star-fill"></i>';
-          }else if ($binhluan['sao']<3){
-            $html_binhluan .='<i class="bi bi-star-fill"></i>';
-            $html_binhluan .='<i class="bi bi-star-fill"></i>';
-          }else if ($binhluan['sao']<4){
-            $html_binhluan .='<i class="bi bi-star-fill"></i>';
-            $html_binhluan .='<i class="bi bi-star-fill"></i>';
-          }else{
-            $html_binhluan .='<i class="bi bi-star-fill"></i>';
-            $html_binhluan .='<i class="bi bi-star-fill"></i>';
-            $html_binhluan .='<i class="bi bi-star-fill"></i>';
-            $html_binhluan .='<i class="bi bi-star-fill"></i>';
-            $html_binhluan .='<i class="bi bi-star-fill"></i>';
-          }
-          $html_binhluan .= '
-          </div>
-
-          <div>
-            <span>Đã mua size: '.$size.'</span> 
-          </div>
-          <div>
-            <span>Đã mua màu: '.$color.'</span>
-          </div>
-        </div>
-        <div style ="margin: 10px 0px">
-        '.$noidung.'
-        </div>
-        <div style="display: flex; justify-content: end; gap: 10px">
-          <div>
-            '.$ten.'
-          </div>
-          <div>
-            '.$age.'
-          </div>
-          <div>
-            '.$diachi.'
-          </div>
-        </div>
-
-
-
-        
-      </div>
-    
-    ';
-  }
+      ';
+    }
 
 
 
@@ -291,46 +264,64 @@
                 ?>
                   <div class="modal" id="binhluan">
                   <div class="modal-dialog modal-dialog-centered modal-lg">
-                    <div class="modal-content">
-                      <!-- header -->
-                      <div class="modal-header">
-  
-                      </div>
-                      <!-- body -->
-                      <div class="modal-body">
-                        <form action="index.php?page=sanphamchitiet&idpro=<?=$sanphamchitiet['id']?>" method="post">
-                          <div style="display: flex; flex-direction: column">
-                            <span>Nội dung bình luận</span>
-                            <textarea name="noidung" id="noidung" style="width: 100%; height: 200px"></textarea>
-                            <span>Size</span>
-                            <input type="text" name="size" id="size">
-                            <span>Color</span>
-                            <input type="text" name="color" id="color">
-                            <div class="rating">
-                              <input value="5" name="rating" id="star5" type="radio">
-                              <label for="star5"></label>
-                              <input value="4" name="rating" id="star4" type="radio">
-                              <label for="star4"></label>
-                              <input value="3" name="rating" id="star3" type="radio">
-                              <label for="star3"></label>
-                              <input value="2" name="rating" id="star2" type="radio">
-                              <label for="star2"></label>
-                              <input value="1" name="rating" id="star1" type="radio">
-                              <label for="star1"></label>
-                            </div>
-                            <!-- <span>Sao</span>
-                            <input type="text" name="sao" id="sao"> -->
-                            <span>Nickname</span>
-                            <input type="text" name="nickname" id="nickname"> 
-                          </div>
+                  <div class="modal-content">
+                  <!-- Modal Header -->
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="commentModalLabel">Bình luận</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
 
-                          <div style="display: flex; justify-content: end">
-                            <input type="submit" name="guibinhluan" value="Gửi" onclick="gui(event)">
-                          </div>
-                        </form>
+                  <!-- Modal Body -->
+                  <div class="modal-body">
+                    <form action="index.php?page=sanphamchitiet&idpro=<?=$sanphamchitiet['id']?>" method="post">
+                      <!-- Comment Content -->
+                      <div class="mb-3">
+                        <label for="noidung" class="form-label">Nội dung bình luận</label>
+                        <textarea class="form-control" name="noidung" id="noidung" rows="5" placeholder="Nhập nội dung bình luận"></textarea>
                       </div>
 
-                    </div>
+                      <!-- Size -->
+                      <div class="mb-3">
+                        <label for="size" class="form-label">Size</label>
+                        <input type="text" class="form-control" name="size" id="size" placeholder="Nhập size">
+                      </div>
+
+                      <!-- Color -->
+                      <div class="mb-3">
+                        <label for="color" class="form-label">Color</label>
+                        <input type="text" class="form-control" name="color" id="color" placeholder="Nhập màu sắc">
+                      </div>
+
+                      <!-- Rating -->
+                      <div class="mb-3">
+                        <label class="form-label">Đánh giá</label>
+                        <div class="rating d-flex gap-1">
+                          <input value="5" name="rating" id="star5" type="radio">
+                          <label for="star5" class="bi bi-star-fill"></label>
+                          <input value="4" name="rating" id="star4" type="radio">
+                          <label for="star4" class="bi bi-star-fill"></label>
+                          <input value="3" name="rating" id="star3" type="radio">
+                          <label for="star3" class="bi bi-star-fill"></label>
+                          <input value="2" name="rating" id="star2" type="radio">
+                          <label for="star2" class="bi bi-star-fill"></label>
+                          <input value="1" name="rating" id="star1" type="radio">
+                          <label for="star1" class="bi bi-star-fill"></label>
+                        </div>
+                      </div>
+
+                      <!-- Nickname -->
+                      <div class="mb-3">
+                        <label for="nickname" class="form-label">Nickname</label>
+                        <input type="text" class="form-control" name="nickname" id="nickname" placeholder="Nhập nickname">
+                      </div>
+
+                      <!-- Submit Button -->
+                      <div class="modal-footer">
+                        <button type="submit" name="guibinhluan" class="btn btn-submit w-100">Gửi</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
                   </div>
                 </div>
                   
@@ -403,7 +394,9 @@
                       <span style="font-size: 30px;"><?=$name_item?></span>
                       <div style="display: flex;  align-items: center; gap: 10px">
                         <i class="bi bi-share"></i>
-                        <i class="bi bi-heart"></i>
+                        <button style="border: none; background: none" name="addlike">
+                          <i class="bi bi-heart"></i>
+                        </button>
                       </div>
                     </div>
 
@@ -435,7 +428,23 @@
                     <input type="hidden" name="size" value="<?= isset($_GET['size']) ? htmlspecialchars($_GET['size']) :'' ?>">
 
                     <div style="display: flex; justify-content: space-between">
-                        <span style="font-size: 40px;">$<?=$price?></span>
+                        <div style="display: flex; text-align: center; gap: 10px; align-items: center">
+                          <?php
+                            if ($price_sale == 0){
+                          ?>
+                            <div class="text-primary" style="font-size: 40px;"><?=$price?> k</div>
+                          <?php }else{
+                                  if ($limit_date_sale >= date('Y-m-d H:i:s')){ ?>
+                                    <div class="text-primary" style="font-size: 40px; text-decoration: line-through;"><?=$price?> k</div>
+                                    <div class="text-danger" style="font-size: 40px;"><?=$price_sale?> k</div>
+                                  <?php }else{
+                                    ?>
+                                    <div class="text-primary" style="font-size: 40px;"><?=$price?> k</div>
+                                  <?php }
+                          ?>
+
+                          <?php } ?>
+                        </div>
                         <div style="display: flex; text-align: center; gap: 10px; align-items: center">
 
                           <?php
@@ -491,27 +500,30 @@
                       <div style="margin-top: 10px; margin-bottom: 10px">
                         <?=$description?> 
                       </div>
-
-                      <div class="counter" style="display: flex; border: 1px solid black; width: 50%; justify-content: center; border-radius: 100px; padding: 2px; margin-top: 10px; margin-bottom: 10px">
-                        <button type="button" onclick="giam()" style="background: none; border: none"><i class="bi bi-dash fs-4"></i></button>
-                        <input name="soluong" type="number" id="tanggiam" value="1" min="1" style="border: none; display: flex; text-align: center ">
-                        <button type="button" onclick="tang()" style="background: none; border: none"><i class="bi bi-plus fs-4"></i></button>
-                        <!-- script -->
-                        <script>
-                          function giam(){
-                            const inp = document.getElementById('tanggiam');
-                            let curr = parseInt(inp.value);
-                            if (curr>1){
-                              inp.value = curr - 1;
+                      
+                      <div style="display: flex; justify-content: start">
+                        <div class="counter" style="display: flex; flex-direction: row; border: 1px solid black; justify-content: space-between; border-radius: 100px; margin-bottom: 20px">
+                          <button type="button" onclick="giam()" style="background: none; border: none"><i class="bi bi-dash fs-4"></i></button>
+                          <input name="soluong" type="number" id="tanggiam" value="1" min="1" style="border: none; display: flex; text-align: center ">
+                          <button type="button" onclick="tang()" style="background: none; border: none"><i class="bi bi-plus fs-4"></i></button>
+                          <!-- script -->
+                          <script>
+                            function giam(){
+                              const inp = document.getElementById('tanggiam');
+                              let curr = parseInt(inp.value);
+                              if (curr>1){
+                                inp.value = curr - 1;
+                              }
                             }
-                          }
-                          function tang(){
-                            const inp = document.getElementById('tanggiam');
-                            let curr =parseInt(inp.value);
-                            inp.value = curr+1;
-                          }
-                        </script>
-                  </div>
+                            function tang(){
+                              const inp = document.getElementById('tanggiam');
+                              let curr =parseInt(inp.value);
+                              inp.value = curr+1;
+                            }
+                          </script>
+                        </div>
+                      </div>
+
                 </div>
                 
               <button type="submit" name="addcart" style="width: 100%; border-radius: 100px; border: none; background: black; height: 50px;"<?php if (!isset($_SESSION['session_user']) || count($_SESSION['session_user']) === 0) echo 'onclick="dangnhap(); return false;"'; ?>>
@@ -636,6 +648,52 @@
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   }
+  .modal-content {
+      border-radius: 10px;
+    }
+
+    .modal-header {
+      background-color: #007bff;
+      color: white;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+
+    .form-label {
+      font-weight: bold;
+    }
+
+    .rating label {
+      font-size: 24px;
+      color: #ddd;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .rating input[type="radio"] {
+      display: none;
+    }
+
+    .rating input[type="radio"]:checked ~ label,
+    .rating label:hover,
+    .rating label:hover ~ label {
+      color: #f1c40f;
+    }
+
+    .modal-footer {
+      border-top: none;
+    }
+
+    .btn-submit {
+      background-color: #007bff;
+      color: white;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-submit:hover {
+      background-color: #0056b3;
+    }
 
 
 

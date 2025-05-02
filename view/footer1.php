@@ -1,3 +1,5 @@
+</body>
+
 <footer class="dk-footer" style="padding-bottom: 0px;">
     <div class="contrainer-fluid " style="margin-bottom: 150px; background: #000000;">
       <div class="container">

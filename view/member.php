@@ -1,8 +1,8 @@
 <?php
-  echo '<pre>';
-  print_r($_SESSION);
-  print_r($_POST);
-  echo '</pre>';
+  // echo '<pre>';
+  // print_r($_SESSION);
+  // print_r($_POST);
+  // echo '</pre>';
   if (isset($_SESSION['session_user']) && (count($_SESSION['session_user'])>0)){
     extract($_SESSION['session_user']);
  
@@ -54,8 +54,8 @@
             <div class="form-group">
               <label for="password">Mật khẩu</label>
               <div class="input-group">
-                <input type="password" name="password" class="form-control" placeholder="password" value="<?=$password?>" readonly>
-                <span class="input-group-text" style="background: transparent; border: transparent">
+                <input type="password" name="password" class="form-control" style="border-right: transparent" placeholder="password" value="<?=$password?>" readonly>
+                <span class="input-group-text" style="background: transparent; border-left: transparent">
                   <i class="bi bi-eye-slash" id="conmat" onclick="nhanvao()"></i>
                 </span>
               </div>

@@ -12,10 +12,10 @@ function add_bill_detail($id_bill, $ten, $soluong, $tien, $size, $color){
 }
 
 function bill_by_id($id_user){
-  $sql = "SELECT distinct  bill.*, chitietbill.*
+  $sql = "SELECT distinct  bill.*, chitietbill.*, thanhtoan.name, thanhtoan.mau
           from bill 
-          join chitietbill
-          on bill.thanhtoan = chitietbill.id
+          join chitietbill on bill.thanhtoan = chitietbill.id
+          join thanhtoan on thanhtoan.id = bill.trangthaithanhtoan
           where bill.id_user = ?";
   return pdo_query($sql,$id_user);
 } 
@@ -115,20 +115,15 @@ function tondDonHang($year){
   return $result['total'];
 }
 
-// function tongTienTheoThangg(){
-//   $sql = "SELECT month(ngaytao) as thang, sum(tongtien) as tongtien, year(ngaytao) as nam
-//           from bill
-//           where year(ngaytao) = 2025
-//           group by year(ngaytao), month(ngaytao)
-//           order by nam,thang";
-//   return pdo_query($sql);
-// }
-
 function selectYear(){
   $sql = "SELECT distinct year(ngaytao) as nam from bill";
   return pdo_query($sql);
 }
 
+function daThanhToan($id_bill){
+  $sql = "UPDATE bill set trangthaithanhtoan = 1 where id_bill = ?";
+  pdo_execute($sql, $id_bill);
+}
 
 
 // function hang_hoa_update($ma_hh, $ten_hh, $don_gia, $giam_gia, $hinh, $ma_loai, $dac_biet, $so_luot_xem, $ngay_nhap, $mo_ta){

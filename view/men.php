@@ -171,7 +171,7 @@
                           <span>UNISEX, XXS-3XL</span>
                           <span>Zip-Up Blouson Jacket</span>
                           <span style="color: #888;">$'.$price.'</span>
-                          <span style="color: red;">$'.$price_sale.'</span>                          
+                          <span style="color: red;">$'.$price.'</span>                          
                           <i class="bi bi-star">'.$star.'</i>
                         </div>
                       </div>

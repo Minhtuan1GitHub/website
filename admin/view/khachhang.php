@@ -180,7 +180,7 @@
                   </div>
                   </div>
                   <div style="display: flex; align-items: end">
-                    <div style="">
+                    <div>
                       <button name="loc" style="padding: 4px">
                         <i class="bi bi-funnel-fill"></i>
                         <span>Lọc</span>

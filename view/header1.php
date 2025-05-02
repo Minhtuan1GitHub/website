@@ -36,7 +36,7 @@
 </head>
 
 
-<body>
+<body style="width: 65%; margin: 0 auto">
 
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
@@ -65,8 +65,8 @@
 
               </ul>
               <div class="d-flex gap-4 ">
-                <a href="#" class="button">
-                  <i class="bi bi-globe-asia-australia fs-5"></i>
+                <a href="index.php?page=chuyenkhoan" class="button">
+                  <i class="bi bi-tree fs-5"></i>
                 </a>
                 <a href="index.php?page=viewlike" class="button">
                   <i class="bi bi-bag-heart fs-5"></i>
