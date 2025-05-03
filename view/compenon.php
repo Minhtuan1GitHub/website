@@ -330,8 +330,8 @@
 
   <div class="container-fluid">
     <div class="container d-flex justify-content-between">
-      <span class="" style="">Results: 6 items</span>
-      <div style="">
+      <span>Results: 6 items</span>
+      <div>
         <i class="bi bi-sort-down-alt"></i>
         <span>Sort by</span>
       </div>
