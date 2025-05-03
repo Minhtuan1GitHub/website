@@ -12,10 +12,10 @@ $html_breadcrumb .= '<li class="breadcrumb-item"><a href="index.php">Home</a></l
 </nav>
 
 <div class="container my-5">
-    <div class="wishlist-header text-center mb-4">
+    <div class="wishlist-header text-start mb-4">
         <h2 class="text-uppercase font-weight-bold">Wishlist</h2>
         <div class="wishlist-icon mt-2">
-            <img src="layout/images/wishlist-icon.png" alt="Wishlist Icon" class="img-fluid" style="width: 80px; height: auto;">
+            <a href="#"><img src="layout/images/outerwear/wishlist.jpg" alt="Wishlist Icon" class="img-fluid" style="width: 100%; height: auto;"></a>
         </div>
     </div>
 

@@ -559,10 +559,10 @@
                         if (isset($_SESSION['session_user']['id_user']) && ($_SESSION['session_user']['id_user'])){
                             $id_user = $_SESSION['session_user']['id_user'];
                         }
-                                if (empty($_SESSION['session_user']['ten'])){
-                                    header('location: index.php?page=member');
-                                    break;
-                                }
+                                // if (empty($_SESSION['session_user']['ten'])){
+                                //     header('location: index.php?page=member');
+                                //     break;
+                                // }
                             
                         
                             
@@ -632,10 +632,10 @@
                         if (isset($_SESSION['session_user']['id_user']) && ($_SESSION['session_user']['id_user'])){
                             $id_user = $_SESSION['session_user']['id_user'];
                         }
-                                if (empty($_SESSION['session_user']['ten'])){
-                                    header('location: index.php?page=member');
-                                    break;
-                                }
+                                // if (empty($_SESSION['session_user']['ten'])){
+                                //     header('location: index.php?page=member');
+                                //     break;
+                                // }
                             
                         
                             
@@ -752,18 +752,41 @@
                 break;
             case 'chuyenkhoan':
                 $phanloai = get_phanploai();
+                $sort = '5';
                 include "view/header1.php";
                 if (isset($_SESSION['session_user']) && count($_SESSION['session_user'])){
                     $id_user = $_SESSION['session_user']['id_user'];
-                    $get_bill = bill_by_id($id_user);
-                }
+                    if (isset($_GET['sort']) && ($_GET['sort'])){
+                        if ($_GET['sort'] == 'dathanhtoan'){
+                            $sort = '1';
+                        }else if ($_GET['sort'] == 'chuathanhtoan'){
+                            $sort = '2';
+                        }else if ($_GET['sort'] == 'moi'){
+                            $sort = '3';
+                        }else if ($_GET['sort'] == 'huy'){
+                            $sort = '4';
+                        }else if ($_GET['sort'] == 'hoan'){
+                            $sort = '6';
+                        }
+                    }
+                }    
+                $get_bill = bill_by_id($id_user, $sort);
+                
+
+
                 if (isset($_GET['orderId'])){
-                    daThanhToan($_GET['orderId']);
+                    if (isset($_GET['resultCode'])){
+                        if ($_GET['resultCode'] == 0){
+                            daThanhToan($_GET['orderId'],1);
+                        }else if ($_GET['resultCode'] == 1006){
+                            daThanhToan($_GET['orderId'],4);
+                        }
+                    }
+
                     header('location: index.php?page=chuyenkhoan');
 
                 }
 
-                // $getchitiet = getx`chitiet($get_bill);
                 include "view/chuyenkhoan.php";
                 include "view/footer.php";
                 include "view/find.php";
@@ -781,6 +804,7 @@
                 $phanloai = get_phanploai();
                 include "view/header1.php";
                 $getchitiet = getchitiet($_SESSION['getchitiet']);
+                $getInfo = getInfoBill($_SESSION['getchitiet']);
                 include "view/chitietdonhang.php";
                 break;
             case 'adduser':
@@ -985,6 +1009,88 @@
                     header('location: index.php?page=chitietdonhang');
                 }
 
+                if (isset($_POST['momo'])) {
+                    // Thông tin kết nối MoMo
+                    $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
+                    $partnerCode = 'MOMOBKUN20180529';
+                    $accessKey = 'klm05TvNBzhg7h7j';
+                    $secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
+                
+                    // Thông tin đơn hàng
+                    $orderInfo = "Thanh toán qua MoMo";
+                    $amount = $_POST['money'] * 1000; // Chuyển đổi đơn vị tiền tệ
+                    $orderId = $_POST['madonhang'];
+                    // $orderId = time() . "";
+                    $madonhangbandau = isset($_POST['madonhangbandau']) ? $_POST['madonhangbandau'] : ''; // Kiểm tra giá trị đầu vào
+                
+                    $redirectUrl = "http://localhost/tumiShop/index.php?page=chuyenkhoanlai";
+                    $ipnUrl = "http://localhost/tumiShop/index.php?page=chuyenkhoanlai";
+                    $extraData = "";
+                
+                    $requestId = time() . "";
+                    $requestType = "payWithATM";
+                
+                    // Tạo chữ ký (signature)
+                    $rawHash = "accessKey=$accessKey&amount=$amount&extraData=$extraData&ipnUrl=$ipnUrl&orderId=$orderId&orderInfo=$orderInfo&partnerCode=$partnerCode&redirectUrl=$redirectUrl&requestId=$requestId&requestType=$requestType";
+                    $signature = hash_hmac("sha256", $rawHash, $secretKey);
+                
+                    // Dữ liệu gửi đi
+                    $data = [
+                        'partnerCode' => $partnerCode,
+                        'partnerName' => "Test",
+                        "storeId" => "MomoTestStore",
+                        'requestId' => $requestId,
+                        'amount' => $amount,
+                        'orderId' => $orderId,
+                        'orderInfo' => $orderInfo,
+                        'redirectUrl' => $redirectUrl,
+                        'ipnUrl' => $ipnUrl,
+                        'lang' => 'vi',
+                        'extraData' => $extraData,
+                        'requestType' => $requestType,
+                        'signature' => $signature,
+                    ];
+                
+                    // Gửi yêu cầu đến API MoMo
+                    $result = execPostRequest($endpoint, json_encode($data));
+                    $jsonResult = json_decode($result, true);
+                
+                        // Chuyển hướng người dùng sang MoMo
+                    if (isset($jsonResult['payUrl'])) {
+                        header('Location: ' . $jsonResult['payUrl']);
+                        exit;
+                    } else {
+                        echo "Không lấy được link thanh toán.";
+                    }
+                }
+
+                if (isset($_POST['hoantien'])){
+                    $id_bill = $_POST['id_bill'];
+                    $trangthai = '8';
+                    $ten = $_SESSION['session_user']['ten'];
+                    $sodienthoai = $_SESSION['session_user']['dienthoai'];
+                    $diachi = $_SESSION['session_user']['diachi'];
+                    $tongtien = $_POST['tongtien'];
+                    updatetrangthai($id_bill, $trangthai);
+                    sendmail2($ten, $sodienthoai, $diachi, $id_bill, $tongtien);
+                    header('location: index.php?page=chuyenkhoan');
+                }
+
+                break;
+            case 'chuyenkhoanlai':
+
+                $idbillmoi = $_GET['orderId'];
+                $madonhangbandau = $_SESSION['madonhangbandau'];
+
+                if ($_GET['resultCode'] == 0){
+                    thanhToanLai($idbillmoi,$madonhangbandau);
+                }
+
+                unset($_SESSION['madonhangbandau']);
+                header('location: index.php?page=chuyenkhoan');
+                
+                    
+                
                 break;
 
 

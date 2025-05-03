@@ -23,9 +23,21 @@ if (isset($_SESSION['session_user']) && count($_SESSION['session_user']) > 0) {
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center mb-3">
                                     <h5 class="card-title text-uppercase mb-0 text-truncate">' . $name_item . '</h5>
-                                    <button class="btn btn-outline-danger btn-sm" name="addlike" title="Add to Wishlist">
-                                        <i class="bi bi-heart"></i>
-                                    </button>
+                                    <form action="index.php?page=addcart" method="post" class="d-inline">
+                                        <input type="hidden" name="id" value="' . $sp['id'] . '">
+                                        <input type="hidden" name="name_item" value="' . $name_item . '">
+                                        <input type="hidden" name="img" value="' . $img . '">
+                                        <input type="hidden" name="size" value="' . $size . '">
+                                        <input type="hidden" name="color" value="' . $color . '">
+                                        <input type="hidden" name="price" value="' . $price . '">
+                                        <input type="hidden" name="price_sale" value="' . $price_sale . '">
+                                        <input type="hidden" name="description" value="' . $description . '">
+                                        <input type="hidden" name="limit_date_sale" value="' . $limit_date_sale . '">
+                                        <input type="hidden" name="soluong" value="1">
+                                        <button class="btn btn-outline-primary btn-sm" name="addcart">
+                                            <i class="bi bi-cart" style="color: blue"></i>
+                                        </button>
+                                    </form>
                                 </div>
                                 <p class="mb-1"><strong>Size:</strong> ' . size($size) . '</p>
                                 <p class="mb-1"><strong>Color:</strong> ' . color($color) . '</p>';
@@ -46,21 +58,8 @@ if (isset($_SESSION['session_user']) && count($_SESSION['session_user']) > 0) {
             }
 
             $html_cart .= '
-                                <div class="d-flex align-items-center my-3">
-                                    <a class="btn btn-danger btn-sm me-2" href="index.php?page=removelike&id=' . $index . '" onclick="return confirm(\'Bạn có chắc chắn muốn xóa sản phẩm này không?\')">Remove</a>
-                                    <form action="index.php?page=addcart" method="post" class="d-inline">
-                                        <input type="hidden" name="id" value="' . $sp['id'] . '">
-                                        <input type="hidden" name="name_item" value="' . $name_item . '">
-                                        <input type="hidden" name="img" value="' . $img . '">
-                                        <input type="hidden" name="size" value="' . $size . '">
-                                        <input type="hidden" name="color" value="' . $color . '">
-                                        <input type="hidden" name="price" value="' . $price . '">
-                                        <input type="hidden" name="price_sale" value="' . $price_sale . '">
-                                        <input type="hidden" name="description" value="' . $description . '">
-                                        <input type="hidden" name="limit_date_sale" value="' . $limit_date_sale . '">
-                                        <input type="hidden" name="soluong" value="1">
-                                        <button class="btn btn-outline-primary btn-sm" name="addcart">Add to Cart</button>
-                                    </form>
+                                <div class="d-flex align-items-center justify-content-end my-3">
+                                    <a class="btn btn-outline-danger btn-sm " href="index.php?page=removelike&id=' . $index . '" onclick="return confirm(\'Bạn có chắc chắn muốn xóa sản phẩm này không?\')">Remove</a>
                                 </div>';
 
             if ($limit_date_sale >= date("Y-m-d")) {

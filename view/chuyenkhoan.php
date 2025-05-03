@@ -8,11 +8,7 @@ $html_breadcrumb .= '<li class="breadcrumb-item"><a href="index.php">Home</a></l
                     <li class="breadcrumb-item"><a href="index.php?page=member">Thông tin</a></li>
                         
                      <li class="breadcrumb-item active" aria-current="page">Đơn hàng của bạn</li>';
-$html_chitiet = '';
-foreach ($getchitiet as $ct) {
-    $html_chitiet .='
-    ';
-}
+
 
 ?>
 
@@ -30,128 +26,126 @@ foreach ($getchitiet as $ct) {
         <h4>Đơn hàng của bạn</h4>
         <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown button
+            Đơn hàng
         </button>
         <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li><a class="dropdown-item" href="index.php?page=chuyenkhoan&sort=moi">Đơn hàng mới</a></li>
+            <li><a class="dropdown-item" href="index.php?page=chuyenkhoan&sort=huy">Đơn hàng đã hủy</a></li>
+            <li><a class="dropdown-item" href="index.php?page=chuyenkhoan&sort=dathanhtoan">Đã thanh toán</a></li>
+            <li><a class="dropdown-item" href="index.php?page=chuyenkhoan&sort=chuathanhtoan" >Chưa thanh toán</a></li>
+            <li><a class="dropdown-item" href="index.php?page=chuyenkhoan&sort=hoan" >Hoàn tiền</a></li>
         </ul>
         </div>
     </div>
-    <div class="row" style="font-weight: bold; border-bottom: 1px solid black; padding: 10px 0;">
-        <div class="col">Mã đơn hàng</div>
-        <div class="col-1">Tên</div>
-        <div class="col">Số điện thoại</div>
-        <div class="col">Địa chỉ</div>
-        <div class="col-1">Tổng tiền</div>
-        <div class="col">Trạng thái</div>
-        <div class="col">Thanh toán</div>
-        <div class="col">Thao tác</div>
-        <div class="col">Chi tiết đơn hàng</div>
-    </div>
 
-    <?php foreach ($get_bill as $bill): ?>
-        <form action="index.php?page=updateorder" method="post">
-            <div class="row" style="padding: 8px 0; border-bottom: 1px solid #ccc;">
-                <div class="col"><?= $bill['id_bill'] ?></div>
-                <div class="col">
+    <table id="orderTable" class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Mã đơn hàng</th>
+            <th>Tên</th>
+            <th>Số điện thoại</th>
+            <th>Địa chỉ</th>
+            <th>Tổng tiền</th>
+            <th>Tình trạng</th>
+            <th>Trạng thái</th>
+            <th>Thao tác</th>
+            <th>Chi tiết đơn hàng</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($get_bill as $bill): ?>
+        <tr>
+            <form action="index.php?page=updateorder" method="post">
+            <input type="hidden" name="id_bill" value="<?=$bill['id_bill']?>">
+            <input type="hidden" name="tongtien" value="<?=$bill['tongtien']?>">
+
+            <td class="text-center"><?= $bill['id_bill'] ?></td>
+            <td>
+                <!-- <form action="index.php?page=updateorder" method="post"> -->
+                    <?php if ($bill['id'] == 0 || $bill['id'] == 2): ?>
+                        <input type="text" value="<?= $bill['ten'] ?>" name="ten" class="form-control form-control-sm">
+                    <?php else: ?>
+                        <input type="text" value="<?= $bill['ten'] ?>" class="form-control-plaintext form-control-sm" disabled>
+                    <?php endif; ?>
+            </td>
+            <td>
+                    <?php if ($bill['id'] == 0 || $bill['id'] == 2): ?>
+                        <input type="text" value="<?= $bill['sdt'] ?>" name="sdt" class="form-control form-control-sm">
+                    <?php else: ?>
+                        <input type="text" value="<?= $bill['sdt'] ?>" class="form-control-plaintext form-control-sm" disabled>
+                    <?php endif; ?>
+            </td>
+            <td>
+                    <?php if ($bill['id'] == 0 || $bill['id'] == 2): ?>
+                        <input type="text" value="<?= $bill['dc'] ?>" name="dc" class="form-control form-control-sm">
+                    <?php else: ?>
+                        <input type="text" value="<?= $bill['dc'] ?>" class="form-control-plaintext form-control-sm" disabled>
+                    <?php endif; ?>
+            </td>
+            <td class="text-center d"><?= number_format($bill['tongtien'], 0, ',', '.') ?>k</td>
+            <td class="text-center">
+                <div  style=";background: <?=$bill['background']?>; color: <?=$bill['color']?>; border-radius: 10px; padding: 3px 0px">
+                    <span class="status-pill <?= $bill['trangthai'] == 'Paid' ? 'status-paid' : ($bill['trangthai'] == 'Pending' ? 'status-pending' : 'status-cancelled') ?>">
+                        <?= $bill['trangthai'] ?>
+                    </span>
+                </div>
+            </td>
+            <td class="text-center" style="color: <?=$bill['mau']?>; font-weight: bold"><?= $bill['name'] ?></td>
+            <td class="text-center">
+                <div class="d-flex justify-content-center gap-2">
+                    <?php if ($bill['id'] == 0 || $bill['id'] == 2): ?>
+                        <button name="sua" class="btn btn-warning btn-sm">Sửa</button>
+                    <?php else: ?>
+                        <!-- <button class="btn btn-warning btn-sm" disabled>Sửa</button> -->
+                    <?php endif; ?>
+                        
+                    <?php if ($bill['id'] == 0 || $bill['id'] == 2 || $bill['id'] == 1): ?>
+                        <button name="huy" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắc muốn xóa?')">Hủy</button>
+                    <?php else: ?>
+                        <!-- <button class="btn btn-danger btn-sm"> Hoàn tiền</button> -->
+                    <?php endif; ?>
+
+                    <?php if ($bill['id'] == 7 && $bill['trangthaithanhtoan'] == 1):?>
+                        <button name="hoantien" class="btn btn-danger btn-sm">Hoàn tiền</button>
+                    <?php else: ?>
+                        <!-- <button name="hoantien" class="btn btn-danger btn-sm" disabled>Hoàn tiền</button> -->
+                    <?php endif; ?>
+                </div>
+            </td>
+            <td class="text-center">
                     <?php
-                        if ($bill['id'] == 0 || $bill['id'] == 2) {
+                        if ($bill['trangthaithanhtoan'] === 4){
                             ?>
-                            <input type="text" value="<?= $bill['ten']?>" style="width: 100%;" name="ten">
+                            <?php
+                                $timestamp = time();
+                                $random_string = strtoupper(substr(bin2hex(random_bytes(2)), 0, 4));                                  
+                                $ma_don_hang = $_SESSION['session_user']['id_user'].$random_string.$timestamp;
+                                $_SESSION['madonhangbandau'] = $bill['id_bill'];
+                             ?>
+                            <input type="hidden" name="madonhang" value="<?=$ma_don_hang;?>">  
+                            <input type="hidden" name="madonhangbandau" value="<?=$bill['id_bill']?>">
+                            <input type="hidden" name="money" value="<?=$bill['tongtien']?>">
+
+                            <button
+                                type="submit"
+                                class="btn btn-outline-pink btn-sm"
+                                name="momo"
+                            >
+                                Momo
+                            </button>
+                            
                         <?php }else{
                             ?>
-                            <input type="text" value="<?= $bill['ten']?>" style="width: 100%; background: none; border: none" disabled>
+                            <input type="hidden" name="id_bill" value="<?= $bill['id_bill'] ?>">
+                            <button class="btn btn-primary btn-sm" name="chitiet">Hóa đơn</button>
                         <?php }
                     ?>
-                </div>
-                <div class="col">
-                    <?php
-                            if ($bill['id'] == 0 || $bill['id'] == 2) {
-                                ?>
-                                <input type="text" value="<?= $bill['sdt']?>" style="width: 100%;" name="sdt">
-                            <?php }else{
-                                ?>
-                                <input type="text" value="<?= $bill['sdt']?>" style="width: 100%; background: none; border: none" disabled>
-                            <?php }
-                    ?>
-                </div>
-                <div class="col">
-                    <?php
-                            if ($bill['id'] == 0 || $bill['id'] == 2) {
-                                ?>
-                                <input type="text" value="<?= $bill['dc']?>" style="width: 100%;" name="dc">
-                            <?php }else{
-                                ?>
-                                <input type="text" value="<?= $bill['dc']?>" style="width: 100%; background: none; border: none" disabled>
-                            <?php }
-                    ?>
-
-                </div>
-                <div class="col"><?= $bill['tongtien'] ?>₫</div>
-                <div class="col" style="background: <?=$bill['background']?>; color: <?=$bill['color']?>; font-size: 13px; height: 35px ;font-weight: bold; border-radius: 100px; display:flex; justify-content: center; align-items: center; gap: 3px;">
-                    <?= $bill['trangthai'] ?>
-                    <input type="hidden" value="<?=$bill['id']?>" name="trangthai">
-                </div>
-                <div class="col" style="color: <?=$bill['mau']?>; font-size: 13px; ">
-                    <?=$bill['name']?>
-                </div>
-                <div class="col">
-                    <div style="display: flex; flex-direction: row; gap: 10px">
-                        <?php 
-                            if ($bill['id'] ==0 || $bill['id'] == 2){
-                                ?>
-                                
-                                    <button name="sua" style="border: none;">
-                                        <i class="bi bi-tools"></i>
-                                        <span>Sửa</span>
-                                    </button>
-                                    
-                            <?php }else {
-                                ?>
-                                <button disabled style="background: none; border: none">
-                                    <i class="bi bi-tools"></i>
-                                    <span>Sửa</span>
-                                </button>
-                                
-                            <?php }
-                        ?>
-                        <?php
-                            if ($bill['id'] ==0 || $bill['id'] == 2 || $bill['id'] == 1){
-                                ?>
-                                                            
-                                    <button name="huy" style="border: none;" onclick="return confirm('Bạn có chắc chắc muốn xóa?') ">
-                                        <i class="bi bi-x"></i>
-                                        <span>Hủy</span>
-                                    </button>
-                            <?php }else {
-                                ?>
-                                <button disabled style="background: none; border: none">
-                                    <i class="bi bi-x-lg"></i>
-                                    <span>Hủy</span>
-                                </button>
-                                
-                            <?php }
-                        ?>
-  
-                    </div>
-                </div>
-
-                <div class="col" style="display: flex; justify-content: start">
-                    <!-- <form action="index.php?page=chitiet" method="post" style="display: flex;"> -->
-                        <input type="hidden" name="id_bill" value="<?=$bill['id_bill']?>">
-                        <div style="display: flex;">
-                            <button class="chitietdon" name="chitiet">Chi tiết đơn hàng</button>
-                        </div>
-                    <!-- </form> -->
-                </div> 
-            </div>
-        </form>
-
-
-    <?php endforeach; ?>
-
+                </form>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
     
 </div>
 
@@ -169,30 +163,41 @@ foreach ($getchitiet as $ct) {
         border: none;
         font-size: 12px;
     }
-
-    /* .chitietdon{
-        background: transparent;
-        border: 1px solid transparent;
-        color:rgb(255, 87, 125);
-        animation: inout 2.5s ease-in-out infinite;
-    } */
-    /* @keyframes inout{
-        0%{
-            transform: scale(1);
-        }
-        50%{
-            transform: scale(1,2);
-        }
-        100%{
-            transform: scale(1);
-        }
-    } */
-
+    .btn-outline-pink {
+        background: #a50064;
+        color: #ffffff;
+    }
+    .btn-outline-pink:hover {
+        background: #ffffff;
+        color: #a50064;
+        border: 2px solid #a50064;
+    }
 
 
 </style>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Include DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    $('#orderTable').DataTable({
+        "pageLength": 10,      // Số dòng mỗi trang
+        "lengthChange": false, // Không cho người dùng đổi số dòng
+        "ordering": false,     // Không cần sắp xếp
+        "searching": false,     // Tìm kiếm
+        "info": true,
+        "language": {
+              "info": "Hiển thị _START_ đến _END_ của _TOTAL_ dòng",
+              "search": "Tìm kiếm:",
+              "paginate": {
+                  "previous": "Trước",
+                  "next": "Sau"
+              }
 
 
-
-<script src="layout/javascript/dangky.js"></script>
+          }
+    });
+  });
+</script>

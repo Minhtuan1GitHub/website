@@ -11,12 +11,29 @@ function add_bill_detail($id_bill, $ten, $soluong, $tien, $size, $color){
   pdo_execute($sql, $id_bill, $ten, $soluong, $tien,$size, $color);
 }
 
-function bill_by_id($id_user){
+function bill_by_id($id_user, $sort){
   $sql = "SELECT distinct  bill.*, chitietbill.*, thanhtoan.name, thanhtoan.mau
           from bill 
           join chitietbill on bill.thanhtoan = chitietbill.id
           join thanhtoan on thanhtoan.id = bill.trangthaithanhtoan
           where bill.id_user = ?";
+  if (empty($sort)){
+    $sql .= " AND 1";
+  }else{
+    if ($sort == 1){
+      $sql .= " AND bill.trangthaithanhtoan = 1";
+    }else if ($sort == 2){
+      $sql .= " AND bill.trangthaithanhtoan = 0 or bill.trangthaithanhtoan = 4";
+    }else if ($sort == 3){
+      $sql .= " order by bill.ngaytao desc";
+    }else if ($sort == 4){
+      $sql .= " AND bill.thanhtoan = 7";
+    }else if ($sort == 6){
+      $sql .= " AND bill.thanhtoan = 8";
+    }else{
+      $sql .= "";
+    }
+  }
   return pdo_query($sql,$id_user);
 } 
 
@@ -29,6 +46,15 @@ function getchitiet($id_bill){
   join voucher on voucher.id_voucher = bill.voucher
   where bill_details.id_bill = ?";
   return pdo_query($sql, $id_bill);
+}
+
+function getInfoBill($id_bill){
+  $sql = "SELECT bill.*, user.email, user.diachi, thanhtoan.name
+          from bill 
+          join user on user.id_user = bill.id_user
+          join thanhtoan on thanhtoan.id = bill.trangthaithanhtoan
+          where bill.id_bill = ?";
+  return pdo_query_one($sql, $id_bill);
 }
 
 function tongdonhang(){
@@ -85,7 +111,11 @@ function updateorder($id_bill, $ten, $sdt, $dc){
 }
 
 function updatetrangthai($id_bill, $trangthai){
-  $sql = "UPDATE bill set thanhtoan = ? where id_bill = ?";
+  $sql = "UPDATE bill set thanhtoan = ?";
+  if ($trangthai == 8){
+    $sql .= " ,trangthaithanhtoan = 5";
+  }
+  $sql .= " where id_bill = ?";
   pdo_execute($sql, $trangthai, $id_bill);
 }
 
@@ -120,9 +150,19 @@ function selectYear(){
   return pdo_query($sql);
 }
 
-function daThanhToan($id_bill){
-  $sql = "UPDATE bill set trangthaithanhtoan = 1 where id_bill = ?";
+function daThanhToan($id_bill, $thanhcong){
+  $sql = "UPDATE bill";
+  if ($thanhcong == 1){
+    $sql .=" set trangthaithanhtoan = 1 where id_bill = ?";
+  } else if ($thanhcong == 4){
+    $sql .=" set trangthaithanhtoan = 4 where id_bill = ?";
+  }
   pdo_execute($sql, $id_bill);
+}
+
+function thanhToanLai($id_sau, $id_bill){
+  $sql = "UPDATE bill set trangthaithanhtoan = 1, id_bill = ? where id_bill = ?";
+  pdo_execute($sql, $id_sau, $id_bill);
 }
 
 

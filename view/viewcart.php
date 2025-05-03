@@ -29,7 +29,7 @@
           }
         }
         $tongmon += (int)$soluong;
-        $tongtiensanpham += $tongtien;
+        $tongtiensanpham += $tongtien; 
   
         $html_cart .= '
           <div class="card mb-3 shadow-sm border-0">
@@ -41,9 +41,22 @@
                 <div class="card-body">
                   <div class="d-flex justify-content-between align-items-center mb-2">
                     <h5 class="card-title text-uppercase">'.$name_item.'</h5>
-                    <button class="btn btn-outline-danger btn-sm" name="addlike">
-                      <i class="bi bi-heart"></i>
-                    </button>
+                    <form action="index.php?page=addcart" method="post">
+                      <input type="hidden" name="id" value="'.$sp['id'].'">
+                      <input type="hidden" name="name_item" value="'.$name_item.'">
+                      <input type="hidden" name="img" value="'.$img.'">
+                      <input type="hidden" name="size" value="'.$size.'">
+                      <input type="hidden" name="color" value="'.$color.'">
+                      <input type="hidden" name="price" value="'.$price.'">
+                      <input type="hidden" name="price_sale" value="'.$price_sale.'">
+                      <input type="hidden" name="description" value="'.$description.'">
+                      <input type="hidden" name="limit_date_sale" value="'.$limit_date_sale.'">
+                      <input type="hidden" name="soluong" value="1">
+                      
+                      <button class="btn btn-outline-danger btn-sm" name="addlike">
+                        <i class="bi bi-heart"></i>
+                      </button>
+                    </form>
                   </div>
                   <p class="mb-1"><strong>Size:</strong> '.size($size).'</p>
                   <p class="mb-1"><strong>Color:</strong> '.color($color).'</p>';
@@ -64,7 +77,7 @@
         }
   
         $html_cart .= '
-                  <div class="d-flex align-items-center my-3">
+                  <div class="d-flex align-items-center my-3" style="justify-content: space-between">
                     <form action="index.php?page=upsl" method="post" class="d-flex align-items-center">
                       <input type="hidden" name="id_item" value="'.$gh.'">
                       <input type="hidden" name="id_user" value="'.$_SESSION['session_user']['id_user'].'"> 
@@ -100,27 +113,25 @@
 
   $html_voucher = '';
   
-  $html_soluongvoucher ='';
-  
+  $html_soluongvoucher = '';
+
   foreach ($voucher as $vc) {
-    extract($vc);
-    $slvoucher =count($voucher);
-
-    $html_voucher .='<div class="form-check" style="display: flex; justify-content: space-between; border-top: 1px solid black; margin: 5px 0px; padding: 10px 25px">
-                      <div style="display: flex; flex-direction: column">
-                        <div>
-                        
-
-                          <input type="radio" class="form-check-input" name ="voucher_giam" id="radio'.$id_voucher.'" value="'.$id_voucher.'" >
-                          <label class="form-check-label" for="radio">'.$voucher_giam.'% - '.$voucher_name.'</label>
-                        </div>  
-                        <span>Expiration date: '.$voucher_date.' </span>
-                        <a href="#">Chi tiết</a>
-                      </div>
-
-                      <img src="layout/images/voucher/'.$voucher_img.'" alt="" style="object-fit: cover; width: 10%">
-
-                    </div>';
+      extract($vc);
+      $slvoucher = count($voucher);
+  
+      $html_voucher .= '
+      <div class="form-check border-top py-3 px-4 d-flex align-items-center justify-content-between">
+          <div>
+              <input type="radio" class="form-check-input me-2" name="voucher_giam" id="radio' . $id_voucher . '" value="' . $id_voucher . '">
+              <label class="form-check-label fw-bold" for="radio' . $id_voucher . '">' . $voucher_giam . '% - ' . $voucher_name . '</label>
+              <small class="d-block text-muted">Expiration date: ' . $voucher_date . '</small>
+              <a href="#" class="text-decoration-none text-primary">Chi tiết</a>
+          </div>
+  
+          <div>
+              <img src="layout/images/voucher/' . $voucher_img . '" alt="Voucher" class="img-fluid rounded" style="width: 80px; height: auto;">
+          </div>
+      </div>';
   }
   $html_soluongvoucher = $slvoucher;
 
@@ -207,60 +218,93 @@
             </div>
         </div>
 
-        <button class="" style="display: flex; justify-content: space-between; border: none; background: none; margin-top: 10px; border-top: 1px solid black; border-bottom: 1px solid black; padding: 10px 0px" type="button" data-bs-toggle="modal" data-bs-target="#myModal">
-          <div>
-            <i class="bi bi-ticket"></i>
-            <span>Coupon</span>
-            
-            <span>(<?=$html_soluongvoucher;?>)</span>
+        <button
+          class="btn btn-light d-flex justify-content-between align-items-center border border-transparent rounded-0 mt-3 p-3"
+          type="button"
+          data-bs-toggle="modal"
+          data-bs-target="#myModal">
+          <div class="d-flex align-items-center">
+            <i class="bi bi-ticket me-2"></i>
+            <span>Mã giảm</span>
+            <span class="badge bg-dark text-white ms-2">(<?=$html_soluongvoucher;?>)</span>
           </div>
           <div>
             <i class="bi bi-arrow-right"></i>
           </div>
         </button>
 
-        <div class="modal" id="myModal">
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
-              <!-- header -->
-              <div class="modal-header">
-                <h4 class="modal-title">Áp dụng mã giảm giá</h4>
-                <button class="btn-close" type="button" data-bs-dismiss="modal"></button>
+              <!-- Modal Header -->
+              <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title" id="myModalLabel">Áp dụng mã giảm giá</h5>
+                <button
+                  type="button"
+                  class="btn-close btn-close-white"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
               </div>
-              <!-- modal body -->
+
+              <!-- Modal Body -->
               <div class="modal-body">
-                <div>
-                  <span>Nhập mã giảm giá</span>
+                <!-- Input Coupon -->
+                <div class="mb-4">
+                  <span class="fw-bold">Nhập mã giảm giá</span>
                   <div>
-                    <form action="index.php?page=viewcart&voucher=1" method="post">
-                      <!-- input hidden de luu tong tien -->
-                      <input type="hidden" name="tongdonhang" value="<?=$tongtiensanpham?>">
-                      <input type="text" name="mavoucher" id="mavoucher" placeholder="Nhập mã" >
-                      <input type="submit" value="Thêm" id="themm" disabled>
+                    <form action="index.php?page=viewcart&voucher=1" method="post" class="d-flex align-items-center mt-3">
+                      <input
+                        type="hidden"
+                        name="tongdonhang"
+                        value="<?=$tongtiensanpham?>"
+                      />
+                      <input
+                        class="form-control me-3"
+                        type="text"
+                        name="mavoucher"
+                        id="mavoucher"
+                        placeholder="Nhập mã"
+                        style="max-width: 300px;"
+                      />
+                      <button
+                        class="btn btn-dark"
+                        type="submit"
+                        id="themm"
+                        disabled
+                      >
+                        Áp dụng
+                      </button>
                     </form>
                   </div>
-                  <span>Mã giảm giá có hiệu lực <?=$html_soluongvoucher?></span> </br>
-                  <span>Hãy chọn mã giảm giá từ danh sách và áp dụng vào đơn hàng của bạn</span>
-                  
-
-
-                  <div>
-                    <form action="index.php?page=viewcart&voucher=2" method="post">
-                      <?=$html_voucher;?>
-                      <div>
-                        <input type="hidden" name="tongdonhang" value="<?=$tongtiensanpham?>">
-                        <div style="display: flex; justify-content: end; padding-right: 25px">
-                          <input type="submit" value="Thêm" style="width: 70px; background: none; border: 1px solid black">
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-
+                  <small class="text-muted d-block mt-2">Mã giảm giá có hiệu lực <?=$html_soluongvoucher?></small>
                 </div>
-              </div>              
+
+                <!-- Predefined Coupons -->
+                <div>
+                  <span class="fw-bold">Chọn mã giảm giá từ danh sách</span>
+                  <form action="index.php?page=viewcart&voucher=2" method="post" class="mt-3">
+                    <?=$html_voucher;?>
+                    <input
+                      type="hidden"
+                      name="tongdonhang"
+                      value="<?=$tongtiensanpham?>"
+                    />
+                    <div class="text-end mt-3">
+                      <button
+                        class="btn btn-outline-dark"
+                        type="submit"
+                        style="width: 100px;"
+                      >
+                        Áp dụng
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
             </div>
           </div>
-        </div> 
+        </div>
 
               <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered">
@@ -292,9 +336,9 @@
                                 <?php
                                   $timestamp = time();
                                   $random_string = strtoupper(substr(bin2hex(random_bytes(2)), 0, 4));                                  
-                                  $ma_don_hang = $_SESSION['session_user']['id_user'] . '-' . $timestamp . '-' . $random_string;
+                                  $ma_don_hang = $_SESSION['session_user']['id_user'].$random_string.$timestamp;
                                 ?>
-                                  <input type="hidden" name="madonhang" value="<?=$ma_don_hang;?>">
+                                  <input type="hidden" name="madonhang" value="<?=$ma_don_hang;?>"> 
                                   <?php
                                     $list_id = [];   
                                     foreach ($_SESSION['giohang'][$_SESSION['session_user']['id_user']] as $sp) {
@@ -337,8 +381,8 @@
                         </div>
 
                         <div class="modal-footer">
-                          <input id="form-thanhtoan" type="submit" class="btn-transfer" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" value="Cash" name="cash">
-                          <input id="form-thanhtoan" type="submit" class="btn-transfer" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" value="Momo" name="momo" style="background-color: rgba(165,0,100,255);">
+                          <input id="form-thanhtoan1" type="submit" class="btn-transfer" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" value="Cash" name="cash">
+                          <input id="form-thanhtoan2" type="submit" class="btn-transfer" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" value="Momo" name="momo" style="background-color: rgba(165,0,100,255);">
                         </div>
                       </form>
 
@@ -573,7 +617,20 @@
 
 <script>
         document.addEventListener("DOMContentLoaded", function () {
-            const form = document.getElementById("form-thanhtoan");
+            const form = document.getElementById("form-thanhtoan1");
+            form.addEventListener("click", function (event) {
+                const diachi = "<?= $_SESSION['session_user']['diachi'] ?>";
+                const dienthoai = "<?= $_SESSION['session_user']['dienthoai'] ?>";
+                const ten = "<?= $_SESSION['session_user']['ten'] ?>";
+
+                if (!ten || ten.trim() === "" || !dienthoai || dienthoai.trim() === "" || !diachi || diachi.trim() === "") {
+                    alert("Vui lòng cập nhật đầy đủ thông tin (Tên, Số điện thoại, và Địa chỉ) trước khi thanh toán.");
+                    event.preventDefault(); // Prevent form submission
+                }
+            });
+        });
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("form-thanhtoan2");
             form.addEventListener("click", function (event) {
                 const diachi = "<?= $_SESSION['session_user']['diachi'] ?>";
                 const dienthoai = "<?= $_SESSION['session_user']['dienthoai'] ?>";

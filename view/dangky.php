@@ -1,111 +1,136 @@
 <?php
-  $html_breadcrumb = '';
-  $html_breadcrumb .='<li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                      <li class="breadcrumb-item active"aria-current="page">Đăng ký</li>
-
-                      ';
+    $html_breadcrumb = '';
+    $html_breadcrumb .= '<li class="breadcrumb-item"><a href="index.php">Home</a></li>
+                         <li class="breadcrumb-item active" aria-current="page">Đăng ký</li>';
 ?>
-
-
 <link rel="stylesheet" href="layout/css/dangky.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-<nav class="container" aria-label="breadcrumb" style="position: sticky; top: 0; margin-top: 0px">
-      
-      <ol class="breadcrumb">
+<nav class="container" aria-label="breadcrumb" style="position: sticky; top: 0; margin-top: 0px;">
+    <ol class="breadcrumb">
         <?=$html_breadcrumb;?>
-      </ol>
+    </ol>
 </nav>
 
-<div class="container" style="margin-top: 0px;">
-    <h4 style="border-bottom: 1px solid black; padding-bottom: 10px">Đăng ký</h4>
-    <div class="row">
-      <div class="col">
-        <!-- form dang ky -->
-        <form action="index.php?page=adduser" method="post" class="form-dangky">
+<div class="container my-5">
+    <h4 class="pb-2 border-bottom">Đăng ký</h4>
 
-          <div class="form-email">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" placeholder="xxx@tumishop.com" name="email">
-            <?php echo $alert?>
-          </div>
+    <div class="row mt-4">
+        <!-- Registration Form -->
+        <div class="col-md-6">
+            <form action="index.php?page=adduser" method="post" class="card p-4">
+                <!-- Email Input -->
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" placeholder="xxx@tumishop.com" name="email" required>
+                    <?php echo $alert ?? ""; ?>
+                </div>
+                <!-- Password Input -->
+                <div class="mb-3">
+                    <label for="password" class="form-label">Mật khẩu</label>
+                    <div class="input-group">
+                        <input type="password" class="form-control" id="password" placeholder="Nhập mật khẩu" name="password" required>
+                        <span class="input-group-text">
+                            <i class="bi bi-eye-slash" id="hienpass" onclick="nhanvao1()" style="cursor: pointer;"></i>
+                        </span>
+                    </div>
+                </div>
+                <!-- Confirm Password Input -->
+                <div class="mb-3">
+                    <label for="confirmpassword" class="form-label">Xác nhận mật khẩu</label>
+                    <div class="input-group">
+                        <input type="password" class="form-control" id="confirmpassword" placeholder="Nhập lại mật khẩu" name="confirmpassword" required>
+                        <span class="input-group-text">
+                            <i class="bi bi-eye-slash" id="hienpass2" onclick="nhanvao2()" style="cursor: pointer;"></i>
+                        </span>
+                    </div>
+                </div>
+                <!-- Register Button -->
+                <div class="text-center mt-4">
+                    <input class="btn btn-primary w-50" type="submit" name="dangky" value="Đăng ký">
+                </div>
+            </form>
+        </div>
 
-          <div class="form-password">
-            <label for="password" class="form-label">Mật khẩu</label>
-            <div class="input-group">
-              <input type="password" class="form-control" id="password" placeholder="Nhập mật khẩu" name="password">
-              <span class="input-group-text" >
-                <i class="bi bi-eye-slash" class="eye-icon" id="hienpass" onclick="nhanvao1()"></i>
-              </span>
-            </div>
-          </div>
-
-          <div class="form-confirmpassword">
-            <label for="password" class="form-label">Xác nhận mật khẩu</label>
-            <div class="input-group">
-              <input type="password" class="form-control" id="confirmpassword" placeholder="Nhập mật khẩu" name="confirmpassword">
-              <span class="input-group-text" id="togglePassword">
-                <i class="bi bi-eye-slash" class="eye-icon" id="hienpass2" onclick="nhanvao2()"></i>
-              </span>
-            </div>
-          </div>
-
-          <div class="container-btn-dangnhap">
-            <input class="btn-dangnhap" type="submit" name="dangky" value="Đăng ký">
-          </div>
-
-        </form>
-      </div>
-      <div class="col" style="display: flex; flex-direction: column;">
-        <h4>Đã có tài khoản</h4>
-        <a href="index.php?page=dangnhap" class="btn-taotk">Đăng nhập</a>
-      </div>
+        <!-- Already Have Account Section -->
+        <div class="col-md-6 d-flex flex-column align-items-center justify-content-center">
+            <h5>Đã có tài khoản</h5>
+            <a href="index.php?page=dangnhap" class="btn btn-outline-dark my-3 w-50">Đăng nhập</a>
+            <p class="text-center">Đăng nhập ngay để khám phá thêm nhiều ưu đãi hấp dẫn!</p>
+        </div>
     </div>
 </div>
 
-
 <style>
-  .btn-dangnhap{
-    width: 30%;
-    padding: 10px;
-    border-radius: 100px;
-    border: 1px solid black;
-    background: transparent;
-    transition: 0.3s ease;
-  }
-  .btn-dangnhap:hover{
-    background: black;
-    color: white;
-  }
-  .container-btn-dangnhap{
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  .btn-taotk{
-    text-decoration: none;
-    border: 1px solid black; 
-    padding: 10px; 
-    width: 30%; 
-    border-radius: 100px; 
-    border: 1px solid black; 
-    background: transparent; 
-    color: black; 
-    text-align: center;
-    transition: 0.3s ease;
-  }
-  .btn-taotk:hover{
-    background: black;
-    color: white;
-    border: 1px solid white;
-  }
-  a{
-    text-decoration: none;
-    color: black;
-    transition: 0.3s ease;
-  }
-  a:hover{
-    color: red;
-  }
+    /* Card Styling */
+    .card {
+        border: none;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    /* Input Fields */
+    .form-control {
+        border-radius: 5px;
+    }
+
+    .form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+    /* Buttons */
+    .btn-primary {
+        background: linear-gradient(to right, #007bff, #0056b3);
+        border: none;
+        border-radius: 50px;
+        transition: 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background: linear-gradient(to right, #0056b3, #003f7f);
+    }
+
+    .btn-outline-dark {
+        border-radius: 50px;
+        transition: 0.3s ease;
+    }
+
+    .btn-outline-dark:hover {
+        background-color: #000;
+        color: #fff;
+    }
+
+    /* Breadcrumb Styling */
+    .breadcrumb {
+        background: #f8f9fa;
+        padding: 10px 15px;
+        border-radius: 5px;
+    }
+
+    .breadcrumb-item a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .breadcrumb-item a:hover {
+        text-decoration: underline;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .btn-primary, .btn-outline-dark {
+            width: 100%;
+        }
+
+        .col-md-6 {
+            margin-bottom: 20px;
+        }
+    }
 </style>
 
 <script src="layout/javascript/dangky.js"></script>
