@@ -10,15 +10,23 @@
       $html_getProduct .= '
         <tr>
           <td>'.$stt.'</td>
-                    
+          <input type="hidden" value="'.$id_item.'" name="id_item[]">
+          <input type="hidden" value="'.$id_size.'" name="id_size[]">
+          <input type="hidden" value="'.$id_color.'" name="id_color[]">
+
           <td><img class="product-image" src="../layout/images/outerwear/'.$img.'" alt="Product Image"></td>
-          <td><input type="text" value="'.$size.'" class="form-control text-center"></td>
+          <td>
+            <input type="text" value="'.$size.'" class="form-control text-center">
+          </td>
           <td><input type="text" value="'.$color.'" class="form-control text-center"></td>
           <td>
-            <input type="text" value="'.$stock.'" class="form-control text-center">          </td>
-          <td><input type="text" value="'.number_format($price, 0, ',', '.').' ₫" class="form-control text-center"></td>
-          <td><input type="text" value="'.number_format($price_sale, 0, ',', '.').' ₫" class="form-control text-center"></td>
-          <td><input type="text" value="'.$limit_date_sale.'" class="form-control text-center"></td>
+            <input type="text" value="'.$stock.'" class="form-control text-center" name="stock[]">          
+          </td>
+          <td><input type="text" value="'.number_format($price, 0, ',', '.').'" class="form-control text-center" name="price[]"></td>
+          <td><input type="text" value="'.number_format($price_sale, 0, ',', '.').'" class="form-control text-center" name="price_sale[]"></td>
+          <td>
+            <input type="date" value="'.$limit_date_sale.'" class="form-control text-center" name="limit_date_sale[]">
+          </td>
           <td class="text-center">
           <button style="border: none" name="luusanpham">
             <div>
@@ -60,13 +68,12 @@
   }
 ?>
 <main id="main">
-  <!-- <?php
+<?php
   
-        echo '<pre>';
-      print_r($_SESSION);
-      print_r($_POST);
-      echo '</pre>';
-  ?> -->
+  echo "<pre>";
+  print_r($_FILES['img-item']);
+  echo "</pre>";
+?>
   <div class="container py-4">
     <!-- Header -->
     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -83,14 +90,30 @@
 
     <!-- Add Product Button -->
     <div class="text-end mb-4">
-      <a href="index.php?page=themsanpham" class="btn btn-primary">
-        <i class="bi bi-plus-circle-dotted"></i> Thêm Sản Phẩm
-      </a>
+      <div class="dropdown">
+        <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Thao tác
+        </button>
+        <ul class="dropdown-menu">
+          <li class="mb-3">
+            <a href="index.php?page=themsanpham" class="dropdown-item d-flex align-items-center">
+              <i class="bi bi-plus-circle-dotted me-2"></i>
+              <span>Thêm Sản Phẩm</span>
+            </a>
+          </li>
+          <li>
+            <a href="index.php?page=themitem" class="dropdown-item d-flex align-items-center">
+              <i class="bi bi-plus me-2"></i>
+              <span>Thêm item</span>
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
 
     <!-- Table -->
     <form action="index.php?page=luusanpham" method="post">
-      <div class="table-responsive">
+      <div class="table-responsive shadow-sm rounded">
         <table class="table table-bordered table-hover align-middle">
           <thead class="table-primary">
             <tr>
@@ -103,7 +126,6 @@
               <th>GIÁ GIẢM</th>
               <th>GIẢM ĐẾN</th>
               <th class="text-center">
-                <span>THAO TÁC</span>
                 <?php
                   if (isset($_GET['lock'])) {
                     echo '<a href="index.php?page=sanpham" class="ms-2 text-decoration-none text-success"><i class="bi bi-unlock fs-5"></i></a>';
@@ -113,7 +135,6 @@
                 ?>
               </th>
             </tr>
-
           </thead>
           <tbody>
             <?=$html_getProduct;?>
@@ -184,6 +205,29 @@
   .dropdown-item:hover {
     background-color: #e9ecef;
     color: #007bff;
+  }
+  .dropdown-menu {
+    min-width: 220px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .dropdown-item:hover {
+    background-color: #e9ecef;
+    color: #007bff;
+  }
+
+  /* Table Responsive Styling */
+  .table-responsive {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
 </style>
 

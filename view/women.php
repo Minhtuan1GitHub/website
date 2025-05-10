@@ -280,4 +280,18 @@
 .card-img-top:hover {
   transform: scale(1.1);
 }
+.breadcrumb {
+        background: #f8f9fa;
+        padding: 10px 15px;
+        border-radius: 5px;
+    }
+
+    .breadcrumb-item a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .breadcrumb-item a:hover {
+        text-decoration: underline;
+    }
 </style>

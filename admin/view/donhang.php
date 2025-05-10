@@ -4,6 +4,7 @@
     extract($hang);
     $html_tatcadonhang .= '
       <tr>
+        <form action="index.php?page=capnhatsanpham" method="post">
         <th>'.$id_bill.'</th>
         <th>'.$ten.'</th>
         <th>'.$ngaytao.'</th>
@@ -14,7 +15,8 @@
               '.$trangthai.'
             </span>
           </div>
-      
+      <input type="hidden" value='.$id_bill.' name="id_bill">
+      <input type="hidden" value='.$thanhtoan.' name="thanhtoan">
         </th>
         <th>
           <div style="width: 100%">
@@ -23,16 +25,14 @@
             </span>
           </div>
         </th>
-        <th>
+        <th class="text-center">
           <div>
-            <button>
-              <i class="bi bi-eye"></i>
-            </button>
-            <button>
-              <i class="bi bi-printer"></i>
+            <button type="submit" style="border: 1px solic black; background: none; border-radius: 10px; width: ">
+              <i class="bi bi-check"></i>
             </button>
           </div>
         </th>
+        </form>
       </tr> 
     ';
   }

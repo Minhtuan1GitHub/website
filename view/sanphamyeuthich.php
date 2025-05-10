@@ -75,6 +75,8 @@ if (isset($_SESSION['session_user']) && count($_SESSION['session_user']) > 0) {
         }
     }
 }
+$_SESSION['tongmonyeuthich'] = $count
+
 ?>
 
 <div class="container my-5">
@@ -102,7 +104,7 @@ if (isset($_SESSION['session_user']) && count($_SESSION['session_user']) > 0) {
             echo '<a class="btn btn-danger" href="index.php?page=viewlike&del=1" onclick="return confirm(\'Bạn có chắc chắn muốn xóa hết tất cả sản phẩm trong giỏ hàng?\')">Clear All Items</a>';
         } else {
             echo '<div class="alert alert-warning text-center" style="border-radius: 0; font-weight: bold;">
-                    You have no items in your cart.
+                    Bạn chưa có sản phầm nào trong giỏ hàng yêu thích
                   </div>';
         }
         ?>

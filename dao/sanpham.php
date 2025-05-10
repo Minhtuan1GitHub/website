@@ -244,15 +244,52 @@ function danhmuc($id_phanloai){
     return pdo_query($sql, $id_phanloai);
 }
 
-function updatesanpham($id_item, $id_color, $id_size, $stock){
-    $sql = "UPDATE product SET stock = ? WHERE id_item = ? AND id_color = ? AND id_size = ?";
-    return pdo_execute($sql, $stock, $id_item, $id_color, $id_size);
+function updatesanpham($stock, $size, $color, $price, $price_sale, $limit_date_sale ,$id_item, $id_color, $id_size){
+    $sql = "UPDATE product set stock = ?, id_size = ?, id_color = ?, price = ?, price_sale = ?, limit_date_sale = ? 
+            where id_item = ? and id_color = ? and id_size = ?";
+    pdo_execute($sql, $stock,  $size, $color, $price, $price_sale, $limit_date_sale, $id_item, $id_color, $id_size);
 }
 
+function item_insert($img, $id_phanloai, $dm_id, $name_item, $created_at){
+    $sql = "INSERT INTO item(img, id_phanloai, dm_id, name_item, created_at) values (?,?,?,?,?)";
+    pdo_execute($sql, $img, $id_phanloai, $dm_id, $name_item, $created_at);
+}
+
+function selectAllPhanLoai(){
+    $sql = "SELECT * from phanloai";
+    return pdo_query($sql);
+}
+
+function selectAllDanhMuc(){
+    $sql = "SELECT danhmuc.*, phanloai.name_phanloai 
+            from danhmuc
+            join phanloai on phanloai.id_phanloai = danhmuc.id_phanloai";
+    return pdo_query($sql);
+}
+
+function sanphammoithem(){
+    $sql = "SELECT id
+            FROM item
+            ORDER BY created_at DESC
+            LIMIT 1";
+    $result = pdo_query_one($sql);
+    return $result['id'];
+}
+
+
+function themvaostyle($id){
+    $sql = "INSERT INTO style(id) values (?)";
+    pdo_execute($sql, $id);
+}
+
+function themvaoimage_item($id){
+    $sql = "INSERT INTO image_item(id) values (?)";
+    pdo_execute($sql, $id);
+}
 // function chonphanloai(){
 //     $sql = "SELECT name_phanloai from phanloai";
 //     return pdo_query($sql);
-// }
+// } 
 
 
 

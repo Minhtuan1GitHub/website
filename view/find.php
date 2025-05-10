@@ -19,7 +19,6 @@
     <a href="index.php"><i class="bi bi-house fs-3"></i></a>
     <a href="index.php"><i class="bi bi-x-lg fs-1"></i></i></a>
     <?=$html_taikhoan;?>
-    <!-- <a href="index.php?page=dangnhap"><i class="bi bi-person fs-3"></i></a> -->
   </div>
 </div>
 

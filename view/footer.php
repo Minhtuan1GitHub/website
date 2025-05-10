@@ -1,11 +1,44 @@
-</body>
+<!-- Button trigger modal -->
+<div style="display: flex; justify-content: end; margin-bottom: 40px">
+  <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="border: 1px solid rgb(241, 171, 185); border-radius: 100px; height: 40px; width: 40px; background: rgb(241, 171, 185)">
+    <i class="bi bi-robot" style="color: black;"></i>
+  </button>
+</div>
 
-<footer class="dk-footer" style="padding-bottom: 1px;">
-    <div class="contrainer-fluid " style="margin-bottom: 150px; background: #000000;">
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Gửi tin nhắn đến chủ shop</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="messageForm" action="index.php?page=tinnhan" method="post">
+          <div>
+            <input type="hidden" value="<?=$_SESSION['session_user']['id_user']?>" name="id_user">
+
+            <label for="message" class="form-label">Nhập tin nhắn của bạn</label>
+            <textarea class="form-control" id="message" rows="3" placeholder="Nhập tin nhắn của bạn" name="content"></textarea>
+          </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+        <button type="submit" class="btn btn-primary" name="tinnhan"<?php if (!isset($_SESSION['session_user']) || count($_SESSION['session_user']) === 0) echo 'onclick="dangnhap(); return false;"'; ?>>Gửi</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="dk-footer" style="padding-bottom: 1px; width: 100%">
+    <div class="contrainer-fluid " style="margin-bottom: 150px; background: white; backdrop-filter: blur(10px);">
       <div class="container">
         <div class="row">
           <div class="col-lg-3 footer-info">
-            <div class="dk-footer-box-info p-1 " style="background: #A7ED10;">
+            <div class="dk-footer-box-info p-1 " style="background: rgb(241, 171, 185); backdrop-filter: blur(5px);">
               
               <div class="container d-flex justify-content-center ">
                 <a href="#" class="footer-logo">
@@ -14,14 +47,14 @@
               </div>
 
               <div class="container mt-2">
-                <p class="footer-info-text" style="max-width: 100%; font-size: 14px; color: #000000">
+                <p class="footer-info-text" style="max-width: 100%; font-size: 14px; color: black">
                   Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator.
                 </p>  
               </div>
 
               <div class="container">
                 <div class="footer-social-link">
-                  <h3 style="color: #000000">Follow us</h3>
+                  <h3 style="color: black">Follow us</h3>
                   <ul class="d-flex justify-content-evenly p-0" style="list-style: none;">
                     <li>
                       <a href="https://www.facebook.com/ngmitutdtu" target="_blank"><i class="bi bi-facebook fs-5" style="color: blue;"></i></a>
@@ -42,16 +75,16 @@
             </div>
           </div>
 
-          <div class="col-lg-9  d-flex flex-column justify-content-evenly">
+          <div class="col-lg-9 d-flex flex-column justify-content-evenly">
             <div class="row p-1">
               <div class="col">
                 <div class="contact-us d-flex align-items-center g-0 p-0" style="gap: 10px;">
                   <div class="contact-icon mb-4">
-                    <i class="bi bi-map fs-2" style="color: #A7ED10"></i>
+                    <i class="bi bi-map fs-2" style="color: rgb(241, 171, 185);"></i>
                   </div>
                   <div class="contact-info">
-                    <h3 style="color: #ffffff">Ho Chi Minh City</h3>
-                    <p style="color: white;">1168/9 Le Van Luong Nha Be</p>
+                    <h3 style="color: black">Ho Chi Minh City</h3>
+                    <p style="color: black;">1168/9 Le Van Luong Nha Be</p>
                   </div>
                 </div>
               </div>
@@ -59,11 +92,11 @@
               <div class="col">
                 <div class="contact-us d-flex align-items-center g-0 p-0" style="gap: 10px;">
                   <div class="contact-icon mb-4">
-                    <i class="bi bi-phone fs-2" style="color: #A7ED10"></i>
+                    <i class="bi bi-phone fs-2" style="color: rgb(241, 171, 185);"></i>
                   </div>
                   <div class="contact-info">
-                    <h3 style="color: white;">+84 382494117</h3>
-                    <p style="color: white;">Give us a call</p>
+                    <h3 style="color: black;">+84 382494117</h3>
+                    <p style="color: black;">Give us a call</p>
                   </div>
                 </div>
               </div>
@@ -71,9 +104,9 @@
 
             <div class="row p-1">
               <div class="col">
-                <div class="footer-widget ">
+                <div class="footer-widget">
                   <div class="section-heading">
-                    <h3 style="color: white;">Useful links</h3>
+                    <h3 style="color: black;">Useful links</h3>
                     <span class="animate-border border-black"></span>
                   </div>
                   <div class="container d-flex" style="gap: 10px; ">
@@ -111,7 +144,7 @@
               <div class="col">
                 <div class="footer-widget">
                   <div class="section-heading">
-                    <h3 style="color: white;">Location</h3>
+                    <h3 style="color: black;">Location</h3>
                     <span class="animate-border border-black"></span>
                   </div>
                     <div class="row">
@@ -127,8 +160,8 @@
         </div>
       </div>
 
-      <div class="copyright container-fluid mt-2" style="background-color: #A7ED10;">
-        <div class="container">
+      <div class="copyright container-fluid mt-2" style="backdrop-filter: blur(5px);">
+        <div class="container" style="background: rgb(241, 171, 185)">
           <div class="row" style="padding-top: 5px; padding-bottom: 5px; ">
             <div class="col d-flex align-items-center">
               <span style="color: #000000;">
@@ -160,3 +193,25 @@
     </div>
 </footer>
 
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const form = document.getElementById("messageForm");
+      form.addEventListener("submit", function (event) {
+        const message = document.getElementById("message").value.trim();
+        if (message === "") {
+          event.preventDefault(); // Prevent form submission
+          alert("Vui lòng nhập tin nhắn của bạn!"); // Show an alert
+        }
+      });
+    });
+
+    function dangnhap(){
+    Swal.fire({
+      icon: 'info',
+      title: 'Bạn chưa truy cập vào tài khoản',
+      html: "Nếu chưa có tài khoản nhấn vào <a href='index.php?page=dangnhap' style='text-decoration:none;'><i class='bi bi-person fs-3'></i></a> để đăng kí miễn phí",
+      confirmButtonText: 'OK'
+    });  
+  }
+</script>

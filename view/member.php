@@ -13,7 +13,7 @@
                       <li class="breadcrumb-item"<a href="index.php?page=member">Thông tin</a></li>
 
                       ';
-
+  // extract($taikhoan);
 ?>
 
 <nav class="container" aria-label="breadcrumb" style="position: sticky; top: 0; margin-top: 0px">
@@ -32,7 +32,18 @@
     </div>
     <div class="col-10">
       <div class="row" style="display: flex; border-bottom: 1px solid black; padding-bottom: 15px;">
-        <h4 class="col-5">Thông tin của bạn</h4>
+        <div class="d-flex justify-content-between">
+          <h4 class="col-5">Thông tin của bạn</h4>
+          <div style="border: 1px solid transparent; padding: 5px 15px; border-radius: 10px; background: <?php
+            if ($_SESSION['session_user']['trangthai'] == 'Khóa') {
+              echo 'red';
+            } else {
+              echo 'green';
+            }
+          ?>">
+            <span style="color: white; font-weight: bold"><?=$_SESSION['session_user']['trangthai']?></span>
+          </div>
+        </div>
         <?php
         if (isset($_SESSION['tb_xacthuc']) && ($_SESSION['tb_xacthuc'])) {
           echo "<h2 class='col alert' style='font-size: 24px; padding: 0px; color: green; justify-content: center; display: flex' id='myAlert'>" . $_SESSION['tb_xacthuc'] . "</h2>";
@@ -84,9 +95,9 @@
             </div>
           </div>
         </div>
-        <div style="display: flex; justify-content: end; margin-bottom: 10px">
-          <input type="hidden" name="id_user" value="<?=$id_user?>">
-          <input type="submit" name="capnhat" value="Cập nhật" class="btn btn-primary">
+        <div class="d-flex justify-content-end my-2">
+            <input type="hidden" name="id_user" value="<?=$id_user?>">
+            <button type="submit" name="capnhat" class="btn btn-primary">Cập nhật</button>
         </div>
       </form>
     </div>
@@ -163,6 +174,17 @@
   a:hover{
     color: red;
     font-weight: bold;
+  }
+  .btn-primary {
+      background-color: #007bff;
+      border-color: #0056b3;
+      color: white;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .btn-primary:hover {
+      background-color: #0056b3;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
 </style>
 

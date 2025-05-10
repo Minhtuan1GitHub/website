@@ -22,6 +22,13 @@
   include "dao/bill.php";
   include "dao/binhluan.php";
   include "dao/chuyenkhoan.php";
+  include "dao/tinnhan.php";
+
+  if (trangThaiTaiKhoan($_SESSION['session_user']['id_user']) != $_SESSION['session_user']['trangthai']){
+    $trangthaitaikhoan = trangThaiTaiKhoan($_SESSION['session_user']['id_user']);
+    $trangthai = $trangthaitaikhoan['trangthai'];
+    $_SESSION['session_user']['trangthai'] = $trangthai;
+  }
 
   if (!isset($_GET['page'])) {
 
@@ -40,6 +47,7 @@
             case 'men': 
 
                 $phanloai = get_phanploai();
+                $countDonHang = countDonHang($_SESSION['session_user']['id_user']);
                 include "view/header1.php";
                 $dsdm =dm_all(1);  
 
@@ -86,6 +94,7 @@
             
             case 'sanphamchitiet':
                 $phanloai = get_phanploai();
+                $countDonHang = countDonHang($_SESSION['session_user']['id_user']);
                 include "view/header1.php";
 
                 if (isset($_GET['idpro'])){
@@ -242,11 +251,33 @@
                     header('location: index.php?page=sanphamchitiet&idpro='.$id.'');
                 }
                 break;
+            case 'tinnhan':
+                if (isset($_POST['tinnhan'])){
+                    $id_user = $_POST['id_user'];
+                    $content = $_POST['content'];
+                    date_default_timezone_set('Asia/Ho_Chi_Minh');
+                    $create_at = date("Y-m-d H:i:s");
+                    $admin = 83;
+                    message_insert($id_user, $content, $create_at, $admin);
+                    header('location: index.php?page=tinnhanpage');
+                }
+                break;
+            case 'tinnhanpage':
+                $phanloai = get_phanploai();
+                $admin = 83;
+                dadoc($admin);
+                include "view/header1.php";
+                $allMessage = message_select_by_id($_SESSION['session_user']['id_user'], $_SESSION['session_user']['id_user']);
+                include "view/tinnhan.php";
+                include "view/find.php";
+                break;
+                
             case 'addlike':
                 
                 break;
             case 'viewlike': 
                 $phanloai = get_phanploai();
+                $countDonHang = countDonHang($_SESSION['session_user']['id_user']);
                 include "view/header1.php";
                 include "view/viewlike.php";
 
@@ -364,6 +395,8 @@
                     }
                 }
                       $phanloai = get_phanploai();
+                
+                $countDonHang = countDonHang($_SESSION['session_user']['id_user']);
                 include "view/header1.php";
 
                 $voucher = get_voucher(10);
@@ -374,6 +407,7 @@
 
             case 'dangnhap':
                       $phanloai = get_phanploai();
+                $countDonHang = countDonHang($_SESSION['session_user']['id_user']);
                 include "view/header1.php";
                 include "view/dangnhap.php";
                 include "view/find.php";
@@ -428,16 +462,18 @@
 
                 if(isset($_SESSION['session_user']) && (count($_SESSION['session_user'])>0)){
                           $phanloai = get_phanploai();
+                $countDonHang = countDonHang($_SESSION['session_user']['id_user']);
                 include "view/header1.php";
-                    include "view/member.php";
-                    include "view/footer.php";
-                    include "view/find.php";
+                include "view/member.php";
+                include "view/footer.php";
+                include "view/find.php";
                 }
 
 
                 break;
-            case 'updateuser':
-                if (isset($_POST['capnhat']) && ($_POST['capnhat'])){
+            case 'updateuser': 
+                if (isset($_POST['capnhat'])){
+                    // header('location: index.php?page=member');
                     $email = $_POST["email"];
                     $password = $_POST["password"];
                     $name = $_POST["name"];
@@ -445,7 +481,6 @@
                     $phone = $_POST["phone"];
                     $date = $_POST["date"];
                     $gender = $_POST["gender"];
-                    $role = 0;
                     $id_user = $_POST["id_user"];
                     date_default_timezone_set('Asia/Ho_Chi_Minh');
 
@@ -453,9 +488,10 @@
                     $today = new DateTime();
                     $age = $today->diff($birthDate)->y;
                     // xu li
-                    user_update($email, $password, $name, $district, $phone, $date, $gender, $role, $age ,$id_user);
+                    user_update($email, $password, $name, $district, $phone, $date, $gender, $age ,$id_user);
                     //out
-                          $phanloai = get_phanploai();
+                    $phanloai = get_phanploai();
+                    $countDonHang = countDonHang($_SESSION['session_user']['id_user']);
                     include "view/header1.php";
                     include "view/member_comfirm.php";
                     include "view/footer.php";
@@ -498,6 +534,7 @@
 
 
                           $phanloai = get_phanploai();
+                $countDonHang = countDonHang($_SESSION['session_user']['id_user']);
                 include "view/header1.php";
                     include "view/changePassword.php";
                     include "view/footer.php";
@@ -508,12 +545,14 @@
             
             case 'dangky':
                       $phanloai = get_phanploai();
+                $countDonHang = countDonHang($_SESSION['session_user']['id_user']);
                 include "view/header1.php";
                 include "view/dangky.php";
                 include "view/find.php";
                 break;
             case 'quenmatkhau':
                 $phanloai = get_phanploai();
+                $countDonHang = countDonHang($_SESSION['session_user']['id_user']);
                 include "view/header1.php";
                 include "view/quenmatkhau.php";
                 include "view/find.php";
@@ -752,7 +791,9 @@
                 break;
             case 'chuyenkhoan':
                 $phanloai = get_phanploai();
-                $sort = '5';
+                $sort = '3';
+
+                $countDonHang = countDonHang($_SESSION['session_user']['id_user']);
                 include "view/header1.php";
                 if (isset($_SESSION['session_user']) && count($_SESSION['session_user'])){
                     $id_user = $_SESSION['session_user']['id_user'];
@@ -786,7 +827,6 @@
                     header('location: index.php?page=chuyenkhoan');
 
                 }
-
                 include "view/chuyenkhoan.php";
                 include "view/footer.php";
                 include "view/find.php";
@@ -802,6 +842,7 @@
                 break;
             case 'chitietdonhang':
                 $phanloai = get_phanploai();
+                $countDonHang = countDonHang($_SESSION['session_user']['id_user']);
                 include "view/header1.php";
                 $getchitiet = getchitiet($_SESSION['getchitiet']);
                 $getInfo = getInfoBill($_SESSION['getchitiet']);
@@ -822,11 +863,13 @@
                         user_insert($email, $password, $ngaydangki);
                         $alert = "<div class='alert alert-success mt-2' id ='myAlert' role = 'alert'>Đăng ký thành công</div>";
                         $phanloai = get_phanploai();
-                        include "view/header1.php";
+                        $countDonHang = countDonHang($_SESSION['session_user']['id_user']);
+                include "view/header1.php";
                         include "view/dangnhap.php";
                     }else{
                         $alert = "<div class='alert alert-danger mt-2' id ='myAlert' role = 'alert'>Email đã tồn tại. Vui lòng sử dụng email khác.</div>";                        
                               $phanloai = get_phanploai();
+                $countDonHang = countDonHang($_SESSION['session_user']['id_user']);
                 include "view/header1.php";
                         include "view/dangky.php";
                     }
@@ -840,6 +883,7 @@
 
 
                 $phanloai = get_phanploai();
+                $countDonHang = countDonHang($_SESSION['session_user']['id_user']);
                 include "view/header1.php";
                 $dsdm =dm_all(0); 
 
@@ -879,6 +923,7 @@
             case 'kid':
 
                 $phanloai = get_phanploai();
+                $countDonHang = countDonHang($_SESSION['session_user']['id_user']);
                 include "view/header1.php";
                 $dsdm =dm_all(2); 
 
@@ -903,6 +948,7 @@
 
             case 'baby':
                 $phanloai = get_phanploai();
+                $countDonHang = countDonHang($_SESSION['session_user']['id_user']);
                 include "view/header1.php";
                 $dsdm =dm_all(3); 
 
@@ -926,6 +972,7 @@
                 break; 
             case 'danhgia':
                 $phanloai = get_phanploai();
+                $countDonHang = countDonHang($_SESSION['session_user']['id_user']);
                 include "view/header1.php";
                 if (isset($_SESSION['idpro'])){
                     $id = $_SESSION['idpro'];   

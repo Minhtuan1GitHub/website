@@ -75,3 +75,8 @@ body {
   width: 10px !important;
   height: 10px !important;
 }
+
+#notification-badge {
+  font-size: 0.7rem; /* Kích thước nhỏ */
+  padding: 0.4em 0.6em; /* Khoảng cách trong badge */
+}

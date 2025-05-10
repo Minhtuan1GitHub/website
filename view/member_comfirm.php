@@ -7,7 +7,7 @@
   } 
   $html_breadcrumb = '';
   $html_breadcrumb .='<li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                      <li class="breadcrumb-item"><a href="index.php?page=menber">Thông tin</a></li>
+                      <li class="breadcrumb-item"><a href="index.php?page=member">Thông tin</a></li>
                       <li class="breadcrumb-item"<a href="index.php?page=member">Cập nhật thông tin</a></li>
 
                       ';

@@ -38,6 +38,10 @@
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+  <!-- ajax -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+
+
 </head>
 
 
@@ -70,17 +74,30 @@
 
               </ul>
               <div class="d-flex gap-4 ">
-                <a href="index.php?page=chuyenkhoan" class="button">
-                  <i class="bi bi-tree fs-5"></i>
+                <a href="index.php?page=tinnhanpage" class="position-relative">
+                  
+                  <i class="bi bi-send fs-5"></i>
                 </a>
-                <a href="index.php?page=viewlike" class="button">
-                  <i class="bi bi-bag-heart fs-5"></i>
+                <a href="index.php?page=chuyenkhoan" class="position-relative button">
+                  <i class="bi bi-tree fs-5"></i>
+                  <span id="donhang-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    <?=$countDonHang?>
+                  </span> 
+                </a>
+                <a href="index.php?page=viewlike" class="position-relative button">
+                  <i class="bi bi-heart fs-5"></i>
+                  <span id="yeuthich-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    <?=$_SESSION['tongmonyeuthich']?>
+                  </span>
                 </a>
                 <?php
                   if (isset($_SESSION['session_user']) && count($_SESSION['session_user']) > 0 && $_SESSION['session_user']['role'] ==0) {
                     echo '
-                          <a href="index.php?page=viewcart" class="button">
+                          <a href="index.php?page=viewcart" class="position-relative button">
                             <i class="bi bi-cart4 fs-5"></i>
+                            <span id="giohang-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                              '.$_SESSION['tongmon'].'
+                            </span>
                           </a>
                         ';
                   }
@@ -100,3 +117,5 @@
     </div>
   </div>
  
+
+

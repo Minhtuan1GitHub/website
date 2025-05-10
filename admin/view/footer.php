@@ -1,8 +1,14 @@
-<footer>Footer</footer>
+<footer></footer>
 
 <script src="layout/javascript/navbar.js"></script>
+<!-- Popper.js (bắt buộc cho dropdown, tooltip, v.v.) -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
 
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.min.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
 </body>
+<script>
+	CKEDITOR.replace('editor1');
+</script>
 </html>

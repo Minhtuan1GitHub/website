@@ -40,10 +40,23 @@ function checkNewPassword($newPassword, $comfirmNewPassword){
     return false;
 }
 
-function user_update($email, $password, $name, $district, $phone, $date, $gender, $role, $age ,$id_user){
-    $sql = "UPDATE user set email = ?, password = ?, ten = ?, diachi = ?, dienthoai = ?, sinhnhat = ?, gioitinh = ?, role = ?, age = ?  where id_user=? ";
-    pdo_execute($sql, $email, $password, $name, $district, $phone, $date, $gender, $role, $age ,$id_user);
+function user_update($email, $password, $name, $district, $phone, $date, $gender, $age ,$id_user){
+    $sql = "UPDATE user set email = ?, password = ?, ten = ?, diachi = ?, dienthoai = ?, sinhnhat = ?, gioitinh = ?, age = ?  where id_user=? ";
+    pdo_execute($sql, $email, $password, $name, $district, $phone, $date, $gender, $age ,$id_user);
 }
+
+function trangThaiTaiKhoan($id_user){
+    $sql = "SELECT taikhoan.*
+            from taikhoan
+            join user on user.trangthai = taikhoan.id
+            where user.id_user = ?";
+    // $result = pdo_query_one($sql, $id_user);
+    // return $result['trangthai'];
+    // return pdo_query($sql, $id_user);
+    return pdo_query_one($sql, $id_user);
+}
+
+
 
 function user_update_password ($password, $id_user){
     $sql = "UPDATE user set password = ? where id_user = ? ";

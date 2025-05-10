@@ -64,11 +64,6 @@
     }
 
 
-
-
-
-
-
   extract($getavg); 
   
   
@@ -248,8 +243,20 @@
               <div style="display: flex; justify-content: space-between; margin: 10px 0px">
                 <h3>Bình luận</h3>
                 <div style="display: flex; align-items: center; gap: 0px; justify-content: space-between">
-                  <i class="bi bi-pen"></i>
-                  <button class="btn" data-bs-toggle="modal" data-bs-target="#binhluan">Viết bình luận</button>
+                  <?php 
+                    if ($_SESSION['session_user']['trangthai'] =="Khóa"){
+                      ?>
+                    <button class="btn text-secondary" onclick="alert('Tài khoản của bạn đã bị khóa. Bạn không thể viết bình luận!')">
+                      <i class="bi bi-pen text-secondary"></i>
+                      <span>Viết bình luận</span>
+                    </button>
+                    <?php }else{ ?>
+                      <button class="btn" data-bs-toggle="modal" data-bs-target="#binhluan">
+                        <i class="bi bi-pen"></i>
+                        <span>Viết bình luận</span>
+                      </button>
+                    <?php }
+                  ?>
                 </div>
               </div>
 
@@ -394,11 +401,11 @@
                       <span style="font-size: 30px;"><?=$name_item?></span>
                       <div style="display: flex;  align-items: center; gap: 10px">
                         <i class="bi bi-share"></i>
-                        <button style="border: none; background: none" name="addlike">
+                        <button style="border: none; background: none" name="addlike"<?php if (!isset($_SESSION['session_user']) || count($_SESSION['session_user']) === 0) echo 'onclick="dangnhap(); return false;"'; ?>>
                           <i class="bi bi-heart"></i>
                         </button>
                       </div>
-                    </div>
+                    </div> 
 
                     <!-- color -->
                     <div style="display: flex; gap: 10px; margin-top: 10px; margin-bottom: 10px">
@@ -435,11 +442,11 @@
                             <div class="text-primary" style="font-size: 40px;"><?=$price?> k</div>
                           <?php }else{
                                   if ($limit_date_sale >= date('Y-m-d H:i:s')){ ?>
-                                    <div class="text-primary" style="font-size: 40px; text-decoration: line-through;"><?=$price?> k</div>
-                                    <div class="text-danger" style="font-size: 40px;"><?=$price_sale?> k</div>
+                                    <div class="text-primary" style="font-size: 20px; text-decoration: line-through;"><?=$price?>k</div>
+                                    <div class="text-danger" style="font-size: 40px;"><?=$price_sale?>k</div>
                                   <?php }else{
                                     ?>
-                                    <div class="text-primary" style="font-size: 40px;"><?=$price?> k</div>
+                                    <div class="text-primary" style="font-size: 40px;"><?=$price?>k</div>
                                   <?php }
                           ?>
 
@@ -526,7 +533,7 @@
 
                 </div>
                 
-              <button type="submit" name="addcart" style="width: 100%; border-radius: 100px; border: none; background: black; height: 50px;"<?php if (!isset($_SESSION['session_user']) || count($_SESSION['session_user']) === 0) echo 'onclick="dangnhap(); return false;"'; ?>>
+              <button id="addtocart" type="submit" name="addcart" style="width: 100%; border-radius: 100px; border: none; background: black; height: 50px;"<?php if (!isset($_SESSION['session_user']) || count($_SESSION['session_user']) === 0) echo 'onclick="dangnhap(); return false;"'; ?>>
                 <i class="bi bi-cart fs-5" style="color: white;"></i>
                 <span style="color: white;">Add to cart</span>
               </button>

@@ -165,6 +165,22 @@ function thanhToanLai($id_sau, $id_bill){
   pdo_execute($sql, $id_sau, $id_bill);
 }
 
+function countDonHang($id_user){
+  $sql = "SELECT count(id_bill) as total from bill where id_user = ?";
+  $result = pdo_query_one($sql, $id_user);
+  return $result['total'];
+  // return pdo_query_one($sql);
+}
+
+function getAllTrangThai(){
+  $sql = "SELECT * from chitietbill";
+  return pdo_query($sql);
+}
+
+function updateTrangThaiMoi($trangthaimoi, $id_bill){
+  $sql = "UPDATE bill set thanhtoan = ? where id_bill = ?";
+  pdo_execute($sql, $trangthaimoi, $id_bill);
+}
 
 // function hang_hoa_update($ma_hh, $ten_hh, $don_gia, $giam_gia, $hinh, $ma_loai, $dac_biet, $so_luot_xem, $ngay_nhap, $mo_ta){
 //     $sql = "UPDATE hang_hoa SET ten_hh=?,don_gia=?,giam_gia=?,hinh=?,ma_loai=?,dac_biet=?,so_luot_xem=?,ngay_nhap=?,mo_ta=? WHERE ma_hh=?";

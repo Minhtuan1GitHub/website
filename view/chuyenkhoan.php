@@ -106,7 +106,7 @@ $html_breadcrumb .= '<li class="breadcrumb-item"><a href="index.php">Home</a></l
                     <?php endif; ?>
 
                     <?php if ($bill['id'] == 7 && $bill['trangthaithanhtoan'] == 1):?>
-                        <button name="hoantien" class="btn btn-danger btn-sm">Hoàn tiền</button>
+                        <button name="hoantien" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắc muốn hoàn tiền?')">Hoàn tiền</button>
                     <?php else: ?>
                         <!-- <button name="hoantien" class="btn btn-danger btn-sm" disabled>Hoàn tiền</button> -->
                     <?php endif; ?>

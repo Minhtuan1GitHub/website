@@ -45,20 +45,6 @@ $html_breadcrumb .= '<li class="breadcrumb-item"><a href="index.php">Home</a></l
 
 <style>
     /* Breadcrumb Styling */
-    .breadcrumb {
-        background: none;
-        padding: 0;
-        font-size: 0.9rem;
-    }
-
-    .breadcrumb-item a {
-        color: #007bff;
-        text-decoration: none;
-    }
-
-    .breadcrumb-item a:hover {
-        text-decoration: underline;
-    }
 
     /* Wishlist Header */
     .wishlist-header h2 {
@@ -101,5 +87,19 @@ $html_breadcrumb .= '<li class="breadcrumb-item"><a href="index.php">Home</a></l
 
     .card-body {
         padding: 30px;
+    }
+    .breadcrumb {
+        background: #f8f9fa;
+        padding: 10px 15px;
+        border-radius: 5px;
+    }
+
+    .breadcrumb-item a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .breadcrumb-item a:hover {
+        text-decoration: underline;
     }
 </style>

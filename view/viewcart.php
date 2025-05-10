@@ -92,7 +92,7 @@
                     <a class="btn btn-outline-danger btn-sm ms-3" href="index.php?page=remove&id='.$index.'" onclick="return confirm(\'Bạn có chắc chắn muốn xóa sản phẩm này không?\')">Remove</a>
                   </div>';
   
-        if ($limit_date_sale >= date("Y-m-d")) {
+        if ($limit_date_sale > date("Y-m-d")) {
           $date = date("d F", strtotime($limit_date_sale));
           $html_cart .= '<p class="text-danger"><strong>Limited-Time Offer:</strong> Until '.$date.'</p>';
         }
@@ -105,8 +105,8 @@
           </div>';
       }
     }
+    $_SESSION['tongmon'] = $tongmon;
     
-
 } 
   // thong tin 
   $html_thongtin = '';
@@ -489,16 +489,19 @@
               </div> -->
               <div style="width: 100%; margin: 20px 0px">
                 <?php
-                  $disable = '';
                   if (isset($_SESSION['giohang'][$_SESSION['session_user']['id_user']])){
+                    if ($_SESSION['session_user']['trangthai'] != "Khóa"){
+                      ?>
+                      <button class="btn-thanhtoan" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Thanh toán</button> 
+                    <?php }else{ ?>
+                      <button class="btn-thanhtoan" onclick="alert('Tài khoản của bạn đang bị khóa! Hiện tại không thể mua hàng')">Thanh toán</button> 
+                    <?php }
                     ?>
-                    <button class="btn-thanhtoan" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Thanh toán</button> 
+
                   <?php }else{
                     ?>
                     <button class="btn-thanhtoan" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" disabled>Thanh toán</button> 
-
                   <?php }?>
-
               </div>
       </div>
     </div>
