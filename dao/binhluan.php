@@ -34,6 +34,7 @@ function binhluan_count($id){
   // return pdo_query($sql, $id);
 }
 
+
 // function huuich($id_user, $id, $noidung){
 //   $sql = "UPDATE binhluan SET huuich = huuich + 1 WHERE id_user = ? and id = ? and noidung = ?";
 //   pdo_execute($sql, $id_user, $id, $noidung);

@@ -27,7 +27,7 @@
         </th>
         <th class="text-center">
           <div>
-            <button type="submit" style="border: 1px solic black; background: none; border-radius: 10px; width: ">
+            <button type="submit" style="border: 1px solic black; background: none; border-radius: 10px; width: `">
               <i class="bi bi-check"></i>
             </button>
           </div>
@@ -176,6 +176,24 @@
         </div>
       </div>
     </div>
+
+    <div class="page-order-statistics">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <!-- Biểu đồ tròn -->
+            <div style="width: 300px; height: 300px; margin: auto;">
+              <canvas id="pieChart" style="width: 100%; height: 100%;"></canvas>
+            </div>
+          </div>
+          <div class="col">
+            <!-- Biểu đồ cột -->
+            <canvas id="barChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- order table -->
     <div class="page-order-table container">
 
@@ -187,7 +205,7 @@
                   <i class="bi bi-file-earmark-arrow-down"></i>
               </button>
               <ul class="dropdown-menu">
-              <li><a href="#" class="dropdown-item">pdf</a></li>
+              <li><a href="#" class="dropdown-item" onclick="exportPDF()">pdf</a></li>
               <li><a href="#" class="dropdown-item">excel</a></li>
               <li><a href="#" class="dropdown-item">check</a></li>
               </ul>
@@ -248,4 +266,57 @@
           }
     });
   });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    // Biểu đồ tròn
+    const pieCtx = document.getElementById('pieChart').getContext('2d');
+    const pieChart = new Chart(pieCtx, {
+      type: 'pie',
+      data: {
+        labels: ['Đơn hoàn thành', 'Đơn đang xử lý', 'Đơn hàng bị hủy'],
+        datasets: [{
+          label: 'Tỷ lệ đơn hàng',
+          data: [<?=$donhangthanhcong['total']?>, <?=$donhangdangxuli['total']?>, <?=$donhangbihuy['total']?>],
+          backgroundColor: ['#54ad83', '#f6ac56', '#e7585f'],
+          borderWidth: 1
+        }]
+      }
+    });
+
+    // Biểu đồ cột
+    const barCtx = document.getElementById('barChart').getContext('2d');
+    const barChart = new Chart(barCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Tổng đơn hàng', 'Đơn hoàn thành', 'Đơn đang xử lý', 'Đơn hàng bị hủy'],
+        datasets: [{
+          label: 'Số lượng đơn hàng',
+          data: [<?=$tongdonhang['total']?>, <?=$donhangthanhcong['total']?>, <?=$donhangdangxuli['total']?>, <?=$donhangbihuy['total']?>],
+          backgroundColor: ['#6673d9', '#54ad83', '#f6ac56', '#e7585f'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  });
+
+  async function exportPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    const table = document.getElementById('bang-don-hang');
+    const rows = Array.from(table.rows).map(row => Array.from(row.cells).map(cell => cell.innerText));
+    doc.autoTable({
+      head: [rows[0]],
+      body: rows.slice(1),
+    });
+    doc.save('donhang.pdf');
+  }
+
+  
 </script>

@@ -40,7 +40,11 @@ function get_dssp_home($limi){
 }
 
 function get_voucher($limi){
-    $sql = " SELECT * from voucher where voucher_giam >0 order by voucher_giam asc limit ".$limi;
+    $sql = "SELECT * 
+            from voucher 
+            where voucher_giam >0 and current_date() <= endDate
+            order by voucher_giam asc 
+            limit ".$limi;
     return pdo_query($sql);
 }
 
@@ -177,9 +181,25 @@ function getSize($id, $id_item){
 }
 
 function getPrice($id_item, $id_color, $id_size){
-    $sql = "SELECT price from product where id_item = ? and id_size = ? and id_color = ?";
-    $result = pdo_query_one($sql, $id_item, $id_size, $id_color);
-    return $result ? $result['price'] :0;
+    $sql = "SELECT price, price_sale, limit_date_sale 
+            FROM product 
+            WHERE id_item = ? AND id_color = ? AND id_size = ?";
+    $result = pdo_query_one($sql, $id_item, $id_color, $id_size);
+    if ($result) {
+        if ($result['price_sale'] > 0 && $result['limit_date_sale'] >= date('Y-m-d H:i:s')) {
+            return [
+                'price' => $result['price'],
+                'price_sale' => $result['price_sale'],
+                'limit_date_sale' => $result['limit_date_sale']
+            ];
+        }
+        return [
+            'price' => $result['price'],
+            'price_sale' => 0,
+            'limit_date_sale' => null
+        ];
+    }
+    return ['price' => 0, 'price_sale' => 0, 'limit_date_sale' => null];
 }
 
 function size($id){
@@ -286,6 +306,40 @@ function themvaoimage_item($id){
     $sql = "INSERT INTO image_item(id) values (?)";
     pdo_execute($sql, $id);
 }
+
+
+function getAllThanhToan(){
+    $sql = "SELECT * 
+            from thanhtoan
+            where id = 6 or id = 7";
+    return pdo_query($sql);
+}
+function updateThanhToanMoi($thanhtoanmoi, $id_bill){
+    $sql = "UPDATE bill set trangthaithanhtoan = ? where id_bill = ?";
+    pdo_execute($sql, $thanhtoanmoi, $id_bill);
+  }
+
+function getMen($id_phanloai, $dm_id){
+    $sql = "SELECT item.*, product.price, danhmuc.name as dm_name
+            from item 
+            join product on product.id_item = item.id
+            join danhmuc on danhmuc.dm_id = item.dm_id
+            where item.id_phanloai = ? and item.dm_id = ?
+            order by item.created_at desc
+            limit 1";
+    return pdo_query($sql, $id_phanloai, $dm_id);
+}
+
+function getNews($limi){
+    $sql = "SELECT *
+            from news
+            order by date desc
+            limit $limi";
+            ;
+    return pdo_query($sql);
+}
+
+  
 // function chonphanloai(){
 //     $sql = "SELECT name_phanloai from phanloai";
 //     return pdo_query($sql);
@@ -367,3 +421,38 @@ function themvaoimage_item($id){
 //     $sql = "SELECT * FROM hang_hoa ORDER BY ma_hh LIMIT ".$_SESSION['page_no'].", 10";
 //     return pdo_query($sql);
 // }
+
+function getStock($id_item, $id_color, $id_size) {
+    $sql = "SELECT stock FROM product WHERE id_item = ? AND id_color = ? AND id_size = ?";
+    $result = pdo_query_one($sql, $id_item, $id_color, $id_size);
+    return $result ? $result['stock'] : 0;
+}
+
+function getColorWithStock($id_item) {
+    $sql = "SELECT DISTINCT color.color, product.id_color
+            FROM color
+            JOIN product ON product.id_color = color.id
+            WHERE product.id_item = ? 
+            AND EXISTS (
+                SELECT 1 FROM product p2 
+                WHERE p2.id_item = product.id_item 
+                AND p2.id_color = product.id_color 
+                AND p2.stock > 0
+            )";
+    return pdo_query($sql, $id_item);
+}
+
+function getSizeWithStock($id_item, $color_id = null) {
+    $sql = "SELECT DISTINCT size.size, product.id_size
+            FROM size
+            JOIN product ON product.id_size = size.id
+            WHERE product.id_item = ? 
+            AND product.stock > 0";
+    
+    if ($color_id !== null) {
+        $sql .= " AND product.id_color = ?";
+        return pdo_query($sql, $id_item, $color_id);
+    }
+    
+    return pdo_query($sql, $id_item);
+}

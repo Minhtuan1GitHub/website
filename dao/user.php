@@ -164,7 +164,20 @@ function updateUser($id_user, $ten, $diachi, $dienthoai){
     pdo_execute($sql, $ten, $diachi, $dienthoai, $id_user);
 }
 
+function user_insert2($email){
+    $sql = "INSERT INTO user(email) VALUES (?)";
+    pdo_execute($sql, $email);
+}
 
+function user_insert_google($email, $name, $ngaydangki) {
+    $sql = "INSERT INTO user (email, ten, ngaydangki, role, trangthai) VALUES (?, ?, ?, 0, 1)";
+    pdo_execute($sql, $email, $name, $ngaydangki);
+}
+
+function link_google_account($id_user, $google_email) {
+    $sql = "UPDATE user SET google_email = ? WHERE id_user = ?";
+    pdo_execute($sql, $google_email, $id_user);
+}
 
 // function khach_hang_update($ma_kh, $mat_khau, $ho_ten, $email, $hinh, $kich_hoat, $vai_tro){
 //     $sql = "UPDATE khach_hang SET mat_khau=?,ho_ten=?,email=?,hinh=?,kich_hoat=?,vai_tro=? WHERE ma_kh=?";

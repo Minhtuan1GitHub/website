@@ -31,7 +31,7 @@
           <div class="card-body">
             <!-- Header: Nickname and Date -->
             <div class="d-flex justify-content-between align-items-center mb-3">
-              <h5 class="fw-bold text-primary mb-0">' . htmlspecialchars($nickname) . '</h5>
+              ' . htmlspecialchars($nickname) . '
               <small class="text-muted">' . htmlspecialchars($date) . '</small>
             </div>
 
@@ -391,10 +391,10 @@
                     <input type="hidden" name="id" value="<?=$sanphamchitiet['id']?>">
                     <input type="hidden" name="img" value="<?=$img?>">
                     <input type="hidden" name="name_item" value="<?=$name_item?>">
-                    <input type="hidden" name="price_sale" value="<?=$price_sale?>">
                     <input type="hidden" name="description" value="<?=$description?>">
                     <input type="hidden" name="limit_date_sale" value="<?=$limit_date_sale?>">
-                    <input type="hidden" name="price" value="<?=$price?>">
+                    <input type="hidden" name="price" id="selected_price" value="<?=$defaultPrice['price']?>">
+                    <input type="hidden" name="price_sale" id="selected_price_sale" value="<?=$defaultPrice['price_sale']?>">
                     <div style="display: flex; flex-direction: column">
 
                     <div style="display: flex; justify-content: space-between; text-align: center">
@@ -410,47 +410,67 @@
                     <!-- color -->
                     <div style="display: flex; gap: 10px; margin-top: 10px; margin-bottom: 10px">
                       <?php 
-                        foreach ($getColor as $cl) {
+                        $defaultColor = null;
+                        $colorsWithStock = getColorWithStock($sanphamchitiet['id']);
+                        foreach ($colorsWithStock as $cl) {
+                          if ($defaultColor === null) {
+                            $defaultColor = $cl;
+                          }
                           ?>
-                          <button type="button" onclick="chonMau('<?=htmlspecialchars($cl['id_color'])?>')">
+                          <button type="button" class="color-btn <?= (!isset($_GET['color']) && $cl === $defaultColor) || (isset($_GET['color']) && $_GET['color'] == $cl['id_color']) ? 'selected' : '' ?>" 
+                                  data-color-id="<?=htmlspecialchars($cl['id_color'])?>" 
+                                  onclick="chonMau(this, '<?=htmlspecialchars($cl['id_color'])?>')">
                             <?=htmlspecialchars($cl['color'])?>
+                            
                           </button>
                         <?php }
                       ?>
                     </div>
                     <!-- size -->
-                    <div style="display: flex; gap: 10px; margin-top: 10px; margin-bottom: 10px">
+                    <div id="size-container" style="display: flex; gap: 10px; margin-top: 10px; margin-bottom: 10px">
                       <?php
-                        foreach ($getSize as $sz) {
-                          ?>
-                          <button type="button" onclick="chonSize('<?=htmlspecialchars($sz['id_size'])?>')">
-                            <?=htmlspecialchars($sz['size'])?>
-                          </button>
-                        <?php 
+                        $defaultSize = null;
+                        $selectedColorId = isset($_GET['color']) ? $_GET['color'] : ($defaultColor ? $defaultColor['id_color'] : null);
+                        $sizesWithStock = getSizeWithStock($sanphamchitiet['id'], $selectedColorId);
+                        if ($sizesWithStock) {
+                          foreach ($sizesWithStock as $sz) {
+                            if ($defaultSize === null) {
+                              $defaultSize = $sz;
+                            }
+                            $stock = getStock($sanphamchitiet['id'], $selectedColorId, $sz['id_size']);
+                            ?>
+                            <button type="button" 
+                                    class="size-btn <?= (!isset($_GET['size']) && $sz === $defaultSize) || (isset($_GET['size']) && $_GET['size'] == $sz['id_size']) ? 'selected' : '' ?>"
+                                    data-size-id="<?=htmlspecialchars($sz['id_size'])?>" 
+                                    onclick="chonSize(this, '<?=htmlspecialchars($sz['id_size'])?>')"
+                                    <?= $stock <= 0 ? 'disabled' : '' ?>>
+                              <?=htmlspecialchars($sz['size'])?>
+                              <?php if ($stock <= 0): ?>
+                                <span class="out-of-stock">(Hết hàng)</span>
+                              <?php endif; ?>
+                            </button>
+                          <?php 
+                          }
                         }
                       ?>
                     </div>
 
-                    <input type="hidden" name="color" value="<?= isset($_GET['color']) ? htmlspecialchars($_GET['color']) :'' ?>">
-                    <input type="hidden" name="size" value="<?= isset($_GET['size']) ? htmlspecialchars($_GET['size']) :'' ?>">
+                    <input type="hidden" name="color" id="selected-color" value="<?= isset($_GET['color']) ? htmlspecialchars($_GET['color']) : ($defaultColor ? htmlspecialchars($defaultColor['id_color']) : '') ?>">
+                    <input type="hidden" name="size" id="selected-size" value="<?= isset($_GET['size']) ? htmlspecialchars($_GET['size']) : ($defaultSize ? htmlspecialchars($defaultSize['id_size']) : '') ?>">
 
                     <div style="display: flex; justify-content: space-between">
                         <div style="display: flex; text-align: center; gap: 10px; align-items: center">
                           <?php
-                            if ($price_sale == 0){
-                          ?>
-                            <div class="text-primary" style="font-size: 40px;"><?=$price?> k</div>
-                          <?php }else{
-                                  if ($limit_date_sale >= date('Y-m-d H:i:s')){ ?>
-                                    <div class="text-primary" style="font-size: 20px; text-decoration: line-through;"><?=$price?>k</div>
-                                    <div class="text-danger" style="font-size: 40px;"><?=$price_sale?>k</div>
-                                  <?php }else{
-                                    ?>
-                                    <div class="text-primary" style="font-size: 40px;"><?=$price?>k</div>
-                                  <?php }
-                          ?>
-
-                          <?php } ?>
+                            if ($defaultPrice['price_sale'] == 0): ?>
+                                <div class="text-primary" style="font-size: 40px;"><?=$defaultPrice['price']?>k</div>
+                            <?php else: ?>
+                                <?php if ($defaultPrice['limit_date_sale'] >= date('Y-m-d H:i:s')): ?>
+                                    <div class="text-primary" style="font-size: 20px; text-decoration: line-through;"><?=$defaultPrice['price']?>k</div>
+                                    <div class="text-danger" style="font-size: 40px;"><?=$defaultPrice['price_sale']?>k</div>
+                                <?php else: ?>
+                                    <div class="text-primary" style="font-size: 40px;"><?=$defaultPrice['price']?>k</div>
+                                <?php endif; ?>
+                            <?php endif; ?>
                         </div>
                         <div style="display: flex; text-align: center; gap: 10px; align-items: center">
 
@@ -702,10 +722,39 @@
       background-color: #0056b3;
     }
 
+    .color-btn, .size-btn {
+      padding: 8px 16px;
+      border: 1px solid #ddd;
+      background: white;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
 
+    .color-btn:hover, .size-btn:hover {
+      border-color: #333;
+    }
 
-  
-  
+    .color-btn.selected, .size-btn.selected {
+      background: #333;
+      color: white;
+      border-color: #333;
+    }
+
+    .color-btn:disabled, .size-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .size-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background-color: #f5f5f5;
+    }
+    .out-of-stock {
+      font-size: 0.8em;
+      color: #999;
+    }
 
 </style>
 <script>
@@ -732,16 +781,131 @@
     }
   
   }
-  function chonMau(color){
-    const url = new URL(window.location.href);
-    url.searchParams.set("color",color);
-    window.location.href = url;
+  function checkStock(colorId, sizeId) {
+    return fetch(`ajax/product_handler.php?action=check_stock&color_id=${colorId}&size_id=${sizeId}&id_item=<?=$sanphamchitiet['id']?>`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          return data.stock > 0;
+        }
+        return false;
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        return false;
+      });
   }
-  function chonSize(size){
-    const url = new URL(window.location.href);
-    url.searchParams.set("size",size);
-    window.location.href = url;
+
+  function chonMau(btn, colorId) {
+    // Remove selected class from all color buttons
+    document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('selected'));
+    // Add selected class to clicked button
+    btn.classList.add('selected');
+    
+    // Update hidden input
+    document.getElementById('selected-color').value = colorId;
+    
+    // Fetch available sizes for this color
+    fetch(`ajax/product_handler.php?action=get_sizes&color_id=${colorId}&id_item=<?=$sanphamchitiet['id']?>`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.success && data.sizes) {
+          const sizeContainer = document.getElementById('size-container');
+          sizeContainer.innerHTML = data.sizes.map(size => `
+            <button type="button" 
+                    class="size-btn" 
+                    data-size-id="${size.id_size}" 
+                    onclick="chonSize(this, '${size.id_size}')">
+              ${size.size}
+            </button>
+          `).join('');
+          
+          // Select first available size
+          const firstSizeBtn = sizeContainer.querySelector('.size-btn');
+          if (firstSizeBtn) {
+            const sizeId = firstSizeBtn.getAttribute('data-size-id');
+            firstSizeBtn.classList.add('selected');
+            document.getElementById('selected-size').value = sizeId;
+            updatePrice(colorId, sizeId);
+          }
+        }
+      })
+      .catch(error => console.error('Error:', error));
   }
+
+  function chonSize(btn, sizeId) {
+    if (btn.disabled) return;
+    
+    // Remove selected class from all size buttons
+    document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
+    // Add selected class to clicked button
+    btn.classList.add('selected');
+    
+    // Update hidden input
+    document.getElementById('selected-size').value = sizeId;
+    
+    // Update price based on current color and new size selection
+    const colorId = document.getElementById('selected-color').value;
+    if (colorId) {
+      updatePrice(colorId, sizeId);
+    }
+  }
+
+  function updatePrice(colorId, sizeId) {
+    fetch(`ajax/product_handler.php?action=get_price&color_id=${colorId}&size_id=${sizeId}&id_item=<?=$sanphamchitiet['id']?>`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const priceContainer = document.querySelector('.text-primary');
+                const salePriceContainer = document.querySelector('.text-danger');
+                
+                if (data.price_sale > 0 && new Date(data.limit_date_sale) > new Date()) {
+                    // Có giá sale và còn trong thời gian sale
+                    if (priceContainer) {
+                        priceContainer.style.fontSize = '20px';
+                        priceContainer.style.textDecoration = 'line-through';
+                        priceContainer.textContent = `${data.price}k`;
+                    }
+                    if (!salePriceContainer) {
+                        // Tạo container cho giá sale nếu chưa có
+                        const newSalePriceContainer = document.createElement('div');
+                        newSalePriceContainer.className = 'text-danger';
+                        newSalePriceContainer.style.fontSize = '40px';
+                        newSalePriceContainer.textContent = `${data.price_sale}k`;
+                        priceContainer.parentNode.appendChild(newSalePriceContainer);
+                    } else {
+                        salePriceContainer.style.display = 'block';
+                        salePriceContainer.style.fontSize = '40px';
+                        salePriceContainer.textContent = `${data.price_sale}k`;
+                    }
+                } else {
+                    // Không có giá sale hoặc hết thời gian sale
+                    if (priceContainer) {
+                        priceContainer.style.fontSize = '40px';
+                        priceContainer.style.textDecoration = 'none';
+                        priceContainer.textContent = `${data.price}k`;
+                    }
+                    if (salePriceContainer) {
+                        salePriceContainer.style.display = 'none';
+                    }
+                }
+
+                // Cập nhật giá trong form
+                document.querySelector('input[name="price"]').value = data.price;
+                document.querySelector('input[name="price_sale"]').value = data.price_sale || 0;
+            }
+        })
+        .catch(error => console.error('Error:', error));
+  }
+
+  // Select default color and size on page load
+  window.addEventListener('DOMContentLoaded', () => {
+    const defaultColor = document.getElementById('selected-color').value;
+    const defaultSize = document.getElementById('selected-size').value;
+    if (defaultColor && defaultSize) {
+      updatePrice(defaultColor, defaultSize);
+    }
+  });
 </script>
 
 

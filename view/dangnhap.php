@@ -43,6 +43,15 @@
                 </div>
                 <div class="text-center">
                     <input class="btn btn-primary w-50" type="submit" value="Đăng nhập" name="dangnhap">
+                    <div class="mt-3">
+                        <div class="divider d-flex align-items-center my-4">
+                            <p class="text-center mx-3 mb-0 text-muted">Hoặc đăng nhập với</p>
+                        </div>
+                        <a href="<?php echo isset($loginUrl) ? $loginUrl : '#'; ?>" class="btn btn-outline-danger btn-social">
+                            <i class="bi bi-google me-2"></i>
+                            Đăng nhập với Google
+                        </a>
+                    </div>
                 </div>
             </form>
         </div>
@@ -101,6 +110,20 @@
         color: #fff;
     }
 
+    /* Google Button Styling */
+    .btn-outline-danger {
+        border-radius: 50px;
+        transition: 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn-outline-danger:hover {
+        background-color: #dc3545;
+        color: #fff;
+    }
+
     /* Breadcrumb Styling */
     .breadcrumb {
         background: #f8f9fa;
@@ -119,12 +142,59 @@
 
     /* Responsive Design for Small Devices */
     @media (max-width: 768px) {
-        .btn-primary, .btn-outline-dark {
+        .btn-primary, .btn-outline-dark, .btn-outline-danger {
             width: 100%;
         }
 
         .col-md-6 {
             margin-bottom: 20px;
+        }
+    }
+
+    /* Social Login Button */
+    .btn-social {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px 24px;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        width: auto;
+        min-width: 200px;
+    }
+
+    .btn-social:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(220, 53, 69, 0.2);
+    }
+
+    .btn-social i {
+        font-size: 1.1em;
+    }
+
+    /* Divider Line */
+    .divider {
+        position: relative;
+    }
+
+    .divider::before,
+    .divider::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: #e0e0e0;
+    }
+
+    .divider p {
+        margin: 0;
+        padding: 0 1rem;
+    }
+
+    @media (max-width: 768px) {
+        .btn-social {
+            width: 100%;
+            margin-top: 10px;
         }
     }
 </style>

@@ -264,13 +264,22 @@
         $id_bill = $_POST['id_bill'];
         $trangthaithanhtoan = $_POST['thanhtoan'];
         $allTrangThai = getAllTrangThai();
+        $allThanhToan = getAllThanhToan();
         include "../admin/view/capnhatsanpham.php";
         break;
       case 'capnhattrangthaimoi':
         if (isset($_POST['gui'])){
           $id_bill = $_POST['id_bill'];
-          $trangthaimoi = $_POST['trangthaimoi'];
-          updateTrangThaiMoi($trangthaimoi, $id_bill);
+          $trangthaithanhtoan = $_POST['trangthaithanhtoan'];
+          if ($trangthaithanhtoan != 8){
+            $trangthaimoi = $_POST['trangthaimoi'];
+            updateTrangThaiMoi($trangthaimoi, $id_bill);
+          }else{
+            $thanhtoanmoi = $_POST['thanhtoanmoi'];
+            updateThanhToanMoi($thanhtoanmoi, $id_bill);
+            // lam them gui mail cho nay ! 
+          }
+          
           header('location: index.php?page=donhang');
 
         }

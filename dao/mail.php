@@ -56,7 +56,8 @@ function sendmail1($email, $ten, $sodienthoai, $diachi, $madonhang, $tongtien){
       $mail->SMTPSecure = 'ssl';  // encryption TLS/SSL 
       $mail->Port = 465;  // port to connect to                
       $mail->setFrom('minhtuank27tdtu@gmail.com', 'Tumi' ); 
-      $mail->addAddress('nguyenminhtuan061205@gmail.com'); //email nguoi ban
+      $mail->addCC('nguyenminhtuan061205@gmail.com'); //email nguoi ban
+      $mail->addAddress($email); //email nguoi mua
       $mail->isHTML(true);  // Set email format to HTML
       $mail->Subject = 'Đơn đặt hàng';
       $noidungthu = "
@@ -90,7 +91,7 @@ function sendmail1($email, $ten, $sodienthoai, $diachi, $madonhang, $tongtien){
   }
 }
 
-function sendmail2($ten, $sodienthoai, $diachi, $madonhang, $tongtien){
+function sendmail2($email ,$ten, $sodienthoai, $diachi, $madonhang, $tongtien){
     //thu vien giup gui mail
     require "PHPMailer-master/src/PHPMailer.php"; 
     require "PHPMailer-master/src/SMTP.php"; 
@@ -107,7 +108,8 @@ function sendmail2($ten, $sodienthoai, $diachi, $madonhang, $tongtien){
         $mail->SMTPSecure = 'ssl';  // encryption TLS/SSL 
         $mail->Port = 465;  // port to connect to                
         $mail->setFrom('minhtuank27tdtu@gmail.com', 'Tumi' ); 
-        $mail->addAddress('nguyenminhtuan061205@gmail.com'); //email nguoi ban
+        $mail->addCC('nguyenminhtuan061205@gmail.com'); //email nguoi ban
+        $mail->addAddress($email); //email nguoi mua
         $mail->isHTML(true);  // Set email format to HTML
         $mail->Subject = 'Đơn đặt hàng';
         $noidungthu = "

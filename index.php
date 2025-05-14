@@ -1,5 +1,10 @@
 <?php
-    // mo cua session
+    require_once 'vendor/autoload.php';
+    require_once 'config/google_config.php';
+
+    use Google\Client as Google_Client;
+    use Google\Service\Oauth2 as Google_Service_Oauth2;
+
     session_start(); 
     ob_start();
 
@@ -23,6 +28,7 @@
   include "dao/binhluan.php";
   include "dao/chuyenkhoan.php";
   include "dao/tinnhan.php";
+  include "dao/getProductNoiBan.php";
 
   if (trangThaiTaiKhoan($_SESSION['session_user']['id_user']) != $_SESSION['session_user']['trangthai']){
     $trangthaitaikhoan = trangThaiTaiKhoan($_SESSION['session_user']['id_user']);
@@ -37,10 +43,36 @@
 
 
         $dssp_new = get_dssp_home(10);
+        $getMenOne = getMen(1,1);
+        $getMenTwo = getMen(1,2);
+        $getMenThree = getMen(1,3);
+        $getMenFour = getMen(1,4);
+        $getMenFive = getMen(1,5);
 
+        $getWomenOne = getMen(0,10);
+        $getWomenTwo = getMen(0,11);
+        $getWomenThree = getMen(0,12);
+        $getWomenFour = getMen(0,13);
+        $getWomenFive = getMen(0,14);
 
-      include "view/home.php";
-      include "view/bottom.php";
+        $getKidOne = getMen(2,15);
+        $getKidTwo = getMen(2,16);
+        $getKidThree = getMen(2,17);
+        $getKidFour = getMen(2,18);
+        $getKidFive = getMen(2,19);
+
+        $getBabyOne = getMen(3,20);
+        $getBabyTwo = getMen(3,21);
+        $getBabyThree = getMen(3,22);
+        $getBabyFour = getMen(3,23);
+        $getBabyFive = getMen(3,24);
+        
+        $getNews = getNews(8);
+    //   include "view/home.php";
+    include "view/trangchu.php";
+    include "view/bottom.php";
+    include "view/footer.php";
+    // include "view/find.php";
   } else {
       switch ($_GET['page']) {
 
@@ -406,48 +438,65 @@
                 break;
 
             case 'dangnhap':
-                      $phanloai = get_phanploai();
+                $phanloai = get_phanploai();
                 $countDonHang = countDonHang($_SESSION['session_user']['id_user']);
+                
+                // Initialize Google Client
+                $client = new Google_Client();
+                $client->setClientId(GOOGLE_CLIENT_ID);
+                $client->setClientSecret(GOOGLE_CLIENT_SECRET);
+                $client->setRedirectUri(GOOGLE_REDIRECT_URI);
+                $client->addScope("email");
+                $client->addScope("profile");
+                
+                // Get login URL
+                $loginUrl = $client->createAuthUrl();
+                
                 include "view/header1.php";
                 include "view/dangnhap.php";
                 include "view/find.php";
-
                 break;
-            case 'login':
 
-                // input
-                if (isset($_POST["dangnhap"]) && ($_POST["dangnhap"])){
-                    $email = $_POST["email"];
-                    $password = $_POST["password"];
-
-                    //xu li
-                    $kq = checkuser($email, $password);
-
+            case 'google_callback':
+                // Handle Google OAuth callback
+                $client = new Google_Client();
+                $client->setClientId(GOOGLE_CLIENT_ID);
+                $client->setClientSecret(GOOGLE_CLIENT_SECRET);
+                $client->setRedirectUri(GOOGLE_REDIRECT_URI);
+                
+                if (isset($_GET['code'])) {
+                    $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
+                    $client->setAccessToken($token['access_token']);
                     
-                    if(is_array($kq) && (count($kq))){
-                        $_SESSION['session_user'] = $kq;
+                    // Get user info
+                    $google_oauth = new Google_Service_Oauth2($client);
+                    $google_account_info = $google_oauth->userinfo->get();
+                    
+                    $email = $google_account_info->email;
+                    $name = $google_account_info->name;
+                    
+                    // Check if user exists
+                    $user = checkEmail($email);
+                    
+                    if ($user) {
+                        // User exists - proceed with login
+                        $_SESSION['session_user'] = $user;
                         $_SESSION['tb_dangnhap'] = 'Đăng nhập thành công';
-                        $role = $_SESSION['session_user']['role'];
+                        header('location: index.php?page=member');
+                    } else {
+                        // User doesn't exist - register new account
+                        date_default_timezone_set('Asia/Ho_Chi_Minh');
+                        $ngaydangki = date("Y-m-d H:i:s");
+                        user_insert_google($email, $name, $ngaydangki);
                         
-
-
-                        if (isset($_SESSION['trang']) && $_SESSION['trang'] == "sanphamchitiet"){
-                            header('location: index.php?page=sanphamchitiet&idpro='.$_SESSION['idpro']);
-                            unset($_SESSION['trang']);
-                            unset($_SESSION['idpro']);
-                        }else if ($role == 1){
-                            header('location: admin/index.php');
-                        }
-                        else{
-                            header('location: index.php?page=member');
-                        }
-                                                  
+                        // Get the newly created user
+                        $new_user = checkEmail($email);
+                        $_SESSION['session_user'] = $new_user;
+                        $_SESSION['tb_dangnhap'] = 'Đăng ký thành công';
+                        header('location: index.php?page=member');
                     }
-                    else{
-                        $_SESSION['tb_dangnhap'] = "Tài khoản không tồn tại";
-                        //out
-                        header('location: index.php?page=dangnhap');
-                    }
+                } else {
+                    header('location: index.php?page=dangnhap');
                 }
                 break;
             case 'logout':
@@ -544,7 +593,7 @@
                 break;
             
             case 'dangky':
-                      $phanloai = get_phanploai();
+                $phanloai = get_phanploai();
                 $countDonHang = countDonHang($_SESSION['session_user']['id_user']);
                 include "view/header1.php";
                 include "view/dangky.php";
@@ -597,14 +646,7 @@
                         }
                         if (isset($_SESSION['session_user']['id_user']) && ($_SESSION['session_user']['id_user'])){
                             $id_user = $_SESSION['session_user']['id_user'];
-                        }
-                                // if (empty($_SESSION['session_user']['ten'])){
-                                //     header('location: index.php?page=member');
-                                //     break;
-                                // }
-                            
-                        
-                            
+                        }                        
                         if (isset($_SESSION['session_user']['ten']) && ($_SESSION['session_user']['ten'])){
                             $ten = $_SESSION['session_user']['ten'];
                         }
@@ -662,8 +704,6 @@
 
                 }
                 if (isset($_POST["momo"]) && ($_POST["momo"])){
-
-
                     if (isset($_SESSION['session_user']) && ($_SESSION['session_user'])){
                         if (isset($_SESSION['session_user']['email']) && ($_SESSION['session_user']['email'])){
                             $email = $_SESSION['session_user']['email'];
@@ -671,13 +711,6 @@
                         if (isset($_SESSION['session_user']['id_user']) && ($_SESSION['session_user']['id_user'])){
                             $id_user = $_SESSION['session_user']['id_user'];
                         }
-                                // if (empty($_SESSION['session_user']['ten'])){
-                                //     header('location: index.php?page=member');
-                                //     break;
-                                // }
-                            
-                        
-                            
                         if (isset($_SESSION['session_user']['ten']) && ($_SESSION['session_user']['ten'])){
                             $ten = $_SESSION['session_user']['ten'];
                         }
@@ -849,33 +882,46 @@
                 include "view/chitietdonhang.php";
                 break;
             case 'adduser':
-                //kiem tra ton tai thi moi lay du lieu
-                if (isset($_POST["dangky"]) && ($_POST["dangky"])){
+                if (isset($_POST["dangky"]) && ($_POST["dangky"])) {
                     $email = $_POST["email"];
                     $password = $_POST["password"];
                     date_default_timezone_set('Asia/Ho_Chi_Minh');
                     $ngaydangki = date("Y-m-d H:i:s");
-                    //xu li
+                    
                     $tontai = user_select_by_email($email);
-                    $alert = '';
-                    if ($tontai == false){
-                        
+                    if ($tontai == false) {
                         user_insert($email, $password, $ngaydangki);
-                        $alert = "<div class='alert alert-success mt-2' id ='myAlert' role = 'alert'>Đăng ký thành công</div>";
-                        $phanloai = get_phanploai();
-                        $countDonHang = countDonHang($_SESSION['session_user']['id_user']);
-                include "view/header1.php";
-                        include "view/dangnhap.php";
-                    }else{
-                        $alert = "<div class='alert alert-danger mt-2' id ='myAlert' role = 'alert'>Email đã tồn tại. Vui lòng sử dụng email khác.</div>";                        
-                              $phanloai = get_phanploai();
-                $countDonHang = countDonHang($_SESSION['session_user']['id_user']);
-                include "view/header1.php";
-                        include "view/dangky.php";
+                        $user_info = checkEmail($email);
+                        $_SESSION['session_user'] = $user_info;
+                        $_SESSION['tb_dangnhap'] = 'Đăng ký thành công';
+                        header('location: index.php?page=member');
+                    } else {
+                        $_SESSION['tb_dangnhap'] = 'Email đã tồn tại. Vui lòng sử dụng email khác.';
+                        header('location: index.php?page=dangky');
                     }
                 }
 
+                // Handle Google registration
+                if (isset($_SESSION['google_data'])) {
+                    $email = $_SESSION['google_data']['email'];
+                    $name = $_SESSION['google_data']['name'];
+                    date_default_timezone_set('Asia/Ho_Chi_Minh');
+                    $ngaydangki = date("Y-m-d H:i:s");
 
+                    $tontai = user_select_by_email($email);
+                    if ($tontai == false) {
+                        user_insert_google($email, $name, $ngaydangki);
+                        $user_info = checkEmail($email);
+                        $_SESSION['session_user'] = $user_info;
+                        $_SESSION['tb_dangnhap'] = 'Đăng ký thành công';
+                        unset($_SESSION['google_data']);
+                        header('location: index.php?page=member');
+                    } else {
+                        $_SESSION['tb_dangnhap'] = 'Email đã tồn tại. Vui lòng sử dụng email khác.';
+                        unset($_SESSION['google_data']);
+                        header('location: index.php?page=dangky');
+                    }
+                }
                 break;
 
 
@@ -1118,8 +1164,9 @@
                     $sodienthoai = $_SESSION['session_user']['dienthoai'];
                     $diachi = $_SESSION['session_user']['diachi'];
                     $tongtien = $_POST['tongtien'];
+                    $email = $_SESSION['session_user']['email'];
                     updatetrangthai($id_bill, $trangthai);
-                    sendmail2($ten, $sodienthoai, $diachi, $id_bill, $tongtien);
+                    sendmail2($email ,$ten, $sodienthoai, $diachi, $id_bill, $tongtien);
                     header('location: index.php?page=chuyenkhoan');
                 }
 
@@ -1150,7 +1197,7 @@
                 include "view/header.php";
                 $dssp_new = get_dssp_home(10);
 
-                include "view/home.php";
+                // include "view/home.php";
                 include "view/bottom.php";
                 break;
       }

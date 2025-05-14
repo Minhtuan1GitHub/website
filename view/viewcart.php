@@ -124,7 +124,7 @@
           <div>
               <input type="radio" class="form-check-input me-2" name="voucher_giam" id="radio' . $id_voucher . '" value="' . $id_voucher . '">
               <label class="form-check-label fw-bold" for="radio' . $id_voucher . '">' . $voucher_giam . '% - ' . $voucher_name . '</label>
-              <small class="d-block text-muted">Expiration date: ' . $voucher_date . '</small>
+              <small class="d-block text-muted ">Expiration date: <span style="color: #dc3545""> ' . $endDate . '</span></small>
               <a href="#" class="text-decoration-none text-primary">Chi tiết</a>
           </div>
   

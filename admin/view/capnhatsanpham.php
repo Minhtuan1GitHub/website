@@ -48,15 +48,31 @@
             <div class="mb-3">
                 <label for="trangthaithanhtoan" class="form-label">Current Payment Status:</label>
                 <span class="form-control-plaintext" id="trangthaithanhtoan"><?=$trangthaithanhtoan?></span>
+                <input type="hidden" value="<?=$trangthaithanhtoan?>" name="trangthaithanhtoan">
             </div>
             <div class="mb-3">
-                <label for="trangthaimoi" class="form-label">Select New Status:</label>
-                <select class="form-select" id="trangthaimoi" name="trangthaimoi" aria-label="Select New Status">
-                    <option selected>Open this select menu</option>
-                    <?php foreach ($allTrangThai as $item) { ?>
-                        <option value="<?=$item['id']?>"><?=$item['trangthai']?></option>
-                    <?php } ?>
-                </select>
+                <?php
+                    if ($trangthaithanhtoan != 8){
+                        ?>
+                        <label for="trangthaimoi" class="form-label">Select New Status:</label>
+                        <select class="form-select" id="trangthaimoi" name="trangthaimoi" aria-label="Select New Status">
+                            <option selected>Open this select menu</option>
+                            <?php foreach ($allTrangThai as $item) { ?>
+                                <option value="<?=$item['id']?>"><?=$item['trangthai']?></option>
+                            <?php } ?>
+                        </select>
+                    <?php }else{
+                        ?>
+                        <label for="" class="form-label">Hoàn tiền: </label>
+                        <select id="" class="form-select" name="thanhtoanmoi" aria-label="Select New Status">
+                            <option selected>Open this select menu</option>
+                            <?php foreach ($allThanhToan as $chapnhan) { ?>
+                                <option value="<?=$chapnhan['id']?>"><?=$chapnhan['name']?></option>
+                            <?php }?>
+                        </select>
+                    <?php }
+                ?>
+
             </div>
             <button type="submit" class="btn btn-submit w-100" name="gui">Submit</button>
         </form>
